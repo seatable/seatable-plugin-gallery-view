@@ -148,8 +148,8 @@ class App extends React.Component {
       selectedViewIdx,
       isShowGallerySetting
     }, () => {
-      this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
       this.storeSelectedViewId(updatedViews[selectedViewIdx]._id);
+      this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
       this.viewsTabs && this.viewsTabs.setGalleryViewsTabsScroll();
     });
   }
@@ -169,8 +169,8 @@ class App extends React.Component {
         selectedViewIdx,
         isShowGallerySetting
       }, () => {
-        this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
         this.storeSelectedViewId(updatedViews[selectedViewIdx]._id);
+        this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
       });
     }
   }
@@ -314,6 +314,7 @@ class App extends React.Component {
             <span className="plugin-title">{'Gallery'}</span>
           </div>
           <GalleryViewsTabs
+            ref={ref => this.viewsTabs = ref}
             views={galleryViews}
             onSelectView={this.onSelectView}
             selectedViewIdx={selectedViewIdx}
