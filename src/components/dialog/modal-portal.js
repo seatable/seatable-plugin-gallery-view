@@ -12,6 +12,7 @@ class ModalPortal extends React.Component {
   constructor(props) {
     super(props);
     this.el = document.createElement('div');
+    this.el.setAttribute('class', 'gallery-modal-portal');
   }
 
   componentDidMount() {
