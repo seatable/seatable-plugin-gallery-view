@@ -5,16 +5,16 @@ const propTypes = {
   rows: PropTypes.array.isRequired,
   table: PropTypes.object,
   selectedView: PropTypes.object,
-  getRowDataByView: PropTypes.func,
+  getInsertedRowInitData: PropTypes.func,
   onInsertRow: PropTypes.func,
 };
 
 class AddGalleryItem extends React.Component{
 
   addGalleryItem = () => {
-    let { rows, getRowDataByView, selectedView, table } = this.props;
+    let { rows, getInsertedRowInitData, selectedView, table } = this.props;
     let row_id = rows.length > 0 ? rows[rows.length - 1]._id : '';
-    let rowData = getRowDataByView(selectedView, table, row_id);
+    let rowData = getInsertedRowInitData(selectedView, table, row_id);
     this.props.onInsertRow(table, selectedView, rowData);
   }
 

@@ -8,23 +8,23 @@
   bottom: 0;
 }
 
-.plugin-container .plugin-header {
+.plugin-container .gallery-view-content .plugin-header {
   align-items: center;
   padding: 0 1rem;
 }
 
-.plugin-container .modal-title {
+.plugin-container .gallery-view-content .modal-title {
   display: flex;
   flex: 1;
   height: 100%;
 }
 
-.plugin-container .logo-title {
+.plugin-container .gallery-view-content .logo-title {
   width: calc(180px - 1rem);
   padding: 10px 0;
 }
 
-.plugin-container .modal-title .plugin-logo {
+.plugin-container .gallery-view-content .modal-title .plugin-logo {
   width: 24px;
   height: 24px;
   margin-right: 10px;
@@ -41,7 +41,7 @@
   height: 100%;
 }
 
-.plugin-container .gallery-views-tabs {
+.plugin-container .gallery-view-content .gallery-views-tabs {
   flex: 1;
   height: 100%;
   font-size: 14px;
@@ -49,47 +49,47 @@
   overflow: hidden;
 }
 
-.plugin-container .views-tabs-scroll {
+.plugin-container .gallery-view-content .views-tabs-scroll {
   overflow-x: scroll;
   overflow-y: hidden;
 }
 
-.plugin-container .views-tabs-scroll::-webkit-scrollbar {
+.plugin-container .gallery-view-content .views-tabs-scroll::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
 }
 
-.plugin-container .gallery-views-tabs .views {
+.plugin-container .gallery-view-content .gallery-views-tabs .views {
   height: 100%;
 }
 
-.plugin-container .view-item {
+.plugin-container .gallery-view-content .view-item {
   height: 100%;
   padding: 0 16px;
   flex: 1 0 auto;
 }
 
-.plugin-container .view-item .view-item-content {
+.plugin-container .gallery-view-content .view-item .view-item-content {
   width: 100%;
   height: 100%;
   border-bottom: 2px solid transparent;
   color: #999;
 }
 
-.plugin-container .view-item .view-item-content:hover {
+.plugin-container .gallery-view-content .view-item .view-item-content:hover {
   border-color: #3b88fd;
   color: #444;
   cursor: pointer;
 }
 
-.plugin-container .view-item.active .view-item-content {
+.plugin-container .gallery-view-content .view-item.active .view-item-content {
   border-color: #3b88fd;
   color: #444;
   cursor: default;
 }
 
-.plugin-container .btn-view-dropdown {
+.plugin-container .gallery-view-content .btn-view-dropdown {
   width: 20px;
   height: 20px;
   margin-left: 5px;
@@ -98,7 +98,7 @@
   cursor: pointer;
 }
 
-.plugin-container .btn-view-dropdown .dtable-icon-drop-down {
+.plugin-container .gallery-view-content .btn-view-dropdown .dtable-icon-drop-down {
   display: inline-block;
   height: 18px;
   font-size: 12px;
@@ -107,16 +107,16 @@
   transition: all .1s;
 }
 
-.plugin-container .btn-view-dropdown:hover .dtable-icon-drop-down {
+.plugin-container .gallery-view-content .btn-view-dropdown:hover .dtable-icon-drop-down {
   color: #aaa;
 }
 
-.plugin-container .btn-add-view {
+.plugin-container .gallery-view-content .btn-add-view {
   width: 24px;
   height: 100%;
 }
 
-.plugin-container .btn-add-view .dtable-icon-add-table {
+.plugin-container .gallery-view-content .btn-add-view .dtable-icon-add-table {
   height: 24px;
   width: 24px;
   text-align: center;
@@ -128,26 +128,26 @@
   line-height: 24px;
 }
 
-.plugin-container .modal-content {
+.plugin-container .gallery-view-content .modal-content {
   height: 100%;
   overflow: hidden;
 }
 
-.plugin-container .plugin-body {
+.plugin-container .gallery-view-content .plugin-body {
   padding: 0;
   overflow: hidden;
   background-color: #fff;
 }
 
-.plugin-container .header-btn-list {
+.plugin-container .gallery-view-content .gallery-header-btn {
   height: 100%;
 }
 
-.plugin-container .header-btn-list .gallery-setting {
+.plugin-container .gallery-view-content .gallery-header-btn .gallery-setting {
   margin-right: 10px;
 }
 
-.plugin-container .btn-close {
+.plugin-container .gallery-view-content .btn-close {
   height: 24px;
   width: 24px;
   text-align: center;
@@ -157,6 +157,6 @@
   font-weight: 700;
 }
 
-.plugin-container .btn-close:hover {
+.plugin-container .gallery-view-content .btn-close:hover {
   opacity: 0.8;
 }

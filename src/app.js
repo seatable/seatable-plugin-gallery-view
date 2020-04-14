@@ -198,7 +198,7 @@ class App extends React.Component {
     }
     let row_data = Object.assign({}, newRowData);
     
-    this.dtable.appendRow(table, view, row_data);
+    this.dtable.appendRow(table, row_data, view);
     let viewRows = this.dtable.getViewRows(view, table);
     let insertedRow = viewRows[viewRows.length - 1];
     if (insertedRow) {
@@ -235,8 +235,8 @@ class App extends React.Component {
     return this.dtable.getRowById(table, rowID);
   }
 
-  getRowDataByView = (view, table, rowID) => {
-    return this.dtable.getRowDataByView(view, table, rowID);
+  getInsertedRowInitData = (view, table, rowID) => {
+    return this.dtable.getInsertedRowInitData(view, table, rowID);
   }
 
   getRowCommentCount = (rowID) => {
@@ -264,7 +264,7 @@ class App extends React.Component {
 
   renderBtnGroups = () => {
     return (
-      <div className="header-btn-list d-flex align-items-center">
+      <div className="gallery-header-btn d-flex align-items-center">
         <span className="btn-close gallery-setting" onClick={this.onGallerySettingToggle}>
           <i className="dtable-font dtable-icon-settings"></i>
         </span>
@@ -330,7 +330,7 @@ class App extends React.Component {
             imageColumns={imageColumns}
             getRow={this.getRow}
             selectedView={selectedView}
-            getRowDataByView={this.getRowDataByView}
+            getInsertedRowInitData={this.getInsertedRowInitData}
             onInsertRow={this.onInsertRow}
             isShowAllRowList={isShowAllRowList}
             onAddGalleryRowList={this.onAddGalleryRowList}

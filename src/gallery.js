@@ -12,7 +12,7 @@ const propTypes = {
   imageColumns: PropTypes.array,
   getRow: PropTypes.func,
   selectedView: PropTypes.object,
-  getRowDataByView: PropTypes.func,
+  getInsertedRowInitData: PropTypes.func,
   onInsertRow: PropTypes.func,
   isShowAllRowList: PropTypes.bool,
   onAddGalleryRowList: PropTypes.func,
@@ -51,7 +51,7 @@ class Gallery extends React.Component {
               table={this.props.table}
               selectedView={this.props.selectedView}
               rows={this.props.rows}
-              getRowDataByView={this.props.getRowDataByView}
+              getInsertedRowInitData={this.props.getInsertedRowInitData}
               onInsertRow={this.props.onInsertRow}
             />
           </div>
