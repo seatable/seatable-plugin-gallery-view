@@ -16,37 +16,8 @@ class GalleryViewList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      emptyList: []
+      emptyList: ['emptyItem1', 'emptyItem2', 'emptyItem3', 'emptyItem4', 'emptyItem5']
     };
-  }
-
-  componentDidMount() {
-    window.addEventListener('resize', this.onResize);
-    this.onResize();
-  }
-
-  componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize)
-  }
-
-  onResize = () => {
-    let emptyList = [];
-    let { rows } = this.props;
-    const galleryListWidth = this.galleryListRef.offsetWidth;
-    const rowsLength = rows.length;
-
-    let galleryItemNumber = Math.floor(galleryListWidth / 250); //250 is galleryItem min-width and margin width
-    let emptyItemLength = galleryItemNumber - (rowsLength % galleryItemNumber);
-    if (emptyItemLength !== galleryItemNumber) {
-      let index = 0; 
-      while(index < emptyItemLength) {
-        emptyList.push(index);
-        index++;
-      }
-    }
-    this.setState({
-      emptyList: emptyList,
-    });
   }
 
   render() {
