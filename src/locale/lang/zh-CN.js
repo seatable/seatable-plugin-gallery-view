@@ -9,6 +9,8 @@ const zh_CN = {
   "Table": "表格",
   "View": "视图",
   "Name_Column": "名称字段",
+  "No_options": "没有选择",
+  "Unnamed_record": "未命名行"
 };
 
 export default zh_CN; 

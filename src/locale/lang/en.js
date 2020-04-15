@@ -9,6 +9,8 @@ const en = {
   "Table": "Table",
   "View": "View",
   "Name_Column": "Name Column",
+  "No_options": "No options",
+  "Unnamed_record": "Unnamed record"
 };
 
 export default en; 

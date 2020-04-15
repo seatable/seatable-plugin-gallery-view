@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import intl from 'react-intl-universal';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
 
 const propTypes = {
@@ -44,8 +45,8 @@ class GalleryViewItem extends React.Component {
 
   render() {
     let { commentCount } = this.state;
-    let { galleryItem, imageColumn, itemMarginRightNone, lang } = this.props;
-    let rowName = galleryItem['Name'] ? galleryItem['Name'] : 'Unnamed record';
+    let { galleryItem, imageColumn } = this.props;
+    let rowName = galleryItem['Name'] ? galleryItem['Name'] : intl.get('Unnamed_record');
 
     let itemImage;
     if (imageColumn) {
@@ -54,15 +55,8 @@ class GalleryViewItem extends React.Component {
         itemImage = <ImageLazyLoad imageUrl={galleryItem[imageColumnName][0]} />
       }
     }
-    let style = { width: `${this.props.width}px`};
-    if (itemMarginRightNone) {
-      style = {
-        width: `${this.props.width}px`,
-        marginRight: 0
-      }
-    } 
     return (
-      <div className="gallery-item" onClick={this.onRowExpand} style={style}>
+      <div className="gallery-item" onClick={this.onRowExpand}>
         <div className="gallery-image-container">
           {itemImage}
         </div>

@@ -16,7 +16,7 @@ class GalleryViewList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      galleryItemWidth: 220
+      emptyList: []
     };
   }
 
@@ -30,24 +30,28 @@ class GalleryViewList extends React.Component {
   }
 
   onResize = () => {
-    let galleryItemWidth;
+    let emptyList = [];
+    let { rows } = this.props;
     const galleryListWidth = this.galleryListRef.offsetWidth;
-    let galleryItemNumber = Math.floor(galleryListWidth / 240); //240 is galleryItem min-width and margin-right width
-    let remainingWidth = galleryListWidth % 240;
-    if (remainingWidth > 0) {
-      galleryItemWidth = 220 + remainingWidth / galleryItemNumber;
-    } else {
-      galleryItemWidth = 220;
+    const rowsLength = rows.length;
+
+    let galleryItemNumber = Math.floor(galleryListWidth / 250); //250 is galleryItem min-width and margin width
+    let emptyItemLength = galleryItemNumber - (rowsLength % galleryItemNumber);
+    if (emptyItemLength !== galleryItemNumber) {
+      let index = 0; 
+      while(index < emptyItemLength) {
+        emptyList.push(index);
+        index++;
+      }
     }
     this.setState({
-      galleryItemWidth: galleryItemWidth,
-      galleryItemNumber: galleryItemNumber
-    })
+      emptyList: emptyList,
+    });
   }
 
   render() {
     const { rows, imageColumn } = this.props;
-    const { galleryItemWidth,  galleryItemNumber } = this.state;
+    const { emptyList } = this.state;
     return (
       <div className="gallery-list" ref={ref => this.galleryListRef = ref}>
         {rows && rows.map((galleryItem, index) => {
@@ -60,11 +64,13 @@ class GalleryViewList extends React.Component {
               table={this.props.table}
               getRowCommentCount={this.props.getRowCommentCount}
               selectedGalleryView={this.props.selectedGalleryView}
-              width={galleryItemWidth}
-              itemMarginRightNone={(index + 1) % galleryItemNumber === 0 ? true : false}
             />
           );
         })}
+        {emptyList.length > 0 && emptyList.map((item, index) => {
+          return <div key={`emptyaItem${index}`} className="empty-content"></div>;
+        })}
+       
       </div>
     );
   }
