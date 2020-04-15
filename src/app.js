@@ -278,6 +278,11 @@ class App extends React.Component {
     this.setState({itemShowRowLength: newGalleryRowList});
   }
 
+  onAddGalleryItem = (view, table, rowID) => {
+   let rowData = this.getInsertedRowInitData(view, table, rowID);
+   this.onInsertRow(table, view, rowData);
+  }
+
   render() {
     let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting,
      itemShowRowLength } = this.state;
@@ -335,6 +340,7 @@ class App extends React.Component {
             isShowAllRowList={isShowAllRowList}
             onAddGalleryRowList={this.onAddGalleryRowList}
             getRowCommentCount={this.getRowCommentCount}
+            onAddGalleryItem={this.onAddGalleryItem}
           />
           {isShowGallerySetting &&
             <GallerySetting

@@ -73,7 +73,7 @@ class ImageLazyLoad extends React.Component {
     }
 
     if (isShowLoading) {
-      return <Loading />;
+      return <Loading />
     }
     return (
       <img 

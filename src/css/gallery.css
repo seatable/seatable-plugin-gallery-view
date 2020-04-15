@@ -2,21 +2,18 @@
 .gallery-list-content .gallery-list {
   display: flex;
   flex-wrap: wrap;
+  padding: 0 9px;
 }
 
 .gallery-list .gallery-item {
-  width: 220px;
+  min-width: 220px;
   height: 200px;
   border-radius: 4px;
   border: 1px solid #ededed;
-  margin-right: 40px;
+  margin-right: 20px;
   margin-top: 20px;
   cursor: pointer;
   box-shadow: 0 0 2px 0 rgba(0, 0, 0, 0.05)
-}
-
-.gallery-list .gallery-item:nth-child(5n){
-  margin-right: 0;
 }
 
 .gallery-item .gallery-image-container {
@@ -24,6 +21,9 @@
   text-align: center;
   border-bottom: 1px solid #e2e2e2;
   background: #efefef;
+  display: flex;
+  align-items: center;
+  justify-content: center
 }
 
 .gallery-item .gallery-image-container .loading-tip {

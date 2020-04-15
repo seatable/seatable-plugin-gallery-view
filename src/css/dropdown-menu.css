@@ -5,6 +5,9 @@
 .gallery-modal-portal .dropdown-menu .no-options {
   height: 40px;
   color: #c2c2c2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .gallery-modal-portal .dropdown-item:hover {

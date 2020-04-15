@@ -1,8 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import intl from 'react-intl-universal';
 import PluginSelect from './plugin-select';
 import { SETTING_KEY, zIndexes } from '../constants';
-import intl from 'react-intl-universal';
 import '../locale';
 
 import '../css/gallery-setting.css';
