@@ -28,10 +28,7 @@ class GalleryViewItem extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let { galleryItem, getRowCommentCount, selectedGalleryView } = this.props;
-    if (selectedGalleryView._id === nextProps.selectedGalleryView._id) {
-      return;
-    }
+    let { galleryItem, getRowCommentCount } = this.props;
     if (galleryItem._id !== nextProps.galleryItem._id) {
       getRowCommentCount(nextProps.galleryItem._id).then(res => {
         this.setState({commentCount: res.data.count});
