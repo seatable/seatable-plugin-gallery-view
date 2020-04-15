@@ -70,7 +70,6 @@ class GalleryViewList extends React.Component {
         {emptyList.length > 0 && emptyList.map((item, index) => {
           return <div key={`emptyaItem${index}`} className="empty-content"></div>;
         })}
-       
       </div>
     );
   }

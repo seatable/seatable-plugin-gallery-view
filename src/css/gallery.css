@@ -2,7 +2,6 @@
 .gallery-list-content .gallery-list {
   display: flex;
   flex-wrap: wrap;
-  /* padding: 0 9px; */
   justify-content: center;
 }
 
