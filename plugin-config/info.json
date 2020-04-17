@@ -1,6 +1,11 @@
 {
   "name": "gallery",
-  "version": "0.0.1",
-  "display_name": "Gallery",
+  "version": "0.1.0",
+  "display_name": {
+    "de": "",
+    "en": "Gallery",
+    "fr": "",
+    "zh-cn": "图库"
+  },
   "description": "This plugin is used to show the card view"
 }
