@@ -154,6 +154,18 @@ class App extends React.Component {
     });
   }
 
+  onRenameView = (viewName) => {
+    let { plugin_settings, selectedViewIdx } = this.state;
+    let updatedView = plugin_settings.views[selectedViewIdx];
+    updatedView = Object.assign({}, updatedView, {name: viewName});
+    plugin_settings.views[selectedViewIdx] = updatedView;
+    this.setState({
+      plugin_settings
+    }, () => {
+      this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
+    });
+  }
+
   onDeleteView = (viewId) => {
     let { plugin_settings, selectedViewIdx } = this.state;
     let { views: updatedViews } = plugin_settings;
@@ -240,7 +252,7 @@ class App extends React.Component {
   }
 
   getRowCommentCount = (rowID) => {
-    if (window.app) {
+    if (Object.keys(window.app).length !== 0) {
       return window.app.dtableStore.dtableAPI.getRowCommentsCount(rowID);
     }
     return this.dtable.getRowCommentCount(rowID);
@@ -325,6 +337,7 @@ class App extends React.Component {
             selectedViewIdx={selectedViewIdx}
             onAddView={this.onAddView}
             onDeleteView={this.onDeleteView}
+            onRenameView={this.onRenameView}
           />
         </ModalHeader>
         <ModalBody className="test-plugin-content gallery-dialog-body">

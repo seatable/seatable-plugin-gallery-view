@@ -61,7 +61,7 @@ class GalleryViewItem extends React.Component {
           {itemImage}
         </div>
         <div className="text-truncate gallery-row-content">
-          <span>{rowName}</span>
+          <span className="row-title">{rowName}</span>
           {commentCount !== 0 && 
             <div className="row-comment-content">
               <span className="dtable-font dtable-icon-comment row-comment-icon">

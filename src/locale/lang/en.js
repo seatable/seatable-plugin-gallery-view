@@ -1,5 +1,6 @@
 const en = {
-  "Delete": "Delete",
+  "Rename_View": "Rename View",
+  "Delete_View": "Delete View",
   "New_View": "New View",
   "Name": "Name",
   "Name_is_required": "Name is required",

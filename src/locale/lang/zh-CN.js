@@ -1,5 +1,7 @@
 const zh_CN = {
-  "Delete": "删除",
+  "Delete_View": "删除视图",
+  "Rename_View": "重命名视图",
+  
   "New_View": "新建视图",
   "Name": "名称",
   "Name_is_required": "名称必须存在",

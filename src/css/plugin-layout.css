@@ -1,5 +1,5 @@
 .dtable-plugin.plugin-container {
-  width: 90%;
+  width: 1398px;
   max-width: 1398px;
   position: absolute;
   margin-left: 50%;
@@ -33,17 +33,17 @@
 .gallery-dialog-body {
   padding: 0;
   height: calc(100% - 56px);
+  overflow: hidden;
 }
 
 .gallery-dialog-body .gallery-list-content {
-  padding: 1rem;
+  padding: 0 7px;
   overflow: auto;
   height: 100%;
 }
 
 .plugin-container .gallery-view-content .gallery-views-tabs {
   flex: 1;
-  /* height: 100%; */
   font-size: 14px;
   font-weight: 500;
   overflow: hidden;

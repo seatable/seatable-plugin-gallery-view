@@ -12,8 +12,9 @@
   padding: 10px;
 }
 
-.plugin-gallery-setting .setting-header {
-  padding: 0 10px 1rem;
+.plugin-gallery-setting .setting-header-container {
+  width: 100%;
+  border-bottom: 1px solid #e2e2e2;
 }
 
 .plugin-gallery-setting .setting-header-title {
@@ -21,7 +22,6 @@
   padding: 10px 0;
   font-size: 1rem;
   font-weight: 700;
-  border-bottom: 1px solid #e2e2e2;
 }
 
 .plugin-gallery-setting .btn-close {
@@ -29,7 +29,7 @@
 }
 
 .plugin-gallery-setting .setting-body {
-  padding: 0 10px;
+  padding: 10px;
 }
 
 .plugin-gallery-setting .setting-item {
