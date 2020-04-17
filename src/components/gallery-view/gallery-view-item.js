@@ -40,7 +40,7 @@ class GalleryViewItem extends React.Component {
   onRowExpand = () => {
     let { table,  galleryItem } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
-    window.app.onPluginRowExpand(row, table);
+    window.app.onRowExpand(row, table);
   }
 
   render() {

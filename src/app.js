@@ -202,7 +202,7 @@ class App extends React.Component {
     let viewRows = this.dtable.getViewRows(view, table);
     let insertedRow = viewRows[viewRows.length - 1];
     if (insertedRow) {
-      window.app.onPluginRowExpand(insertedRow, table);
+      window.app.onRowExpand(insertedRow, table);
     }
   }
 
@@ -240,7 +240,7 @@ class App extends React.Component {
   }
 
   getRowCommentCount = (rowID) => {
-    if (window.dtable) {
+    if (window.app) {
       return window.app.dtableStore.dtableAPI.getRowCommentsCount(rowID);
     }
     return this.dtable.getRowCommentCount(rowID);
