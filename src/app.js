@@ -214,7 +214,7 @@ class App extends React.Component {
     let viewRows = this.dtable.getViewRows(view, table);
     let insertedRow = viewRows[viewRows.length - 1];
     if (insertedRow) {
-      window.app.onRowExpand(insertedRow, table);
+      window.app.expandRow(insertedRow, table);
     }
   }
 
