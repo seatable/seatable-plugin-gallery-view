@@ -2,11 +2,10 @@
 .gallery-list-content .gallery-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
 }
 
 .gallery-list .gallery-item {
-  width: 260px;
+  min-width: 220px;
   height: 234px;
   border-radius: 4px;
   border: 1px solid #ededed;

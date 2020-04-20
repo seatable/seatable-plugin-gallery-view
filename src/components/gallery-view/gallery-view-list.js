@@ -16,13 +16,39 @@ class GalleryViewList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      emptyList: ['emptyItem1', 'emptyItem2', 'emptyItem3', 'emptyItem4', 'emptyItem5']
+      galleryItemWidth: 220
     };
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.onResize);
+    this.onResize();
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.onResize)
+  }
+
+  onResize = () => {
+    let galleryItemWidth;
+    const galleryListWidth = this.galleryListRef.offsetWidth;
+    let galleryItemNumber = Math.floor(galleryListWidth / 236); //236 is galleryItem min-width and margin-right width
+    let remainingWidth = galleryListWidth % 236;
+    if (remainingWidth > 0) {
+      galleryItemWidth = 220 + remainingWidth / galleryItemNumber;
+    } else {
+      galleryItemWidth = 220;
+    }
+    this.setState({
+      galleryItemWidth: galleryItemWidth,
+      galleryItemNumber: galleryItemNumber
+    })
   }
 
   render() {
     const { rows, imageColumn } = this.props;
-    const { emptyList } = this.state;
+    const { galleryItemWidth,  galleryItemNumber } = this.state;
+    
     return (
       <div className="gallery-list" ref={ref => this.galleryListRef = ref}>
         {rows && rows.map((galleryItem, index) => {
@@ -35,11 +61,10 @@ class GalleryViewList extends React.Component {
               table={this.props.table}
               getRowCommentCount={this.props.getRowCommentCount}
               selectedGalleryView={this.props.selectedGalleryView}
+              width={galleryItemWidth}
+              itemMarginRightNone={(index + 1) % galleryItemNumber === 0 ? true : false}
             />
           );
-        })}
-        {emptyList.length > 0 && emptyList.map((item, index) => {
-          return <div key={`emptyaItem${index}`} className="empty-content"></div>;
         })}
       </div>
     );

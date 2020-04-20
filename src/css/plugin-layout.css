@@ -1,5 +1,5 @@
 .dtable-plugin.plugin-container {
-  width: 1398px;
+  width: 90%;
   max-width: 1398px;
   position: absolute;
   margin-left: 50%;
@@ -37,7 +37,7 @@
 }
 
 .gallery-dialog-body .gallery-list-content {
-  padding: 0 7px;
+  padding: 0 7px 1rem;
   overflow: auto;
   height: 100%;
 }
