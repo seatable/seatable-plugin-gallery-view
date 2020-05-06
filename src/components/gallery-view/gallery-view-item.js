@@ -150,9 +150,6 @@ class GalleryViewItem extends React.Component {
             closeImagePopup={this.hideLargeImage}
             moveToPrevImage={this.movePrev}
             moveToNextImage={this.moveNext}
-            deleteImage={this.isReadOnly ? null : this.deleteImage}
-            downloadImage={this.isReadOnly ? null : this.downloadImage}
-            onRotateImage={this.isReadOnly ? null : this.onRotateImage}
           /> 
         }
       </div>
