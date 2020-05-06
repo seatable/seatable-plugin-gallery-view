@@ -47,7 +47,6 @@ class Gallery extends React.Component {
             table={this.props.table}
             getRowCommentCount={this.props.getRowCommentCount}
             selectedGalleryView={this.props.selectedGalleryView}
-            // optionsList={optionsList}
             singleSelectColumns={singleSelectColumns}
           />
           <AddGalleryItem 
