@@ -313,6 +313,7 @@ class App extends React.Component {
     let { name: viewName } = selectedView;
     let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
     let rows = this.getRows(tableName, viewName, settings);
+    let singleSelectColumns = this.dtable.getColumnsByType(selectedTable, CellType.SINGLE_SELECT)
     let isShowAllRowList = false;
     let rowsList = [];
     if (rows.length < itemShowRowLength) {
@@ -354,6 +355,7 @@ class App extends React.Component {
             onAddGalleryRowList={this.onAddGalleryRowList}
             getRowCommentCount={this.getRowCommentCount}
             onAddGalleryItem={this.onAddGalleryItem}
+            singleSelectColumns={singleSelectColumns}
           />
           {isShowGallerySetting &&
             <GallerySetting

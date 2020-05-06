@@ -31,11 +31,12 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { imageColumns } = this.props;
+    const { imageColumns, singleSelectColumns} = this.props;
     let imageColumn;
     if (imageColumns && imageColumns.length > 0) {
       imageColumn = imageColumns[0];
     }
+
     return (
       <div className="gallery-list-content" ref={ref => this.galleryListRef = ref} onScroll={this.onScroll}>
         <div ref={ref => this.galleryBodyRef = ref}>
@@ -46,6 +47,8 @@ class Gallery extends React.Component {
             table={this.props.table}
             getRowCommentCount={this.props.getRowCommentCount}
             selectedGalleryView={this.props.selectedGalleryView}
+            // optionsList={optionsList}
+            singleSelectColumns={singleSelectColumns}
           />
           <AddGalleryItem 
             table={this.props.table}

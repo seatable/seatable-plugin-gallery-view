@@ -7,5 +7,5 @@ const config = {
   lang: "en"
 };
 
-const dtablePluginConfig = Object.assign({}, config, {server: config.server.replace(/\/+$/, "")}) ;
+const dtablePluginConfig = Object.assign({}, config, {server: config.server.replace(/\/+$/, "")});
 window.dtablePluginConfig = dtablePluginConfig;

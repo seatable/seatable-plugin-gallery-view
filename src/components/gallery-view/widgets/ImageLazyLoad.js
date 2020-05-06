@@ -65,6 +65,10 @@ class ImageLazyLoad extends React.Component {
     event.stopPropagation();
   }
 
+  onImageClick = (event) => {
+    this.props.onImageClick(event, 0);
+  }
+
   render() {
     let { imageUrl, isShowLoading } = this.state;
 
@@ -80,6 +84,7 @@ class ImageLazyLoad extends React.Component {
         alt='' 
         src={imageUrl}
         onMouseDown={this.onMouseDown}
+        onClick={this.onImageClick} 
         height="168"
       />
     );
