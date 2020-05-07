@@ -109,8 +109,9 @@ class GalleryViewItem extends React.Component {
 
   render() {
     let { images, largeImageIndex } = this.state;
-    let { galleryItem, imageColumn, itemMarginRightNone } = this.props;
-    let rowName = galleryItem['Name'] ? galleryItem['Name'] : intl.get('Unnamed_record');
+    let { galleryItem, imageColumn, itemMarginRightNone, table} = this.props;
+    let row = this.props.getRow(table, galleryItem._id);
+    let rowName = row['0000'] ? row['0000'] : intl.get('Unnamed_record');
     let optionList = this.renderOptionList();
     let itemImage;
     let imageNumber = 0;
