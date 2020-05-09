@@ -85,7 +85,7 @@ class ImageLazyLoad extends React.Component {
         src={imageUrl}
         onMouseDown={this.onMouseDown}
         onClick={this.onImageClick} 
-        height="168"
+        height="162"
       />
     );
   }
