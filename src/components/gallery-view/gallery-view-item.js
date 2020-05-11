@@ -97,7 +97,7 @@ class GalleryViewItem extends React.Component {
       return (
         <div className="formatter-container">
           {optionFormatterList.map((item, index) => {
-            if (item) return <SingleSelectFormatter key={`singleselect${index}`} options={optionsList} value={item} />;
+            if (item) return <SingleSelectFormatter key={`singleselect${index}`} options={optionsList} value={item} fontSize={12} />;
             return null;
           })}
           {optionFormatterList.every(item => !item) && <span className="row-cell-empty d-inline-block"></span>}

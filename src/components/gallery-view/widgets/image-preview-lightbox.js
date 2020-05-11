@@ -9,51 +9,39 @@ function ImagePreviewerLightbox(props) {
   const imageItemsLength = imageItems.length;
   const URL = imageItems[imageIndex];
   const imageTitle = URL ? decodeURI(URL.slice(URL.lastIndexOf('/') + 1)) : '';
-  if (window.isMobile) {
-    return (
-      <Fragment>
-        <Lightbox
-          wrapperClassName="mobile-image-previewer"
-          mainSrc={imageItems[imageIndex]}
-          nextSrc={imageItems[(imageIndex + 1) % imageItemsLength]}
-          prevSrc={imageItems[(imageIndex + imageItemsLength - 1) % imageItemsLength]}
-          onCloseRequest={props.closeImagePopup}
-          onMovePrevRequest={props.moveToPrevImage}
-          onMoveNextRequest={props.moveToNextImage}
-          imagePadding={0}
-          animationDisabled={true}
-          imageTitle={imageTitle}
-          reactModalStyle={{
-            overlay: {
-              zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX,
-              backgroundColor: '#000',
-              height: 'calc(100% - 100px)',
-            }
-          }}
-        />
-      </Fragment>
-    );
+  const isMobile = window.isMobile;
+  let reactModalStyle;
+  if (isMobile) {
+    reactModalStyle = {
+      overlay: {
+        zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX,
+        backgroundColor: '#000',
+        height: 'calc(100% - 100px)',
+      }
+    }
+  } else {
+    reactModalStyle = {
+      overlay: {
+        zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX
+      }
+    }
   }
-  
-  let PCtoolbarButtons = [];
   return (
-    <Lightbox
-      wrapperClassName="PC-image-previewer"
-      imageTitle={imageTitle}
-      toolbarButtons={PCtoolbarButtons}
-      mainSrc={imageItems[imageIndex]}
-      nextSrc={imageItems[(imageIndex + 1) % imageItemsLength]}
-      prevSrc={imageItems[(imageIndex + imageItemsLength - 1) % imageItemsLength]}
-      onCloseRequest={props.closeImagePopup}
-      onMovePrevRequest={props.moveToPrevImage}
-      onMoveNextRequest={props.moveToNextImage}
-      imagePadding={70}
-      reactModalStyle={{
-        overlay: {
-          zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX
-        }
-      }}
-    />
+    <Fragment>
+      <Lightbox
+        wrapperClassName={isMobile ? "mobile-image-previewer" : "PC-image-previewer"}
+        imageTitle={imageTitle}
+        mainSrc={imageItems[imageIndex]}
+        nextSrc={imageItems[(imageIndex + 1) % imageItemsLength]}
+        prevSrc={imageItems[(imageIndex + imageItemsLength - 1) % imageItemsLength]}
+        onCloseRequest={props.closeImagePopup}
+        onMovePrevRequest={props.moveToPrevImage}
+        onMoveNextRequest={props.moveToNextImage}
+        imagePadding={isMobile ? 0 : 70}
+        animationDisabled={true}
+        reactModalStyle={reactModalStyle}
+      />
+    </Fragment>
   );
 }
 
