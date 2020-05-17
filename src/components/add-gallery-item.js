@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import addRowIcon from '../assets/image/add.png';
+
 const propTypes = {
   rows: PropTypes.array.isRequired,
   table: PropTypes.object,
@@ -19,7 +21,7 @@ class AddGalleryItem extends React.Component{
   render() {
     return(
       <div className="add-gallery-item" onClick={this.addGalleryItem}>
-        <span className="dtable-font dtable-icon-add add-gallery-row"></span>
+        <img src={addRowIcon} alt="" width="54" />
       </div>
     );
   }

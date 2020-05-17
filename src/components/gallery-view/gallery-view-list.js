@@ -63,6 +63,8 @@ class GalleryViewList extends React.Component {
               selectedGalleryView={this.props.selectedGalleryView}
               width={galleryItemWidth}
               itemMarginRightNone={(index + 1) % galleryItemNumber === 0 ? true : false}
+              optionsList={this.props.optionsList}
+              singleSelectColumns={this.props.singleSelectColumns}
             />
           );
         })}
