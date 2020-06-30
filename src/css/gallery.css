@@ -43,6 +43,11 @@
   overflow: hidden;
 }
 
+.gallery-item .gallery-image-container img {
+  height: 162px;
+  max-width: none;
+}
+
 .gallery-item .gallery-image-container .loading-tip {
   display: inline-block;
 }
