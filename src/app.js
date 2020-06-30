@@ -206,7 +206,28 @@ class App extends React.Component {
     let newRowData = {};
     for (let key in rowData) {
       let column = columns.find(column => column.key === key);
-      newRowData[column.name] = rowData[key];
+      switch(column.type ) {
+        case 'single-select': {
+          let singleSelectName = '';
+          singleSelectName = column.data.options.find(item => item.id === rowData[key]);
+          newRowData[column.name] = singleSelectName.name;
+          break;
+        }
+        case 'multiple-select': {
+          let multipleSelectNameList = [];
+          rowData[key].forEach(multiItemId => {
+            let multiSelectItemName = column.data.options.find(multiItem => multiItem.id === multiItemId);
+            if (multiSelectItemName) {
+              multipleSelectNameList.push(multiSelectItemName.name);
+            }
+          });
+          newRowData[column.name] = multipleSelectNameList;
+
+          break;
+        }
+        default: 
+          newRowData[column.name] = rowData[key];
+      }
     }
     let row_data = Object.assign({}, newRowData);
     
