@@ -206,7 +206,7 @@ class App extends React.Component {
     let newRowData = {};
     for (let key in rowData) {
       let column = columns.find(column => column.key === key);
-      switch(column.type ) {
+      switch(column.type) {
         case 'single-select': {
           let singleSelectName = '';
           singleSelectName = column.data.options.find(item => item.id === rowData[key]);
@@ -230,7 +230,7 @@ class App extends React.Component {
       }
     }
     let row_data = Object.assign({}, newRowData);
-    
+
     this.dtable.appendRow(table, row_data, view);
     let viewRows = this.dtable.getViewRows(view, table);
     let insertedRow = viewRows[viewRows.length - 1];
