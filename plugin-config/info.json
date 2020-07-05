@@ -1,11 +1,16 @@
 {
   "name": "gallery",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "display_name": {
-    "de": "",
+    "de": "Galerie",
     "en": "Gallery",
-    "fr": "",
+    "fr": "Galerie",
     "zh-cn": "图库"
   },
-  "description": "This plugin is used to show the card view"
+  "description": {
+    "de": "Dieses Plugin wird verwendet, um die Kartenansicht anzuzeigen",
+    "en": "This plugin is used to show the card view",
+    "fr": "Ce plugin est utilisé pour afficher la vue de la carte",
+    "zh-cn": "该插件用于显示卡片视图"
+  }
 }
