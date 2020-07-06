@@ -1,6 +1,6 @@
 {
   "name": "gallery",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "display_name": {
     "de": "Galerie",
     "en": "Gallery",
@@ -8,9 +8,9 @@
     "zh-cn": "图库"
   },
   "description": {
-    "de": "Dieses Plugin wird verwendet, um die Kartenansicht anzuzeigen",
-    "en": "This plugin is used to show the card view",
-    "fr": "Ce plugin est utilisé pour afficher la vue de la carte",
-    "zh-cn": "该插件用于显示卡片视图"
+    "de": "Zeigen Sie Ihre Datensätze in einer Galerie an.",
+    "en": "Display your records in a gallery.",
+    "fr": "Affichez vos enregistrements dans une galerie.",
+    "zh-cn": "用图库的方式展示你的记录。"
   }
 }
