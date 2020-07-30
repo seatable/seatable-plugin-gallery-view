@@ -214,7 +214,6 @@ class App extends React.Component {
   }
 
   onModifyGallerySettings = (updated, type) => {
-    // console.log(updated)
     let { plugin_settings, selectedViewIdx } = this.state;
     let { views: updatedViews } = plugin_settings;
     let updatedView = plugin_settings.views[selectedViewIdx];
@@ -224,11 +223,9 @@ class App extends React.Component {
     } else {
       updatedSettings = Object.assign({}, updated);
     }
-    // console.log(updatedSettings)
     updatedView.settings = updatedSettings;
     updatedViews[selectedViewIdx] = updatedView;
     plugin_settings.views = updatedViews;
-
     this.setState({plugin_settings}, () => {
       this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
     });

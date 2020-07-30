@@ -6,7 +6,6 @@
 
 .gallery-list .gallery-item {
   min-width: 220px;
-  /* height: 234px; */
   border-radius: 4px;
   border: 1px solid #dedede;
   margin-right: 8px;
@@ -102,11 +101,11 @@
   align-items: center;
 }
 
-.gallery-text-editor {
+.gallery-row-content .gallery-text-editor {
   font-size: 14px;
 }
 
-.gallery-formula-container {
+.gallery-row-content .gallery-formula-container {
   text-align: left!important;
 }
 
