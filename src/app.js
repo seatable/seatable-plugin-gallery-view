@@ -38,7 +38,10 @@ class App extends React.Component {
       isLoading: true,
       showDialog: props.showDialog || false,
       table: null,
-      itemShowRowLength: 50
+      itemShowRowLength: 50,
+      selectedViewIdx: 0,
+      plugin_settings: {},
+      isShowGallerySetting: false,
     };
     this.dtable = new DTable();
   }
@@ -57,6 +60,8 @@ class App extends React.Component {
       window.app = {};
       await this.dtable.init(window.dtablePluginConfig);
       await this.dtable.syncWithServer();
+      let relatedUsersRes = await this.getRelatedUsersFromServer(this.dtable.dtableStore);
+      window.app.collaborators = relatedUsersRes.data.user_list;
       this.dtable.subscribe('dtable-connect', () => { this.onDTableConnect(); });
     } else { 
       // integrated to dtable app
@@ -67,6 +72,19 @@ class App extends React.Component {
     this.dtable.subscribe('local-dtable-changed', () => { this.onDTableChanged(); });
     this.dtable.subscribe('remote-dtable-changed', () => { this.onDTableChanged(); });
     this.resetData(true);
+  }
+
+  async getRelatedUsersFromServer(dtableStore) {
+    return dtableStore.dtableAPI.getTableRelatedUsers();
+  }
+
+  getRelatedUsersFromLocal = () => {
+    let { collaborators, state } = window.app;
+    if (!collaborators) {
+      // dtable app
+      return state && state.collaborators;
+    }
+    return collaborators; // local develop
   }
 
   onDTableConnect = () => {
@@ -115,6 +133,13 @@ class App extends React.Component {
       return window.dtable.dtableUuid;
     }
     return window.dtablePluginConfig.dtableUuid;
+  }
+
+  getMediaUrl = () => {
+    if (window.dtable) {
+      return window.dtable.mediaUrl;
+    }
+    return window.dtablePluginConfig.mediaUrl;
   }
 
   onPluginToggle = () => {
@@ -188,15 +213,22 @@ class App extends React.Component {
     }
   }
 
-  onModifyGallerySettings = (updated) => {
+  onModifyGallerySettings = (updated, type) => {
+    // console.log(updated)
     let { plugin_settings, selectedViewIdx } = this.state;
     let { views: updatedViews } = plugin_settings;
     let updatedView = plugin_settings.views[selectedViewIdx];
     let { settings: updatedSettings} = updatedView || {};
-    updatedSettings = Object.assign({}, updatedSettings, updated);
+    if (!type) {
+      updatedSettings = Object.assign({}, updatedSettings, updated);
+    } else {
+      updatedSettings = Object.assign({}, updated);
+    }
+    // console.log(updatedSettings)
     updatedView.settings = updatedSettings;
     updatedViews[selectedViewIdx] = updatedView;
     plugin_settings.views = updatedViews;
+
     this.setState({plugin_settings}, () => {
       this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
     });
@@ -273,11 +305,20 @@ class App extends React.Component {
     return this.dtable.getInsertedRowInitData(view, table, rowID);
   }
 
-  getRowCommentCount = (rowID) => {
-    if (Object.keys(window.app).length !== 0) {
-      return window.app.dtableStore.dtableAPI.getRowCommentsCount(rowID);
-    }
-    return this.dtable.getRowCommentCount(rowID);
+  getLinkCellValue = (linkId, table1Id, table2Id, rowId) => {
+    return this.dtable.getLinkCellValue(linkId, table1Id, table2Id, rowId);
+  }
+
+  getRowsByID = (tableId, rowIds) => {
+    return this.dtable.getRowsByID(tableId, rowIds);
+  }
+
+  getTableById = (table_id) => {
+    return this.dtable.getTableById(table_id);
+  }
+
+  getUserCommonInfo = (email, avatar_size) => {
+    return this.dtable.getUserCommonInfo(email, avatar_size)
   }
 
   storeSelectedViewId = (viewId) => {
@@ -332,12 +373,13 @@ class App extends React.Component {
     let { name: tableName } = selectedTable || {};
     let views = this.dtable.getViews(selectedTable);
     let selectedView = this.getSelectedView(selectedTable, settings) || views[0];   
+    let currentColumns = selectedTable.columns;
     let { name: viewName } = selectedView;
     let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
     let rows = this.getRows(tableName, viewName, settings);
-    let singleSelectColumns = this.dtable.getColumnsByType(selectedTable, CellType.SINGLE_SELECT)
     let isShowAllRowList = false;
     let rowsList = [];
+    let collaborators = this.getRelatedUsersFromLocal();
     if (rows.length < itemShowRowLength) {
       rowsList = rows;
       isShowAllRowList = true;
@@ -377,7 +419,15 @@ class App extends React.Component {
             onAddGalleryRowList={this.onAddGalleryRowList}
             getRowCommentCount={this.getRowCommentCount}
             onAddGalleryItem={this.onAddGalleryItem}
-            singleSelectColumns={singleSelectColumns}
+            settings={settings || {}}
+            currentColumns={currentColumns}
+            getLinkCellValue={this.getLinkCellValue}
+            getRowsByID={this.getRowsByID}
+            getTableById={this.getTableById}
+            collaborators={collaborators}
+            getUserCommonInfo={this.getUserCommonInfo}
+            getMediaUrl={this.getMediaUrl}
+            CellType={CellType}
           />
           {isShowGallerySetting &&
             <GallerySetting
@@ -387,6 +437,7 @@ class App extends React.Component {
               settings={settings || {}}
               onModifyGallerySettings={this.onModifyGallerySettings}
               onHideGallerySetting={this.onHideGallerySetting}
+              currentColumns={currentColumns}
             />
           }
         </ModalBody>

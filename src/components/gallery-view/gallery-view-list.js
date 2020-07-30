@@ -7,8 +7,17 @@ const propTypes = {
   imageColumn: PropTypes.object,
   getRow: PropTypes.func,
   table: PropTypes.object,
-  getRowCommentCount: PropTypes.func,
   selectedGalleryView: PropTypes.object,
+  settings: PropTypes.object,
+  currentColumns: PropTypes.array,
+  selectedView: PropTypes.object,
+  getLinkCellValue: PropTypes.func,
+  getRowsByID: PropTypes.func,
+  getTableById: PropTypes.func,
+  collaborators: PropTypes.array,
+  getUserCommonInfo: PropTypes.func,
+  getMediaUrl: PropTypes.func,
+  CellType: PropTypes.object,
 };
 
 class GalleryViewList extends React.Component {
@@ -48,7 +57,7 @@ class GalleryViewList extends React.Component {
   render() {
     const { rows, imageColumn } = this.props;
     const { galleryItemWidth,  galleryItemNumber } = this.state;
-    
+
     return (
       <div className="gallery-list" ref={ref => this.galleryListRef = ref}>
         {rows && rows.map((galleryItem, index) => {
@@ -59,12 +68,19 @@ class GalleryViewList extends React.Component {
               imageColumn={imageColumn}
               getRow={this.props.getRow}
               table={this.props.table}
-              getRowCommentCount={this.props.getRowCommentCount}
               selectedGalleryView={this.props.selectedGalleryView}
               width={galleryItemWidth}
               itemMarginRightNone={(index + 1) % galleryItemNumber === 0 ? true : false}
-              optionsList={this.props.optionsList}
-              singleSelectColumns={this.props.singleSelectColumns}
+              currentColumns={this.props.currentColumns}
+              settings={this.props.settings}
+              selectedView={this.props.selectedView}
+              getLinkCellValue={this.props.getLinkCellValue}
+              getRowsByID={this.props.getRowsByID}
+              getTableById={this.props.getTableById}
+              collaborators={this.props.collaborators}
+              getUserCommonInfo={this.props.getUserCommonInfo}
+              getMediaUrl={this.props.getMediaUrl}
+              CellType={this.props.CellType}
             />
           );
         })}

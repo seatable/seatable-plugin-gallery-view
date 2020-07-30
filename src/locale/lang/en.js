@@ -11,7 +11,9 @@ const en = {
   "View": "View",
   "Name_Column": "Name Column",
   "No_options": "No options",
-  "Unnamed_record": "Unnamed record"
+  "Unnamed_record": "Unnamed record",
+  "Choose_fields": "Choose fields",
+  "Choose_all": "Choose all"
 };
 
 export default en; 

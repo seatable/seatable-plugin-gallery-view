@@ -6,7 +6,7 @@
 
 .gallery-list .gallery-item {
   min-width: 220px;
-  height: 234px;
+  /* height: 234px; */
   border-radius: 4px;
   border: 1px solid #dedede;
   margin-right: 8px;
@@ -14,6 +14,8 @@
   margin-top: 16px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   position: relative;
+  max-height: 350px;
+  overflow: auto;
 }
 
 .gallery-list .gallery-item:hover {
@@ -91,4 +93,24 @@
   right: 16px;
   cursor: pointer;
   z-index: 4;
+}
+
+.gallery-row-content .gallery-editor-container {
+  margin-top: 7px;
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+}
+
+.gallery-text-editor {
+  font-size: 14px;
+}
+
+.gallery-formula-container {
+  text-align: left!important;
+}
+
+.gallery-row-content .gallery-link-container {
+  line-height: 1.5;
+  display: flex;
 }

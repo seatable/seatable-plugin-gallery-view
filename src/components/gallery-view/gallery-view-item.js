@@ -3,16 +3,26 @@ import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
-import { SingleSelectFormatter } from 'dtable-ui-component';
+import EditorFormatter from '../formatter/editor-formatter';
+
 const propTypes = {
   galleryItem: PropTypes.object,
   imageColumn: PropTypes.object,
   getRow: PropTypes.func,
   table: PropTypes.object,
-  getRowCommentCount: PropTypes.func,
   selectedGalleryView: PropTypes.object,
   width: PropTypes.number,
-  itemMarginRightNone: PropTypes.bool
+  itemMarginRightNone: PropTypes.bool,
+  settings: PropTypes.object,
+  currentColumns: PropTypes.array,
+  selectedView: PropTypes.object,
+  getLinkCellValue: PropTypes.func,
+  getRowsByID: PropTypes.func,
+  getTableById: PropTypes.func,
+  collaborators: PropTypes.array,
+  getUserCommonInfo: PropTypes.func,
+  getMediaUrl: PropTypes.func,
+  CellType: PropTypes.object,
 };
 
 class GalleryViewItem extends React.Component {
@@ -69,50 +79,48 @@ class GalleryViewItem extends React.Component {
     window.app.expandRow(row, table);
   }
 
-  renderOptionList = () => {
-    const { galleryItem, table, singleSelectColumns } = this.props;
-    let row = this.props.getRow(table, galleryItem._id);
-    let optionsList = [];
-    let optionDataList = [];
-    let optionFormatterList = [];
-    if (Array.isArray(singleSelectColumns) && singleSelectColumns.length > 0) {
-      singleSelectColumns.forEach(item => {
-        optionsList.push(...item.data.options);
-        optionDataList.push(row[item.key]);
+  getFilteredColumns = () => {
+    const { settings, currentColumns } = this.props;
+    const { is_show_row_item } = settings;
+    let filteredColumns = [];
+    if (is_show_row_item) {
+      filteredColumns = currentColumns.filter(item => {
+        return is_show_row_item[item.name];
       })
-
-      optionDataList.forEach(optionID => {
-        let formatter;
-        if (optionID) {
-          formatter = optionsList.find(option => optionID === option.id);
-          if (formatter) {
-            optionFormatterList.push(optionID);
-          } else {
-            optionFormatterList.push(false);
-          }
-          return;
-        }
-        optionFormatterList.push(false);
-      });
-      return (
-        <div className="formatter-container">
-          {optionFormatterList.map((item, index) => {
-            if (item) return <SingleSelectFormatter key={`singleselect${index}`} options={optionsList} value={item} fontSize={12} />;
-            return null;
-          })}
-          {optionFormatterList.every(item => !item) && <span className="row-cell-empty d-inline-block"></span>}
-        </div>
-      )
     }
-    return <span className="row-cell-empty d-inline-block"></span>;
+    return filteredColumns;
+  }
+
+  renderEditorFormatter = () => {
+    let { galleryItem, table } = this.props;
+    let filteredColumns = this.getFilteredColumns();
+    let row = this.props.getRow(table, galleryItem._id);
+    return filteredColumns.map((column, index) => {
+      if (column.key === '0000') {
+        let rowName = row['0000'] ? row['0000'] : intl.get('Unnamed_record');
+        return <div key={`row-title-${index}`} className="row-title" onClick={this.onRowExpand}>{rowName}</div>
+      } else {
+        return (<EditorFormatter
+          key={`editor-formatter-${index}`}
+          column={column}
+          selectedView={this.props.selectedView}
+          row={row}
+          table={table}
+          getLinkCellValue={this.props.getLinkCellValue}
+          getRowsByID={this.props.getRowsByID}
+          getTableById={this.props.getTableById}
+          collaborators={this.props.collaborators}
+          getUserCommonInfo={this.props.getUserCommonInfo}
+          getMediaUrl={this.props.getMediaUrl}
+          CellType={this.props.CellType}
+        />);
+      }
+    })
   }
 
   render() {
     let { images, largeImageIndex } = this.state;
-    let { galleryItem, imageColumn, itemMarginRightNone, table} = this.props;
-    let row = this.props.getRow(table, galleryItem._id);
-    let rowName = row['0000'] ? row['0000'] : intl.get('Unnamed_record');
-    let optionList = this.renderOptionList();
+    let { galleryItem, imageColumn, itemMarginRightNone} = this.props;
     let itemImage;
     let imageNumber = 0;
     if (imageColumn) {
@@ -141,8 +149,7 @@ class GalleryViewItem extends React.Component {
           {itemImage}
         </div>
         <div className="text-truncate gallery-row-content">
-          <div className="row-title" onClick={this.onRowExpand}>{rowName}</div>
-          {optionList}
+          {this.renderEditorFormatter()}
         </div>
         {this.state.isShowLargeImage && 
           <ImagePreviewerLightbox 

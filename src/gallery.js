@@ -16,7 +16,16 @@ const propTypes = {
   onInsertRow: PropTypes.func,
   isShowAllRowList: PropTypes.bool,
   onAddGalleryRowList: PropTypes.func,
-  getRowCommentCount: PropTypes.func,
+  onAddGalleryItem: PropTypes.func,
+  settings: PropTypes.object,
+  currentColumns: PropTypes.array,
+  getLinkCellValue: PropTypes.func,
+  getRowsByID: PropTypes.func,
+  getTableById: PropTypes.func,
+  collaborators: PropTypes.array,
+  getUserCommonInfo: PropTypes.func,
+  getMediaUrl: PropTypes.func,
+  CellType: PropTypes.object,
 };
 
 class Gallery extends React.Component {
@@ -31,7 +40,7 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { imageColumns, singleSelectColumns} = this.props;
+    const { imageColumns} = this.props;
     let imageColumn;
     if (imageColumns && imageColumns.length > 0) {
       imageColumn = imageColumns[0];
@@ -45,9 +54,17 @@ class Gallery extends React.Component {
             imageColumn={imageColumn}
             getRow={this.props.getRow}
             table={this.props.table}
-            getRowCommentCount={this.props.getRowCommentCount}
             selectedGalleryView={this.props.selectedGalleryView}
-            singleSelectColumns={singleSelectColumns}
+            settings={this.props.settings}
+            currentColumns={this.props.currentColumns}
+            selectedView={this.props.selectedView}
+            getLinkCellValue={this.props.getLinkCellValue}
+            getRowsByID={this.props.getRowsByID}
+            getTableById={this.props.getTableById}
+            collaborators={this.props.collaborators}
+            getUserCommonInfo={this.props.getUserCommonInfo}
+            getMediaUrl={this.props.getMediaUrl}
+            CellType={this.props.CellType}
           />
           <AddGalleryItem 
             table={this.props.table}
