@@ -12,7 +12,9 @@ const zh_CN = {
   "View": "视图",
   "Name_Column": "名称字段",
   "No_options": "没有选择",
-  "Unnamed_record": "未命名行"
+  "Unnamed_record": "未命名行",
+  "Choose_fields": "选择字段",
+  "Choose_all": "选择全部"
 };
 
 export default zh_CN; 

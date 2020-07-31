@@ -5,8 +5,8 @@
   "dependencies": {
     "@seafile/react-image-lightbox": "0.0.5",
     "classnames": "^2.2.6",
-    "dtable-sdk": "0.0.35",
-    "dtable-ui-component": "^0.1.5",
+    "dtable-sdk": "0.0.42",
+    "dtable-ui-component": "^0.1.7",
     "jszip": "^3.2.2",
     "moment": "^2.24.0",
     "react": "^16.12.0",
