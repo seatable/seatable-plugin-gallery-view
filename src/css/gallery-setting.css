@@ -60,7 +60,7 @@
   cursor: pointer;
 }
 
-.gallery-setting-item {
+.fields-setting-body .gallery-setting-item {
   position: relative;
   font-size: 14px;
   height: 30px;
@@ -71,6 +71,10 @@
   display: flex;
   padding-left: 10px;
   cursor: pointer;
+}
+
+.gallery-setting-item .gallery-column-switch:hover { 
+  background: #f0f0f0;
 }
 
 .gallery-setting-item .gallery-column-switch .custom-switch {

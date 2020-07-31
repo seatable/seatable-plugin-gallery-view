@@ -367,10 +367,9 @@ class App extends React.Component {
     let { settings } = selectedGalleryView || {};
     let tables = this.dtable.getTables();
     let selectedTable = this.getSelectedTable(tables, settings);
-    let { name: tableName } = selectedTable || {};
+    let { name: tableName, columns: currentColumns } = selectedTable || {};
     let views = this.dtable.getViews(selectedTable);
     let selectedView = this.getSelectedView(selectedTable, settings) || views[0];   
-    let currentColumns = selectedTable.columns;
     let { name: viewName } = selectedView;
     let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
     let rows = this.getRows(tableName, viewName, settings);
