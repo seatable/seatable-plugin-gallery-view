@@ -13,7 +13,10 @@ const en = {
   "No_options": "No options",
   "Unnamed_record": "Unnamed record",
   "Choose_fields": "Choose fields",
-  "Choose_all": "Choose all"
+  "Choose_all": "Choose all",
+  "Image_fields": "Image fields",
+  "Title_fields": "Title fields",
+  "Other_fields": "Other fields"
 };
 
 export default en; 

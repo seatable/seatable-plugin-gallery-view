@@ -66,7 +66,7 @@ class EditorFormatter extends React.Component {
     }
 
     if (!isValidEmail(value)) {
-      let mediaUrl = this.props.getMediaUrl
+      let mediaUrl = this.props.getMediaUrl();
       let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
       collaborator = {
         name: value,

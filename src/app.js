@@ -159,6 +159,22 @@ class App extends React.Component {
     }
   }
 
+  initGallerySetting = (settings = {}) => {
+    let initUpdated = {};
+    let CellType = this.dtable.getCellType();
+    let tables = this.dtable.getTables();
+    let selectedTable = this.getSelectedTable(tables, settings);
+    let titleColumn = selectedTable.columns.find(column => column.key === '0000');
+    let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
+    let imageColumn = null;
+    if (imageColumns && imageColumns.length > 0) {
+      imageColumn = imageColumns[0];
+    }
+    let imageName = imageColumn ? imageColumn.name : null;
+    initUpdated = Object.assign({}, {is_show_row_image: imageName}, {is_show_row_title: titleColumn.name});
+    return initUpdated;
+  }
+
   onAddView = (viewName) => {
     let { plugin_settings } = this.state;
     let { views: updatedViews } = plugin_settings;
@@ -168,6 +184,8 @@ class App extends React.Component {
     updatedViews.push(newView);
     let { settings } = updatedViews[selectedViewIdx];
     let isShowGallerySetting = !this.isValidViewSettings(settings);
+    let initUpdated = this.initGallerySetting();
+    updatedViews[selectedViewIdx].settings  = Object.assign({}, initUpdated);
     plugin_settings.views = updatedViews;
     this.setState({
       plugin_settings,
@@ -221,7 +239,8 @@ class App extends React.Component {
     if (!type) {
       updatedSettings = Object.assign({}, updatedSettings, updated);
     } else {
-      updatedSettings = Object.assign({}, updated);
+      const initUpdated = this.initGallerySetting(updated)
+      updatedSettings = Object.assign({}, updated, {is_show_row_item: initUpdated});
     }
     updatedView.settings = updatedSettings;
     updatedViews[selectedViewIdx] = updatedView;
@@ -434,6 +453,7 @@ class App extends React.Component {
               onModifyGallerySettings={this.onModifyGallerySettings}
               onHideGallerySetting={this.onHideGallerySetting}
               currentColumns={currentColumns}
+              imageColumns={imageColumns}
             />
           }
         </ModalBody>

@@ -4,6 +4,9 @@ import intl from 'react-intl-universal';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
+import { formatNumberToString } from '../../utils/value-format-utils';
+import { isValidEmail } from '../../utils/utils';
+import moment from 'moment';
 
 const propTypes = {
   galleryItem: PropTypes.object,
@@ -25,6 +28,8 @@ const propTypes = {
   CellType: PropTypes.object,
 };
 
+const CREATOR = 'creator';
+
 class GalleryViewItem extends React.Component {
 
   constructor(props) {
@@ -33,8 +38,79 @@ class GalleryViewItem extends React.Component {
       isShowLargeImage: false,
       canOpenImage: false,
       largeImageIndex: '',
-      images: []
+      images: [], 
+      isDataLoaded: false, 
+      creatorCollaborator: null,
+      lastModifierCollaborator: null,
+      isCreatorLoaded: false,
+      isDataLoaded: false,
+      collaborator: null
     };
+  }
+
+  componentDidMount() {
+    const { galleryItem, table } = this.props;
+    let row = this.props.getRow(table, galleryItem._id);
+    this.getCollaborator(row._creator, CREATOR);
+    this.getCollaborator(row._last_modifier);
+  }
+
+   getCollaborator = (value, type) => {
+    if (!value) {
+      if (type === CREATOR) {
+        this.setState({isCreatorLoaded: true, creatorCollaborator: null})
+      } else {
+        this.setState({isDataLoaded: true, lastModifierCollaborator: null})
+      }
+      return;
+    }
+    let { collaborators } = this.props;
+    let collaborator = collaborators && collaborators.find(c => c.email === value);
+    if (collaborator) {
+      if (type === CREATOR) {
+        this.setState({isCreatorLoaded: true, creatorCollaborator: collaborator})
+      } else {
+        this.setState({isDataLoaded: true, lastModifierCollaborator: collaborator})
+      }
+      return;
+    }
+
+    if (!isValidEmail(value)) {
+      let mediaUrl = this.props.getMediaUrl();
+
+      let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
+      collaborator = {
+        name: value,
+        avatar_url: defaultAvatarUrl,
+      };
+      if (type === CREATOR) {
+        this.setState({isCreatorLoaded: true, creatorCollaborator: collaborator})
+      } else {
+        this.setState({isDataLoaded: true, lastModifierCollaborator: collaborator})
+      }
+      return;
+    }
+
+    this.props.getUserCommonInfo(value).then(res => {
+      collaborator = res.data;
+      if (type === CREATOR) {
+        this.setState({isCreatorLoaded: true, creatorCollaborator: collaborator})
+      } else {
+        this.setState({isDataLoaded: true, lastModifierCollaborator: collaborator})
+      }
+    }).catch(() => {
+      let mediaUrl = this.props.getMediaUrl();
+      let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
+      collaborator = {
+        name: value,
+        avatar_url: defaultAvatarUrl,
+      };
+      if (type === CREATOR) {
+        this.setState({isCreatorLoaded: true, creatorCollaborator: collaborator})
+      } else {
+        this.setState({isDataLoaded: true, lastModifierCollaborator: collaborator})
+      }
+    });
   }
 
   onImageClick = (e, index) => {
@@ -79,13 +155,40 @@ class GalleryViewItem extends React.Component {
     window.app.expandRow(row, table);
   }
 
+  getGalleryImageColumn = () => {
+    const { settings, currentColumns } = this.props;
+    const { is_show_row_image } = settings;
+    let imageColumn;
+    if (!is_show_row_image) {
+      imageColumn = currentColumns.find(column => column.type === 'image');
+    } else {
+      imageColumn = currentColumns.find(column => column.name === is_show_row_image);
+    }
+    return imageColumn;
+  }
+
+  getGalleryTitleColumn = () => {
+    const { settings, currentColumns } = this.props;
+    const { is_show_row_title } = settings;
+    let titleColumn;
+    if (!is_show_row_title) {
+      titleColumn = currentColumns.find(column => column.key === '0000');
+    } else {
+      titleColumn = currentColumns.find(column => column.name === is_show_row_title);
+    }
+    if (!titleColumn) {
+      titleColumn = currentColumns.find(column => column.key === '0000');
+    }
+    return titleColumn;
+  }
+
   getFilteredColumns = () => {
     const { settings, currentColumns } = this.props;
     const { is_show_row_item } = settings;
     let filteredColumns = [];
     if (is_show_row_item) {
       filteredColumns = currentColumns.filter(item => {
-        return is_show_row_item[item.name];
+        return is_show_row_item[item.name] && item.key !== '0000';
       })
     }
     return filteredColumns;
@@ -96,35 +199,140 @@ class GalleryViewItem extends React.Component {
     let filteredColumns = this.getFilteredColumns();
     let row = this.props.getRow(table, galleryItem._id);
     return filteredColumns.map((column, index) => {
-      if (column.key === '0000') {
-        let rowName = row['0000'] ? row['0000'] : intl.get('Unnamed_record');
-        return <div key={`row-title-${index}`} className="row-title" onClick={this.onRowExpand}>{rowName}</div>
-      } else {
-        return (<EditorFormatter
-          key={`editor-formatter-${index}`}
-          column={column}
-          selectedView={this.props.selectedView}
-          row={row}
-          table={table}
-          getLinkCellValue={this.props.getLinkCellValue}
-          getRowsByID={this.props.getRowsByID}
-          getTableById={this.props.getTableById}
-          collaborators={this.props.collaborators}
-          getUserCommonInfo={this.props.getUserCommonInfo}
-          getMediaUrl={this.props.getMediaUrl}
-          CellType={this.props.CellType}
-        />);
-      }
+      return (<EditorFormatter
+        key={`editor-formatter-${index}`}
+        column={column}
+        selectedView={this.props.selectedView}
+        row={row}
+        table={table}
+        getLinkCellValue={this.props.getLinkCellValue}
+        getRowsByID={this.props.getRowsByID}
+        getTableById={this.props.getTableById}
+        collaborators={this.props.collaborators}
+        getUserCommonInfo={this.props.getUserCommonInfo}
+        getMediaUrl={this.props.getMediaUrl}
+        CellType={this.props.CellType}
+      />);
     })
+  }
+
+  renderRowTitle = () => {
+    let titleValue = this.getTitleValue();
+    if (!titleValue) titleValue = intl.get('Unnamed_record');
+    return <div className="row-title" onClick={this.onRowExpand}>{titleValue}</div>
+  }
+
+  getTitleValue = () => {
+    let titleColumn = this.getGalleryTitleColumn();
+    const { collaborators, CellType, galleryItem, table } = this.props;
+    let {type: columnType, key: columnKey} = titleColumn;
+    let row = this.props.getRow(table, galleryItem._id);
+    let titleValue = '';
+    switch(columnType) {
+      case CellType.TEXT: {
+        titleValue = row[columnKey];
+        break;
+      }
+      case CellType.COLLABORATOR: {
+        let value = row[columnKey];
+        if (!Array.isArray(row[columnKey])) {
+          value = [row[columnKey]];
+        }
+        if (value) {
+          value.forEach(email => {
+            let collaborator = collaborators.find(collaborator => collaborator.email === email);
+            if (collaborator) {
+              titleValue += `${collaborator.name} `;
+            }
+          });
+        }
+        break;
+      }
+      case CellType.GEOLOCATION : {
+        let value=row[columnKey];
+        if (value) {
+          titleValue = `${value.province || ''} ${value.city || ''} ${value.district || ''} ${value.detail || ''}`;
+        }
+        break;
+      }
+      case CellType.NUMBER: {
+        if (row[columnKey]) {
+          titleValue = formatNumberToString(row[columnKey], titleColumn.data.format);
+        }
+        break;
+      }
+      case CellType.DATE: {
+        titleValue = row[columnKey];
+        break;
+      }
+      case CellType.MULTIPLE_SELECT: {
+        let value = row[columnKey];
+        if (value) {
+          let options = titleColumn.data.options;
+          value.forEach(optionID => {
+            let option = options.find(item => item.id === optionID);
+            if (option) {
+              titleValue += `${option.name} `;
+            }
+          });
+        }
+        break;
+      }
+      case CellType.SINGLE_SELECT: {
+        let value = row[columnKey];
+        if (value) {
+          let options = titleColumn.data.options
+          let option  = options.find(item => item.id === value);
+          titleValue = option.name;
+        }
+        break;
+      }
+      case CellType.CTIME: {
+        if (row._ctime) {
+          titleValue = moment(row._ctime).format('YYYY-MM-DD HH:mm:ss');       
+        }
+        break;
+      }
+      case CellType.MTIME: {
+        if (row._mtime) {
+          titleValue = moment(row._mtime).format('YYYY-MM-DD HH:mm:ss');        
+        }
+        break;
+      }
+      case CellType.CREATOR: {
+        if (this.state.isCreatorLoaded) {
+          if (this.state.creatorCollaborator) {
+            titleValue = this.state.creatorCollaborator.name;
+          }
+        }
+        break;
+      }
+      case CellType.LAST_MODIFIER: {
+        if (this.state.isDataLoaded) {
+          titleValue = this.state.lastModifierCollaborator.name;
+        }
+        break;
+      }
+      case CellType.FORMULA: {
+        let formulaRows = this.props.selectedView.formula_rows;
+        let formulaValue = formulaRows ? formulaRows[row._id][columnKey] : '';
+        titleValue = Object.prototype.toString.call(formulaValue) === '[object Boolean]' ? '' : formulaValue;
+        break;
+      }
+      default:
+        return null;
+    }
+    return titleValue;
   }
 
   render() {
     let { images, largeImageIndex } = this.state;
-    let { galleryItem, imageColumn, itemMarginRightNone} = this.props;
+    let { galleryItem, itemMarginRightNone } = this.props;
+    let selectedImageColumn = this.getGalleryImageColumn();
     let itemImage;
     let imageNumber = 0;
-    if (imageColumn) {
-      let imageColumnName = imageColumn.name;
+    if (selectedImageColumn) {
+      let imageColumnName = selectedImageColumn.name;
       if (galleryItem[imageColumnName] && galleryItem[imageColumnName].length > 0) {
         imageNumber = galleryItem[imageColumnName].length;
         itemImage = <ImageLazyLoad imageUrl={galleryItem[imageColumnName][0]} onImageClick={this.onImageClick} />
@@ -149,6 +357,7 @@ class GalleryViewItem extends React.Component {
           {itemImage}
         </div>
         <div className="text-truncate gallery-row-content">
+          {this.renderRowTitle()}
           {this.renderEditorFormatter()}
         </div>
         {this.state.isShowLargeImage && 

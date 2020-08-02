@@ -60,6 +60,11 @@
   cursor: pointer;
 }
 
+.fields-setting-body .fields-setting-list {
+  font-size: 12px;
+  margin-top: 5px;
+}
+
 .fields-setting-body .gallery-setting-item {
   position: relative;
   font-size: 14px;

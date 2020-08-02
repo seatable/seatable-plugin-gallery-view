@@ -14,7 +14,10 @@ const zh_CN = {
   "No_options": "没有选择",
   "Unnamed_record": "未命名行",
   "Choose_fields": "选择字段",
-  "Choose_all": "选择全部"
+  "Choose_all": "选择全部",
+  "Image_fields": "图片字段",
+  "Title_fields": "标题字段",
+  "Other_fields": "其他字段"
 };
 
 export default zh_CN; 

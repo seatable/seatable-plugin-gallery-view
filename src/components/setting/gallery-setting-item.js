@@ -69,4 +69,4 @@ class GallerySettingItem extends React.Component {
 
 GallerySettingItem.propTypes = propTypes;
 
-export default GallerySettingItem;
+export default GallerySettingItem; 
