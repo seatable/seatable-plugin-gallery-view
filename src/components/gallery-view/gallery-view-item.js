@@ -43,7 +43,6 @@ class GalleryViewItem extends React.Component {
       creatorCollaborator: null,
       lastModifierCollaborator: null,
       isCreatorLoaded: false,
-      isDataLoaded: false,
       collaborator: null
     };
   }

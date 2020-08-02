@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import PluginSelect from './plugin-select';
-import { SETTING_KEY, zIndexes } from '../constants';
+import { SETTING_KEY, zIndexes, CELL_TYPE } from '../constants';
 import GallerySettingItem from './setting/gallery-setting-item';
 import '../locale';
 
@@ -19,8 +19,9 @@ const propTypes = {
   onHideGallerySetting: PropTypes.func,
 };
 
-const SHOW_TITLE_SELECT = ['text', 'single-select', 'multiple-select', 'number', 'formula', 'date', 'collaborator',
-'geolocation', 'ctime', 'mtime', 'creator', 'last-modifier']
+const SHOW_TITLE_SELECT = [CELL_TYPE.TEXT, CELL_TYPE.SINGLE_SELECT, CELL_TYPE.MULTIPLE_SELECT, CELL_TYPE.NUMBER, CELL_TYPE.FORMULA,
+  CELL_TYPE.DATE, CELL_TYPE.COLLABORATOR, CELL_TYPE.GEOLOCATION, CELL_TYPE.CTIME, CELL_TYPE.MTIME, CELL_TYPE.CREATOR, 
+  CELL_TYPE.LAST_MODIFIER];
 
 class GallerySetting extends React.Component {
 
@@ -70,14 +71,6 @@ class GallerySetting extends React.Component {
     this.props.onModifyGallerySettings(updated);
   }
 
-  onShowImageClick = (column, value) => {
-    let columnName = column.name;
-    let { settings } = this.props;
-    let imageItemUpdated = {[columnName]: value};
-    let updated =  Object.assign({}, settings, {is_show_row_image: imageItemUpdated});
-    this.props.onModifyGallerySettings(updated);
-  }
-
   onChooseAllColumns = () => {
     const { settings } = this.props;
     let itemUpdated = {};
@@ -89,18 +82,16 @@ class GallerySetting extends React.Component {
     this.props.onModifyGallerySettings(updated);
   }
 
-  getColumns = () => {
+  getFilteredColumns = () => {
     let { currentColumns } = this.props;
-    let titleColumn = []; let filteredColumns = [];
+    let filteredColumns = [];
     currentColumns.forEach(column => {
-      if (column.key === '0000') {
-        titleColumn.push(column);
-      } else {
+      if (column.key !== '0000') {
         filteredColumns.push(column);
       }
     });
 
-    return { titleColumn, filteredColumns };
+    return filteredColumns;
   }
 
   getTitleColumns = () => {
@@ -114,15 +105,7 @@ class GallerySetting extends React.Component {
     return titleColumns;
   }
 
-  onShowRowTitle = (column, value) => {
-    let columnName = column.name;
-    let { settings } = this.props;
-    let imageItemUpdated = {[columnName]: value};
-    let updated =  Object.assign({}, settings, {is_show_row_title: imageItemUpdated});
-    this.props.onModifyGallerySettings(updated);
-  }
-
-  onModifyImageSettings = (selectedOption) => {
+  onModifyFieldsSettings = (selectedOption) => {
     let { settings } = this.props;
     let { value, setting_key } = selectedOption;
     let updated = Object.assign({}, settings, {[setting_key]: value});
@@ -143,13 +126,13 @@ class GallerySetting extends React.Component {
     return <PluginSelect
       value={selectedOption}
       options={options}
-      onChange={this.onModifyImageSettings}
+      onChange={this.onModifyFieldsSettings}
     />
   }
 
   render() {
     let { tables, views, onHideGallerySetting, settings, imageColumns } = this.props;
-    let { filteredColumns } = this.getColumns();
+    let filteredColumns = this.getFilteredColumns();
     let titleColumns = this.getTitleColumns();
     return (
       <div className="plugin-gallery-setting position-absolute" style={{zIndex: zIndexes.GALLERY_SETTING}} ref={ref => this.GallerySetting = ref}>

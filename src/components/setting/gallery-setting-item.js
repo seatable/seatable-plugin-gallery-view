@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Switch from './switch';
-import { CELL_ICON } from '../../constants/cell-contants';
+import { CELL_ICON } from '../../constants/cell-constants';
 
 const propTypes = {
   column: PropTypes.object.isRequired,
