@@ -163,7 +163,7 @@ class GallerySetting extends React.Component {
               </div>
               <div className="setting-item fields-setting">
                 <div className="fields-setting-header">
-                  <span>{intl.get('Choose_fields')}</span>
+                  <span>{intl.get('Other_fields')}</span>
                   <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Choose_all')}</span>
                 </div>
                 <div className="fields-setting-body">
@@ -173,7 +173,7 @@ class GallerySetting extends React.Component {
                           key={`gallery-setting-item${index}`}
                           column={column}
                           onColumnItemClick={this.onColumnItemClick}
-                          settings={settings.is_show_row_item || {}}
+                          settings={settings}
                         />
                       );
                     })}

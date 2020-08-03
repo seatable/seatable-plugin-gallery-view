@@ -240,7 +240,7 @@ class App extends React.Component {
       updatedSettings = Object.assign({}, updatedSettings, updated);
     } else {
       const initUpdated = this.initGallerySetting(updated)
-      updatedSettings = Object.assign({}, updated, {is_show_row_item: initUpdated});
+      updatedSettings = Object.assign({}, updated, initUpdated);
     }
     updatedView.settings = updatedSettings;
     updatedViews[selectedViewIdx] = updatedView;
