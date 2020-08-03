@@ -74,7 +74,7 @@ class GallerySetting extends React.Component {
   onChooseAllColumns = () => {
     const { settings } = this.props;
     let itemUpdated = {};
-    let { filteredColumns } = this.getColumns();
+    let filteredColumns = this.getFilteredColumns();
     filteredColumns.forEach(column => {
       itemUpdated[column.name] = true;
     })
