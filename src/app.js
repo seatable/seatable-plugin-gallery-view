@@ -161,15 +161,10 @@ class App extends React.Component {
 
   initGallerySetting = (settings = {}) => {
     let initUpdated = {};
-    let CellType = this.dtable.getCellType();
     let tables = this.dtable.getTables();
     let selectedTable = this.getSelectedTable(tables, settings);
     let titleColumn = selectedTable.columns.find(column => column.key === '0000');
-    let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
-    let imageColumn = null;
-    if (imageColumns && imageColumns.length > 0) {
-      imageColumn = imageColumns[0];
-    }
+    let imageColumn = selectedTable.columns.find(column => column.type === 'image');
     let imageName = imageColumn ? imageColumn.name : null;
     initUpdated = Object.assign({}, {shown_image_name: imageName}, {shown_title_name: titleColumn.name});
     return initUpdated;
@@ -403,7 +398,6 @@ class App extends React.Component {
         return index < itemShowRowLength;
       })
     }
-    console.log(settings)
     return (
       <Modal isOpen={showDialog} toggle={this.onPluginToggle} className="dtable-plugin plugin-container" contentClassName="gallery-view-content" zIndex={GALLERY_DIALOG_MODAL} size="lg">
         <ModalHeader className="plugin-header" close={this.renderBtnGroups()}>

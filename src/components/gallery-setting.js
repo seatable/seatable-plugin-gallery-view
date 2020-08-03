@@ -11,9 +11,9 @@ import '../css/gallery-setting.css';
 const propTypes = {
   tables: PropTypes.array,
   views: PropTypes.array,
-  userColumns: PropTypes.array,
-  dateColumns: PropTypes.array,
   currentColumns: PropTypes.array,
+  imageColumns: PropTypes.array,
+  selectedTable: PropTypes.object,
   settings: PropTypes.object,
   onModifyGallerySettings: PropTypes.func,
   onHideGallerySetting: PropTypes.func,
