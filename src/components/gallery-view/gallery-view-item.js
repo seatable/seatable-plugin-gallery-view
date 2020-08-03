@@ -3,9 +3,6 @@ import PropTypes from 'prop-types';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
-import { formatNumberToString } from '../../utils/value-format-utils';
-import { isValidEmail } from '../../utils/utils';
-import moment from 'moment';
 
 const propTypes = {
   galleryItem: PropTypes.object,
@@ -27,8 +24,6 @@ const propTypes = {
   CellType: PropTypes.object,
 };
 
-const CREATOR = 'creator';
-
 class GalleryViewItem extends React.Component {
 
   constructor(props) {
@@ -38,77 +33,7 @@ class GalleryViewItem extends React.Component {
       canOpenImage: false,
       largeImageIndex: '',
       images: [], 
-      isDataLoaded: false, 
-      creatorCollaborator: null,
-      lastModifierCollaborator: null,
-      isCreatorLoaded: false,
-      collaborator: null
     };
-  }
-
-  componentDidMount() {
-    const { galleryItem, table } = this.props;
-    let row = this.props.getRow(table, galleryItem._id);
-    this.getCollaborator(row._creator, CREATOR);
-    this.getCollaborator(row._last_modifier);
-  }
-
-   getCollaborator = (value, type) => {
-    if (!value) {
-      if (type === CREATOR) {
-        this.setState({isCreatorLoaded: true, creatorCollaborator: null})
-      } else {
-        this.setState({isDataLoaded: true, lastModifierCollaborator: null})
-      }
-      return;
-    }
-    let { collaborators } = this.props;
-    let collaborator = collaborators && collaborators.find(c => c.email === value);
-    if (collaborator) {
-      if (type === CREATOR) {
-        this.setState({isCreatorLoaded: true, creatorCollaborator: collaborator})
-      } else {
-        this.setState({isDataLoaded: true, lastModifierCollaborator: collaborator})
-      }
-      return;
-    }
-
-    if (!isValidEmail(value)) {
-      let mediaUrl = this.props.getMediaUrl();
-
-      let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
-      collaborator = {
-        name: value,
-        avatar_url: defaultAvatarUrl,
-      };
-      if (type === CREATOR) {
-        this.setState({isCreatorLoaded: true, creatorCollaborator: collaborator})
-      } else {
-        this.setState({isDataLoaded: true, lastModifierCollaborator: collaborator})
-      }
-      return;
-    }
-
-    this.props.getUserCommonInfo(value).then(res => {
-      collaborator = res.data;
-      if (type === CREATOR) {
-        this.setState({isCreatorLoaded: true, creatorCollaborator: collaborator})
-      } else {
-        this.setState({isDataLoaded: true, lastModifierCollaborator: collaborator})
-      }
-    }).catch(() => {
-      let mediaUrl = this.props.getMediaUrl();
-      let defaultAvatarUrl = `${mediaUrl}/avatars/default.png`;
-      collaborator = {
-        name: value,
-        avatar_url: defaultAvatarUrl,
-      };
-      if (type === CREATOR) {
-        this.setState({isCreatorLoaded: true, creatorCollaborator: collaborator})
-      } else {
-        this.setState({isDataLoaded: true, lastModifierCollaborator: collaborator})
-      }
-    });
   }
 
   onImageClick = (e, index) => {
@@ -239,109 +164,6 @@ class GalleryViewItem extends React.Component {
     </div>);
   }
 
-  getTitleValue = () => {
-    let titleColumn = this.getGalleryTitleColumn();
-    const { collaborators, CellType, galleryItem, table } = this.props;
-    let {type: columnType, key: columnKey} = titleColumn;
-    let row = this.props.getRow(table, galleryItem._id);
-    let titleValue = '';
-    switch(columnType) {
-      case CellType.TEXT: {
-        titleValue = row[columnKey];
-        break;
-      }
-      case CellType.COLLABORATOR: {
-        let value = row[columnKey];
-        if (!Array.isArray(row[columnKey])) {
-          value = [row[columnKey]];
-        }
-        if (value) {
-          value.forEach(email => {
-            let collaborator = collaborators.find(collaborator => collaborator.email === email);
-            if (collaborator) {
-              titleValue += `${collaborator.name} `;
-            }
-          });
-        }
-        break;
-      }
-      case CellType.GEOLOCATION : {
-        let value=row[columnKey];
-        if (value) {
-          titleValue = `${value.province || ''} ${value.city || ''} ${value.district || ''} ${value.detail || ''}`;
-        }
-        break;
-      }
-      case CellType.NUMBER: {
-        if (row[columnKey]) {
-          titleValue = formatNumberToString(row[columnKey], titleColumn.data.format);
-        }
-        break;
-      }
-      case CellType.DATE: {
-        titleValue = row[columnKey];
-        break;
-      }
-      case CellType.MULTIPLE_SELECT: {
-        let value = row[columnKey];
-        if (value) {
-          let options = titleColumn.data.options;
-          value.forEach(optionID => {
-            let option = options.find(item => item.id === optionID);
-            if (option) {
-              titleValue += `${option.name} `;
-            }
-          });
-        }
-        break;
-      }
-      case CellType.SINGLE_SELECT: {
-        let value = row[columnKey];
-        if (value) {
-          let options = titleColumn.data.options
-          let option  = options.find(item => item.id === value);
-          titleValue = option.name;
-        }
-        break;
-      }
-      case CellType.CTIME: {
-        if (row._ctime) {
-          titleValue = moment(row._ctime).format('YYYY-MM-DD HH:mm:ss');       
-        }
-        break;
-      }
-      case CellType.MTIME: {
-        if (row._mtime) {
-          titleValue = moment(row._mtime).format('YYYY-MM-DD HH:mm:ss');        
-        }
-        break;
-      }
-      case CellType.CREATOR: {
-        if (this.state.isCreatorLoaded) {
-          if (this.state.creatorCollaborator) {
-            titleValue = this.state.creatorCollaborator.name;
-          }
-        }
-        break;
-      }
-      case CellType.LAST_MODIFIER: {
-        if (this.state.isDataLoaded) {
-          titleValue = this.state.lastModifierCollaborator.name;
-        }
-        break;
-      }
-      case CellType.FORMULA: {
-        let formulaRows = this.props.selectedView.formula_rows;
-        let formulaValue = formulaRows ? formulaRows[row._id][columnKey] : '';
-        titleValue = Object.prototype.toString.call(formulaValue) === '[object Boolean]' ? '' : formulaValue;
-        break;
-      }
-      default:
-        return null;
-    }
-    return titleValue;
-  }
-
   render() {
     let { images, largeImageIndex } = this.state;
     let { galleryItem, itemMarginRightNone } = this.props;
@@ -377,7 +199,6 @@ class GalleryViewItem extends React.Component {
           {this.renderRowTitle()}
           <div className="gallery-formatter-list">
             {this.renderEditorFormatter()}
-
           </div>
         </div>
         {this.state.isShowLargeImage && 
