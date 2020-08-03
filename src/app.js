@@ -329,7 +329,10 @@ class App extends React.Component {
   }
 
   getUserCommonInfo = (email, avatar_size) => {
-    return this.dtable.getUserCommonInfo(email, avatar_size)
+    if (window.dtableWebAPI) {
+      return window.dtableWebAPI.getUserCommonInfo(email, avatar_size);
+    }
+    return Promise.reject();
   }
 
   storeSelectedViewId = (viewId) => {
