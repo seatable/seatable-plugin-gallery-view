@@ -171,7 +171,7 @@ class App extends React.Component {
       imageColumn = imageColumns[0];
     }
     let imageName = imageColumn ? imageColumn.name : null;
-    initUpdated = Object.assign({}, {is_show_row_image: imageName}, {is_show_row_title: titleColumn.name});
+    initUpdated = Object.assign({}, {shown_image_name: imageName}, {shown_title_name: titleColumn.name});
     return initUpdated;
   }
 
@@ -403,6 +403,7 @@ class App extends React.Component {
         return index < itemShowRowLength;
       })
     }
+    console.log(settings)
     return (
       <Modal isOpen={showDialog} toggle={this.onPluginToggle} className="dtable-plugin plugin-container" contentClassName="gallery-view-content" zIndex={GALLERY_DIALOG_MODAL} size="lg">
         <ModalHeader className="plugin-header" close={this.renderBtnGroups()}>

@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import intl from 'react-intl-universal';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
@@ -156,24 +155,24 @@ class GalleryViewItem extends React.Component {
 
   getGalleryImageColumn = () => {
     const { settings, currentColumns } = this.props;
-    const { is_show_row_image } = settings;
+    const { shown_image_name } = settings;
     let imageColumn;
-    if (!is_show_row_image) {
+    if (!shown_image_name) {
       imageColumn = currentColumns.find(column => column.type === 'image');
     } else {
-      imageColumn = currentColumns.find(column => column.name === is_show_row_image);
+      imageColumn = currentColumns.find(column => column.name === shown_image_name);
     }
     return imageColumn;
   }
 
   getGalleryTitleColumn = () => {
     const { settings, currentColumns } = this.props;
-    const { is_show_row_title } = settings;
+    const { shown_title_name } = settings;
     let titleColumn;
-    if (!is_show_row_title) {
+    if (!shown_title_name) {
       titleColumn = currentColumns.find(column => column.key === '0000');
     } else {
-      titleColumn = currentColumns.find(column => column.name === is_show_row_title);
+      titleColumn = currentColumns.find(column => column.name === shown_title_name);
     }
     if (!titleColumn) {
       titleColumn = currentColumns.find(column => column.key === '0000');
@@ -183,12 +182,13 @@ class GalleryViewItem extends React.Component {
 
   getFilteredColumns = () => {
     const { settings, currentColumns } = this.props;
-    const { is_show_row_item } = settings;
+    const { shown_column_names, shown_title_name } = settings;
     let filteredColumns = [];
-    if (is_show_row_item) {
+    if (shown_column_names) {
       filteredColumns = currentColumns.filter(item => {
-        return is_show_row_item[item.name] && item.key !== '0000';
-      })
+        return shown_column_names.some(showColumnName => {
+          return item.name === showColumnName && showColumnName !== shown_title_name });
+      }); 
     }
     return filteredColumns;
   }
@@ -198,9 +198,32 @@ class GalleryViewItem extends React.Component {
     let filteredColumns = this.getFilteredColumns();
     let row = this.props.getRow(table, galleryItem._id);
     return filteredColumns.map((column, index) => {
-      return (<EditorFormatter
-        key={`editor-formatter-${index}`}
-        column={column}
+      return (
+        <div className="gallery-editor-container">
+          <EditorFormatter
+            key={`editor-formatter-${index}`}
+            column={column}
+            selectedView={this.props.selectedView}
+            row={row}
+            table={table}
+            getLinkCellValue={this.props.getLinkCellValue}
+            getRowsByID={this.props.getRowsByID}
+            getTableById={this.props.getTableById}
+            collaborators={this.props.collaborators}
+            getUserCommonInfo={this.props.getUserCommonInfo}
+            getMediaUrl={this.props.getMediaUrl}
+            CellType={this.props.CellType}
+          /></div>);
+    })
+  }
+
+  renderRowTitle = () => {
+    let titleColumn = this.getGalleryTitleColumn();
+    const { galleryItem, table } = this.props;
+    let row = this.props.getRow(table, galleryItem._id);
+    return (<div className="row-title" onClick={this.onRowExpand}>
+      <EditorFormatter
+        column={titleColumn}
         selectedView={this.props.selectedView}
         row={row}
         table={table}
@@ -211,14 +234,9 @@ class GalleryViewItem extends React.Component {
         getUserCommonInfo={this.props.getUserCommonInfo}
         getMediaUrl={this.props.getMediaUrl}
         CellType={this.props.CellType}
-      />);
-    })
-  }
-
-  renderRowTitle = () => {
-    let titleValue = this.getTitleValue();
-    if (!titleValue) titleValue = intl.get('Unnamed_record');
-    return <div className="row-title" onClick={this.onRowExpand}>{titleValue}</div>
+        type="row_title"
+      />
+    </div>);
   }
 
   getTitleValue = () => {
@@ -357,7 +375,10 @@ class GalleryViewItem extends React.Component {
         </div>
         <div className="text-truncate gallery-row-content">
           {this.renderRowTitle()}
-          {this.renderEditorFormatter()}
+          <div className="gallery-formatter-list">
+            {this.renderEditorFormatter()}
+
+          </div>
         </div>
         {this.state.isShowLargeImage && 
           <ImagePreviewerLightbox 
