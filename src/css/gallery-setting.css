@@ -14,7 +14,13 @@
 
 .plugin-gallery-setting .setting-header-container {
   width: 100%;
+  padding: 0 10px;
+}
+
+.plugin-gallery-setting .setting-header-container .setting-header-wrapper {
   border-bottom: 1px solid #e2e2e2;
+  display: flex;
+  flex: 1;
   align-items: center;
 }
 
