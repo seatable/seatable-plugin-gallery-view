@@ -127,9 +127,8 @@ class GalleryViewItem extends React.Component {
     let row = this.props.getRow(table, galleryItem._id);
     return filteredColumns.map((column, index) => {
       return (
-        <div className="gallery-editor-container">
+        <div className="gallery-editor-container" key={`editor-formatter-${index}`}>
           <EditorFormatter
-            key={`editor-formatter-${index}`}
             column={column}
             selectedView={this.props.selectedView}
             row={row}
