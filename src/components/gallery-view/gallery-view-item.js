@@ -37,8 +37,9 @@ class GalleryViewItem extends React.Component {
   }
 
   onImageClick = (e, index) => {
-    let { galleryItem, imageColumn } = this.props;
-    let imageColumnName = imageColumn.name;
+    let { galleryItem } = this.props;
+    let selectedImageColumn = this.getGalleryImageColumn();
+    let imageColumnName = selectedImageColumn.name;
     this.setState({
       isShowLargeImage: true,
       images: galleryItem[imageColumnName],
@@ -54,8 +55,9 @@ class GalleryViewItem extends React.Component {
   }
 
   moveNext = (e) => {
-    let { galleryItem, imageColumn } = this.props;
-    let imageColumnName = imageColumn.name;
+    let { galleryItem } = this.props;
+    let selectedImageColumn = this.getGalleryImageColumn();
+    let imageColumnName = selectedImageColumn.name;
     let images = galleryItem[imageColumnName];
     this.setState(prevState => ({
       largeImageIndex: (prevState.largeImageIndex + 1) % images.length,
@@ -64,8 +66,9 @@ class GalleryViewItem extends React.Component {
   
   movePrev = (e) => {
     e.preventDefault();
-    let { galleryItem, imageColumn } = this.props;
-    let imageColumnName = imageColumn.name;
+    let { galleryItem } = this.props;
+    let selectedImageColumn = this.getGalleryImageColumn();
+    let imageColumnName = selectedImageColumn.name;
     let images = galleryItem[imageColumnName];
     this.setState(prevState => ({
       largeImageIndex: (prevState.largeImageIndex + images.length - 1) % images.length,
