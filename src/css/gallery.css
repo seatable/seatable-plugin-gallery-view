@@ -59,6 +59,7 @@
 
 .gallery-item .gallery-row-content .gallery-title-container {
   padding: 0 5px;
+  border-radius: 2px;
 }
 
 .gallery-item .gallery-row-content .gallery-title-container:hover {
