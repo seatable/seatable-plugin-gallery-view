@@ -114,7 +114,7 @@ class EditorFormatter extends React.Component {
       }
       case CellType.LONG_TEXT: {
         if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <LongTextFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        return <LongTextFormatter value={row[columnKey]} />;
       }
       case CellType.IMAGE: {
         if (!row[columnKey] || row[columnKey].length === 0) return this.renderEmptyFormatter();

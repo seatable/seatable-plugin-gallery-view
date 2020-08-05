@@ -54,11 +54,11 @@
 }
 
 .gallery-item .gallery-row-content {
-  padding: 8px 0px;
+  padding: 8px 5px;
 }
 
 .gallery-item .gallery-row-content .gallery-title-container {
-  padding: 0 10px;
+  padding: 0 5px;
 }
 
 .gallery-item .gallery-row-content .gallery-title-container:hover {
@@ -72,14 +72,14 @@
   overflow: hidden;
   white-space: nowrap;
   font-weight: 500;
-  min-height: 28px;
+  height: 28px;
   display: flex;
   align-items: center;
   border-radius: 2px;
 }
 
 .gallery-item .gallery-row-content .gallery-formatter-list {
-  padding: 0 10px;
+  padding: 0 5px;
 }
 
 .gallery-item .gallery-row-content .formatter-container {
@@ -111,11 +111,15 @@
   min-height: 28px;
   display: flex;
   align-items: center;
+  font-size: 14px;
 }
 
 .gallery-row-content .gallery-text-editor {
   font-size: 14px;
-  overflow: visible;
+  line-height: 28px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 
 .gallery-row-content .gallery-formula-container {
