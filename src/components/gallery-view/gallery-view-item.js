@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import intl from 'react-intl-universal';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
@@ -33,13 +32,14 @@ class GalleryViewItem extends React.Component {
       isShowLargeImage: false,
       canOpenImage: false,
       largeImageIndex: '',
-      images: []
+      images: [], 
     };
   }
 
   onImageClick = (e, index) => {
-    let { galleryItem, imageColumn } = this.props;
-    let imageColumnName = imageColumn.name;
+    let { galleryItem } = this.props;
+    let selectedImageColumn = this.getGalleryImageColumn();
+    let imageColumnName = selectedImageColumn.name;
     this.setState({
       isShowLargeImage: true,
       images: galleryItem[imageColumnName],
@@ -55,8 +55,9 @@ class GalleryViewItem extends React.Component {
   }
 
   moveNext = (e) => {
-    let { galleryItem, imageColumn } = this.props;
-    let imageColumnName = imageColumn.name;
+    let { galleryItem } = this.props;
+    let selectedImageColumn = this.getGalleryImageColumn();
+    let imageColumnName = selectedImageColumn.name;
     let images = galleryItem[imageColumnName];
     this.setState(prevState => ({
       largeImageIndex: (prevState.largeImageIndex + 1) % images.length,
@@ -65,8 +66,9 @@ class GalleryViewItem extends React.Component {
   
   movePrev = (e) => {
     e.preventDefault();
-    let { galleryItem, imageColumn } = this.props;
-    let imageColumnName = imageColumn.name;
+    let { galleryItem } = this.props;
+    let selectedImageColumn = this.getGalleryImageColumn();
+    let imageColumnName = selectedImageColumn.name;
     let images = galleryItem[imageColumnName];
     this.setState(prevState => ({
       largeImageIndex: (prevState.largeImageIndex + images.length - 1) % images.length,
@@ -79,14 +81,42 @@ class GalleryViewItem extends React.Component {
     window.app.expandRow(row, table);
   }
 
+  getGalleryImageColumn = () => {
+    const { settings, currentColumns } = this.props;
+    const { shown_image_name } = settings;
+    let imageColumn;
+    if (!shown_image_name) {
+      imageColumn = currentColumns.find(column => column.type === 'image');
+    } else {
+      imageColumn = currentColumns.find(column => column.name === shown_image_name);
+    }
+    return imageColumn;
+  }
+
+  getGalleryTitleColumn = () => {
+    const { settings, currentColumns } = this.props;
+    const { shown_title_name } = settings;
+    let titleColumn;
+    if (!shown_title_name) {
+      titleColumn = currentColumns.find(column => column.key === '0000');
+    } else {
+      titleColumn = currentColumns.find(column => column.name === shown_title_name);
+    }
+    if (!titleColumn) {
+      titleColumn = currentColumns.find(column => column.key === '0000');
+    }
+    return titleColumn;
+  }
+
   getFilteredColumns = () => {
     const { settings, currentColumns } = this.props;
-    const { is_show_row_item } = settings;
+    const { shown_column_names, shown_title_name } = settings;
     let filteredColumns = [];
-    if (is_show_row_item) {
+    if (shown_column_names) {
       filteredColumns = currentColumns.filter(item => {
-        return is_show_row_item[item.name];
-      })
+        return shown_column_names.some(showColumnName => {
+          return item.name === showColumnName && showColumnName !== shown_title_name });
+      }); 
     }
     return filteredColumns;
   }
@@ -96,35 +126,54 @@ class GalleryViewItem extends React.Component {
     let filteredColumns = this.getFilteredColumns();
     let row = this.props.getRow(table, galleryItem._id);
     return filteredColumns.map((column, index) => {
-      if (column.key === '0000') {
-        let rowName = row['0000'] ? row['0000'] : intl.get('Unnamed_record');
-        return <div key={`row-title-${index}`} className="row-title" onClick={this.onRowExpand}>{rowName}</div>
-      } else {
-        return (<EditorFormatter
-          key={`editor-formatter-${index}`}
-          column={column}
-          selectedView={this.props.selectedView}
-          row={row}
-          table={table}
-          getLinkCellValue={this.props.getLinkCellValue}
-          getRowsByID={this.props.getRowsByID}
-          getTableById={this.props.getTableById}
-          collaborators={this.props.collaborators}
-          getUserCommonInfo={this.props.getUserCommonInfo}
-          getMediaUrl={this.props.getMediaUrl}
-          CellType={this.props.CellType}
-        />);
-      }
+      return (
+        <div className="gallery-editor-container" key={`editor-formatter-${index}`}>
+          <EditorFormatter
+            column={column}
+            selectedView={this.props.selectedView}
+            row={row}
+            table={table}
+            getLinkCellValue={this.props.getLinkCellValue}
+            getRowsByID={this.props.getRowsByID}
+            getTableById={this.props.getTableById}
+            collaborators={this.props.collaborators}
+            getUserCommonInfo={this.props.getUserCommonInfo}
+            getMediaUrl={this.props.getMediaUrl}
+            CellType={this.props.CellType}
+          /></div>);
     })
+  }
+
+  renderRowTitle = () => {
+    let titleColumn = this.getGalleryTitleColumn();
+    const { galleryItem, table } = this.props;
+    let row = this.props.getRow(table, galleryItem._id);
+    return (<div className="row-title" onClick={this.onRowExpand}>
+      <EditorFormatter
+        column={titleColumn}
+        selectedView={this.props.selectedView}
+        row={row}
+        table={table}
+        getLinkCellValue={this.props.getLinkCellValue}
+        getRowsByID={this.props.getRowsByID}
+        getTableById={this.props.getTableById}
+        collaborators={this.props.collaborators}
+        getUserCommonInfo={this.props.getUserCommonInfo}
+        getMediaUrl={this.props.getMediaUrl}
+        CellType={this.props.CellType}
+        type="row_title"
+      />
+    </div>);
   }
 
   render() {
     let { images, largeImageIndex } = this.state;
-    let { galleryItem, imageColumn, itemMarginRightNone} = this.props;
+    let { galleryItem, itemMarginRightNone } = this.props;
+    let selectedImageColumn = this.getGalleryImageColumn();
     let itemImage;
     let imageNumber = 0;
-    if (imageColumn) {
-      let imageColumnName = imageColumn.name;
+    if (selectedImageColumn) {
+      let imageColumnName = selectedImageColumn.name;
       if (galleryItem[imageColumnName] && galleryItem[imageColumnName].length > 0) {
         imageNumber = galleryItem[imageColumnName].length;
         itemImage = <ImageLazyLoad imageUrl={galleryItem[imageColumnName][0]} onImageClick={this.onImageClick} />
@@ -149,7 +198,10 @@ class GalleryViewItem extends React.Component {
           {itemImage}
         </div>
         <div className="text-truncate gallery-row-content">
-          {this.renderEditorFormatter()}
+          {this.renderRowTitle()}
+          <div className="gallery-formatter-list">
+            {this.renderEditorFormatter()}
+          </div>
         </div>
         {this.state.isShowLargeImage && 
           <ImagePreviewerLightbox 

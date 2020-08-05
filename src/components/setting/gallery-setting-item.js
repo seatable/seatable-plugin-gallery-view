@@ -1,11 +1,11 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Switch from './switch';
-import { CELL_ICON } from '../../constants/cell-contants';
+import { CELL_ICON } from '../../constants/cell-constants';
 
 const propTypes = {
   column: PropTypes.object.isRequired,
-  settings: PropTypes.object,
+  settings: PropTypes.array,
   onColumnItemClick: PropTypes.func.isRequired
 };
 
@@ -20,25 +20,17 @@ class GallerySettingItem extends React.Component {
 
   componentDidMount() {
     const { settings, column } = this.props;
-    const { is_show_row_item } = settings;
-    if (is_show_row_item) {
-      let isColumnCheckedIndex = Object.keys(is_show_row_item).findIndex(item => item === column.name);
-      if (isColumnCheckedIndex > -1) {
-        this.setState({isChecked: is_show_row_item[column.name]})
-      }
-    }
+    let isShowColumnFormatter = settings.some(showColumnName => showColumnName === column.name);
+    if (isShowColumnFormatter) this.setState({isChecked: true});
   }
 
   componentWillReceiveProps(nextProps) {
     const { settings, column } = this.props;
-    const { is_show_row_item } = settings;
-    if (!is_show_row_item) {
-      this.setState({isChecked: false});
+    let isShowColumnFormatter = settings.some(showColumnName => showColumnName === column.name);
+    if (isShowColumnFormatter) {
+      this.setState({isChecked: true});
     } else {
-      let isColumnCheckedIndex = Object.keys(is_show_row_item).findIndex(item => item === column.name);
-      if (isColumnCheckedIndex > -1) {
-        this.setState({isChecked: is_show_row_item[column.name]});
-      }
+      this.setState({isChecked: false});
     }
   }
 
@@ -69,4 +61,4 @@ class GallerySettingItem extends React.Component {
 
 GallerySettingItem.propTypes = propTypes;
 
-export default GallerySettingItem;
+export default GallerySettingItem; 

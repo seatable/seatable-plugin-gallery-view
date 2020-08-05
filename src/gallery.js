@@ -40,18 +40,12 @@ class Gallery extends React.Component {
   }
 
   render() {
-    const { imageColumns} = this.props;
-    let imageColumn;
-    if (imageColumns && imageColumns.length > 0) {
-      imageColumn = imageColumns[0];
-    }
 
     return (
       <div className="gallery-list-content" ref={ref => this.galleryListRef = ref} onScroll={this.onScroll}>
         <div ref={ref => this.galleryBodyRef = ref}>
           <GalleryViewList 
             rows={this.props.rows}
-            imageColumn={imageColumn}
             getRow={this.props.getRow}
             table={this.props.table}
             selectedGalleryView={this.props.selectedGalleryView}
@@ -65,6 +59,7 @@ class Gallery extends React.Component {
             getUserCommonInfo={this.props.getUserCommonInfo}
             getMediaUrl={this.props.getMediaUrl}
             CellType={this.props.CellType}
+            selectedImageColumn={this.props.selectedImageColumn}
           />
           <AddGalleryItem 
             table={this.props.table}

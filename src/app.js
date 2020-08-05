@@ -159,6 +159,17 @@ class App extends React.Component {
     }
   }
 
+  initGallerySetting = (settings = {}) => {
+    let initUpdated = {};
+    let tables = this.dtable.getTables();
+    let selectedTable = this.getSelectedTable(tables, settings);
+    let titleColumn = selectedTable.columns.find(column => column.key === '0000');
+    let imageColumn = selectedTable.columns.find(column => column.type === 'image');
+    let imageName = imageColumn ? imageColumn.name : null;
+    initUpdated = Object.assign({}, {shown_image_name: imageName}, {shown_title_name: titleColumn.name});
+    return initUpdated;
+  }
+
   onAddView = (viewName) => {
     let { plugin_settings } = this.state;
     let { views: updatedViews } = plugin_settings;
@@ -168,6 +179,8 @@ class App extends React.Component {
     updatedViews.push(newView);
     let { settings } = updatedViews[selectedViewIdx];
     let isShowGallerySetting = !this.isValidViewSettings(settings);
+    let initUpdated = this.initGallerySetting();
+    updatedViews[selectedViewIdx].settings  = Object.assign({}, initUpdated);
     plugin_settings.views = updatedViews;
     this.setState({
       plugin_settings,
@@ -221,7 +234,8 @@ class App extends React.Component {
     if (!type) {
       updatedSettings = Object.assign({}, updatedSettings, updated);
     } else {
-      updatedSettings = Object.assign({}, updated);
+      const initUpdated = this.initGallerySetting(updated)
+      updatedSettings = Object.assign({}, updated, initUpdated);
     }
     updatedView.settings = updatedSettings;
     updatedViews[selectedViewIdx] = updatedView;
@@ -315,7 +329,10 @@ class App extends React.Component {
   }
 
   getUserCommonInfo = (email, avatar_size) => {
-    return this.dtable.getUserCommonInfo(email, avatar_size)
+    if (window.dtableWebAPI) {
+      return window.dtableWebAPI.getUserCommonInfo(email, avatar_size);
+    }
+    return Promise.reject();
   }
 
   storeSelectedViewId = (viewId) => {
@@ -434,6 +451,7 @@ class App extends React.Component {
               onModifyGallerySettings={this.onModifyGallerySettings}
               onHideGallerySetting={this.onHideGallerySetting}
               currentColumns={currentColumns}
+              imageColumns={imageColumns}
             />
           }
         </ModalBody>
