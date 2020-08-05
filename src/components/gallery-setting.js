@@ -25,24 +25,6 @@ const SHOW_TITLE_COLUMN_TYPE = [CELL_TYPE.TEXT, CELL_TYPE.SINGLE_SELECT, CELL_TY
 
 class GallerySetting extends React.Component {
 
-  renderSelector = (source, settingKey, valueKey, labelKey) => {
-    let { settings } = this.props;
-    let options = source.map((item) => {
-      let value = item[valueKey];
-      let label = item[labelKey];
-      return {value, label, setting_key: settingKey};
-    });
-    let selectedOption = options.find(item => item.value === settings[settingKey]);
-    if (!selectedOption && (settingKey === SETTING_KEY.TABLE_NAME || settingKey === SETTING_KEY.VIEW_NAME)) {
-      selectedOption = options[0];
-    }
-    return <PluginSelect
-      value={selectedOption}
-      options={options}
-      onChange={this.onModifySettings}
-    />
-  }
-
   onModifySettings = (selectedOption) => {
     let { settings } = this.props;
     let { setting_key, value } = selectedOption;
@@ -87,10 +69,10 @@ class GallerySetting extends React.Component {
     this.props.onModifyGallerySettings(updated);
   }
 
-  getTitleColumns = () => {
-    let { currentColumns } = this.props;
-    let titleColumns = currentColumns.filter(column => SHOW_TITLE_COLUMN_TYPE.includes(column.type))
-    return titleColumns;
+  onHideAllColumns = () => {
+    const { settings } = this.props;
+    let updated = Object.assign({}, settings, {shown_column_names: []});
+    this.props.onModifyGallerySettings(updated);
   }
 
   onModifyFieldsSettings = (selectedOption) => {
@@ -98,6 +80,40 @@ class GallerySetting extends React.Component {
     let { value, setting_key } = selectedOption;
     let updated = Object.assign({}, settings, {[setting_key]: value});
     this.props.onModifyGallerySettings(updated);
+  }
+
+  getTitleColumns = () => {
+    let { currentColumns } = this.props;
+    let titleColumns = currentColumns.filter(column => SHOW_TITLE_COLUMN_TYPE.includes(column.type))
+    return titleColumns;
+  }
+
+  getFilteredColumns = () => {
+    let { settings, currentColumns } = this.props;
+    let filteredColumns = [];
+    let { shown_title_name } = settings;
+    if (!shown_title_name) {
+      filteredColumns = currentColumns.filter(column => column.key !== '0000');
+    } else {
+      filteredColumns = currentColumns.filter(column => column.name !== shown_title_name);
+    }
+    return filteredColumns;
+  }
+
+  renderChooseFields = () => {
+    let filteredColumns = this.getFilteredColumns();
+    let { settings } = this.props;
+    let { shown_column_names } = settings;
+    let isShowHideChoose = false;
+    if (filteredColumns.length > 0 && shown_column_names && shown_column_names.length > 0) {
+      isShowHideChoose = filteredColumns.every(column => {
+        return shown_column_names.includes(column.name)
+      });
+      if (isShowHideChoose) {
+        return <span className="setting-choose-all" onClick={this.onHideAllColumns}>{intl.get('Hide_all')}</span>;
+      }
+    }
+    return <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Choose_all')}</span>;
   }
 
   renderFieldsSelector = (source, settingKey) => {
@@ -118,16 +134,23 @@ class GallerySetting extends React.Component {
     />
   }
 
-  getFilteredColumns = () => {
-    let { settings, currentColumns } = this.props;
-    let filteredColumns = [];
-    let { shown_title_name } = settings;
-    if (!shown_title_name) {
-      filteredColumns = currentColumns.filter(column => column.key !== '0000');
-    } else {
-      filteredColumns = currentColumns.filter(column => column.name !== shown_title_name);
+
+  renderSelector = (source, settingKey, valueKey, labelKey) => {
+    let { settings } = this.props;
+    let options = source.map((item) => {
+      let value = item[valueKey];
+      let label = item[labelKey];
+      return {value, label, setting_key: settingKey};
+    });
+    let selectedOption = options.find(item => item.value === settings[settingKey]);
+    if (!selectedOption && (settingKey === SETTING_KEY.TABLE_NAME || settingKey === SETTING_KEY.VIEW_NAME)) {
+      selectedOption = options[0];
     }
-    return filteredColumns;
+    return <PluginSelect
+      value={selectedOption}
+      options={options}
+      onChange={this.onModifySettings}
+    />
   }
 
   render() {
@@ -166,7 +189,7 @@ class GallerySetting extends React.Component {
               <div className="setting-item fields-setting">
                 <div className="fields-setting-header">
                   <span>{intl.get('Other_fields')}</span>
-                  <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Choose_all')}</span>
+                  {this.renderChooseFields()}
                 </div>
                 <div className="fields-setting-body">
                     {filteredColumns.map((column, index) => {

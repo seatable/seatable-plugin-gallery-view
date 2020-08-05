@@ -16,7 +16,8 @@ const en = {
   "Choose_all": "Choose all",
   "Image_fields": "Image fields",
   "Title_fields": "Title fields",
-  "Other_fields": "Other fields"
+  "Other_fields": "Other fields",
+  "Hide_all": "Hide all"
 };
 
 export default en; 

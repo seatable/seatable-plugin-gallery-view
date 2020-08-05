@@ -17,7 +17,8 @@ const zh_CN = {
   "Choose_all": "选择全部",
   "Image_fields": "图片字段",
   "Title_fields": "标题字段",
-  "Other_fields": "其他字段"
+  "Other_fields": "其他字段",
+  "Hide_all": "隐藏全部"
 };
 
 export default zh_CN; 
