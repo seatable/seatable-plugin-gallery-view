@@ -198,7 +198,9 @@ class GalleryViewItem extends React.Component {
           {itemImage}
         </div>
         <div className="text-truncate gallery-row-content">
-          {this.renderRowTitle()}
+          <div className="gallery-title-container">
+            {this.renderRowTitle()}
+          </div>
           <div className="gallery-formatter-list">
             {this.renderEditorFormatter()}
           </div>

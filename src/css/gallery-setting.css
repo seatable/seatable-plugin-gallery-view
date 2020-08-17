@@ -83,6 +83,7 @@
   display: flex;
   padding-left: 10px;
   cursor: pointer;
+  border-radius: 2px;
 }
 
 .gallery-setting-item .gallery-column-switch:hover { 

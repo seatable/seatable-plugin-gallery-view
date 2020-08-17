@@ -109,12 +109,12 @@ class EditorFormatter extends React.Component {
         return <TextFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
       }
       case CellType.COLLABORATOR: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
+        if (!row[columnKey] || row[columnKey].length === 0) return this.renderEmptyFormatter();
         return <CollaboratorFormatter value={row[columnKey]} collaborators={collaborators} />;
       }
       case CellType.LONG_TEXT: {
         if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <LongTextFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        return <LongTextFormatter value={row[columnKey]} />;
       }
       case CellType.IMAGE: {
         if (!row[columnKey] || row[columnKey].length === 0) return this.renderEmptyFormatter();
@@ -133,7 +133,7 @@ class EditorFormatter extends React.Component {
         return <DateFormatter value={row[columnKey]} format={column.data.format} />;
       }
       case CellType.MULTIPLE_SELECT: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
+        if (!row[columnKey] || row[columnKey].length === 0) return this.renderEmptyFormatter();
         return <MultipleSelectFormatter value={row[columnKey]} options={column.data.options} />;
       }
       case CellType.SINGLE_SELECT: {
