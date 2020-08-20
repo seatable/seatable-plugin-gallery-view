@@ -17,6 +17,7 @@ const propTypes = {
   settings: PropTypes.object,
   onModifyGallerySettings: PropTypes.func,
   onHideGallerySetting: PropTypes.func,
+  onMoveColumn: PropTypes.func
 };
 
 const SHOW_TITLE_COLUMN_TYPE = [CELL_TYPE.TEXT, CELL_TYPE.SINGLE_SELECT, CELL_TYPE.MULTIPLE_SELECT, CELL_TYPE.NUMBER, CELL_TYPE.FORMULA,
@@ -192,16 +193,18 @@ class GallerySetting extends React.Component {
                   {this.renderChooseFields()}
                 </div>
                 <div className="fields-setting-body">
-                    {filteredColumns.map((column, index) => {
-                      return (
-                        <GallerySettingItem 
-                          key={`gallery-setting-item${index}`}
-                          column={column}
-                          onColumnItemClick={this.onColumnItemClick}
-                          settings={settings.shown_column_names || []}
-                        />
-                      );
-                    })}
+                  {filteredColumns.map((column, index) => {
+                    return (
+                      <GallerySettingItem 
+                        key={`gallery-setting-item${index}`}
+                        column={column}
+                        onColumnItemClick={this.onColumnItemClick}
+                        settings={settings.shown_column_names || []}
+                        onMoveColumn={this.props.onMoveColumn}
+                        selectedTable={this.props.selectedTable}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>
