@@ -93,28 +93,16 @@ class GallerySettingItem extends React.Component {
     this.setState({isItemDropTipShow: false});
     let sourceColumn = event.dataTransfer.getData("text/plain");
     sourceColumn = JSON.parse(sourceColumn);
-    const { selectedTable, onMoveColumn, column } = this.props;
+    const { onMoveColumn, column } = this.props;
     if (sourceColumn.name === column.name) {
       return;
     }
-    onMoveColumn(selectedTable, sourceColumn.name, column.name);
+    onMoveColumn(sourceColumn.name, column.name);
   }
 
   render() {
    const { column } = this.props;
     let placeholder = <Fragment><i className={`dtable-font ${CELL_ICON[column.type]}`}></i><span>{column.name}</span></Fragment>;
-    if (column.key === '0000') {
-      return ( 
-        <div className="gallery-setting-item">
-          <Switch 
-            checked={this.state.isChecked}
-            placeholder={placeholder}
-            onChange={this.onColumnItemClick}
-            onDrop={this.onDrop}
-          />
-        </div>
-      );
-    }
     return (
       <div 
         className={`gallery-setting-item ${this.state.isItemDropTipShow ? 'column-can-drop' : ''}`} 

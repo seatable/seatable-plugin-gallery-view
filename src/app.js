@@ -283,10 +283,6 @@ class App extends React.Component {
     }
   }
 
-  onMoveColumn = (selectedTable, source, target) => {
-    this.dtable.moveColumn(selectedTable, source, target)
-  }
-
   getSelectedTable = (tables, settings = {}) => {
     let selectedTable = this.dtable.getTableByName(settings[SETTING_KEY.TABLE_NAME]);
     if (!selectedTable) {

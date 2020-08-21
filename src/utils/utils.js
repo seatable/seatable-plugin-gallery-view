@@ -36,3 +36,9 @@ export const isValidEmail = (email) => {
 
   return reg.test(email);
 };
+
+export const calculateColumns = (galleryColumns, currentColumns) =>  {
+  let newColumns = galleryColumns.filter(column => currentColumns.some(c => c.name === column.name)); 
+  newColumns = newColumns.concat(currentColumns.filter(column => !galleryColumns.some(c => c.name === column.name)));
+  return newColumns;
+};
