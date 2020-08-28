@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
-import { calculateColumns } from '../../utils/utils';
+import { calculateColumns, calculateColumnsMap, calculateCurrentColumnsMap } from '../../utils/utils';
 
 const propTypes = {
   galleryItem: PropTypes.object,
@@ -115,7 +115,9 @@ class GalleryViewItem extends React.Component {
     const { settings, currentColumns } = this.props;
     const { shown_column_names, shown_title_name } = settings;
 
-    let newColumns = settings.columns ? calculateColumns(settings.columns, currentColumns) : currentColumns;
+    let nameColumnMap = calculateCurrentColumnsMap(currentColumns);
+    let newNameColumnMap = settings.name_column_map ? calculateColumnsMap(settings.name_column_map, nameColumnMap) : nameColumnMap;
+    let newColumns = calculateColumns(newNameColumnMap, nameColumnMap, currentColumns);
     let filteredColumns = [];
     if (shown_column_names) {
       filteredColumns = newColumns.filter(item => {

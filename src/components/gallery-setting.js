@@ -4,7 +4,7 @@ import intl from 'react-intl-universal';
 import PluginSelect from './plugin-select';
 import { SETTING_KEY, zIndexes, CELL_TYPE } from '../constants';
 import GallerySettingItem from './setting/gallery-setting-item';
-import { calculateColumns } from '../utils/utils';
+import { calculateColumns, calculateColumnsMap, calculateCurrentColumnsMap } from '../utils/utils';
 import '../locale';
 
 import '../css/gallery-setting.css';
@@ -85,25 +85,27 @@ class GallerySetting extends React.Component {
 
   onMoveColumn = (source, target) => {
     let { settings, currentColumns } = this.props;
-    let newColumns = settings.columns ? calculateColumns(settings.columns, currentColumns) : currentColumns;
-    let sourceIndex, targetIndex, movedColumn, unMovedColumns = [];
-    newColumns.forEach((column, index) => {
-      if (column.name === source) {
+
+    let nameColumnMap = calculateCurrentColumnsMap(currentColumns);
+    let newNameColumnMap = settings.name_column_map ? calculateColumnsMap(settings.name_column_map, nameColumnMap) : nameColumnMap;
+    let sourceIndex, targetIndex, movedColumnName, unMovedColumnsName = [];
+    newNameColumnMap.forEach((column_name, index) => {
+      if (column_name === source) {
         sourceIndex = index;
-        movedColumn = column;
+        movedColumnName = column_name;
       } else {
-        if (column.name === target) {
+        if (column_name === target) {
           targetIndex = index;
         }
-        unMovedColumns.push(column);
+        unMovedColumnsName.push(column_name);
       }
     });
-    let target_index = unMovedColumns.findIndex(column => column.name === target);
+    let target_index = unMovedColumnsName.findIndex(column_name => column_name === target);
     if (sourceIndex < targetIndex) {
       target_index = target_index + 1;
     }
-    unMovedColumns.splice(target_index, 0, movedColumn);
-    let updated = Object.assign({}, settings, {columns: unMovedColumns});
+    unMovedColumnsName.splice(target_index, 0, movedColumnName);
+    let updated = Object.assign({}, settings, {name_column_map: unMovedColumnsName});
     this.props.onModifyGallerySettings(updated);
   }
 
@@ -117,7 +119,9 @@ class GallerySetting extends React.Component {
     let { settings, currentColumns } = this.props;
     let filteredColumns = [];
     let { shown_title_name } = settings;
-    let newColumns = settings.columns ? calculateColumns(settings.columns, currentColumns) : currentColumns;
+    let nameColumnMap = calculateCurrentColumnsMap(currentColumns);
+    let newNameColumnMap = settings.name_column_map ? calculateColumnsMap(settings.name_column_map, nameColumnMap) : nameColumnMap;
+    let newColumns = calculateColumns(newNameColumnMap, nameColumnMap, currentColumns);
     if (!shown_title_name) {
       filteredColumns = newColumns.filter(column => column.key !== '0000');
     } else {
