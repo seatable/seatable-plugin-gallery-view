@@ -18,7 +18,6 @@ const propTypes = {
   settings: PropTypes.object,
   onModifyGallerySettings: PropTypes.func,
   onHideGallerySetting: PropTypes.func,
-  onMoveColumn: PropTypes.func
 };
 
 const SHOW_TITLE_COLUMN_TYPE = [CELL_TYPE.TEXT, CELL_TYPE.SINGLE_SELECT, CELL_TYPE.MULTIPLE_SELECT, CELL_TYPE.NUMBER, CELL_TYPE.FORMULA,
@@ -86,10 +85,7 @@ class GallerySetting extends React.Component {
 
   onMoveColumn = (source, target) => {
     let { settings, currentColumns } = this.props;
-    let newColumns = currentColumns;
-    if (settings.columns) {
-      newColumns = calculateColumns(settings.columns, currentColumns);
-    }
+    let newColumns = settings.columns ? calculateColumns(settings.columns, currentColumns) : currentColumns;
     let sourceIndex, targetIndex, movedColumn, unMovedColumns = [];
     newColumns.forEach((column, index) => {
       if (column.name === source) {
@@ -121,10 +117,7 @@ class GallerySetting extends React.Component {
     let { settings, currentColumns } = this.props;
     let filteredColumns = [];
     let { shown_title_name } = settings;
-    let newColumns = currentColumns;
-    if (settings.columns) {
-      newColumns = calculateColumns(settings.columns, currentColumns);
-    }
+    let newColumns = settings.columns ? calculateColumns(settings.columns, currentColumns) : currentColumns;
     if (!shown_title_name) {
       filteredColumns = newColumns.filter(column => column.key !== '0000');
     } else {

@@ -279,7 +279,9 @@ class App extends React.Component {
     let viewRows = this.dtable.getViewRows(view, table);
     let insertedRow = viewRows[viewRows.length - 1];
     if (insertedRow) {
-      window.app.expandRow(insertedRow, table);
+      if (window.app && window.app.expandRow) {
+        window.app.expandRow(insertedRow, table);
+      }
     }
   }
 
@@ -452,7 +454,6 @@ class App extends React.Component {
               onHideGallerySetting={this.onHideGallerySetting}
               currentColumns={currentColumns}
               imageColumns={imageColumns}
-              onMoveColumn={this.onMoveColumn}
             />
           }
         </ModalBody>

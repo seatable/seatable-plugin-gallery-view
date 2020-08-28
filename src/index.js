@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './app';
-import './setting';
+import './settings';
 
 ReactDOM.render(<App />, document.getElementById('root'));
 

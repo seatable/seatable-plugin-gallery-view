@@ -79,7 +79,9 @@ class GalleryViewItem extends React.Component {
   onRowExpand = () => {
     let { table,  galleryItem } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
-    window.app.expandRow(row, table);
+    if (window.app && window.app.expandRow) {
+      window.app.expandRow(row, table);
+    }
   }
 
   getGalleryImageColumn = () => {
@@ -113,11 +115,7 @@ class GalleryViewItem extends React.Component {
     const { settings, currentColumns } = this.props;
     const { shown_column_names, shown_title_name } = settings;
 
-    let newColumns = currentColumns;
-    if (settings.columns) {
-      newColumns = calculateColumns(settings.columns, currentColumns);
-    }
-
+    let newColumns = settings.columns ? calculateColumns(settings.columns, currentColumns) : currentColumns;
     let filteredColumns = [];
     if (shown_column_names) {
       filteredColumns = newColumns.filter(item => {

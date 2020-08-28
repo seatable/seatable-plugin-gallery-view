@@ -57,7 +57,7 @@ class GalleryViewList extends React.Component {
   render() {
     const { rows, imageColumn } = this.props;
     const { galleryItemWidth,  galleryItemNumber } = this.state;
-
+    
     return (
       <div className="gallery-list" ref={ref => this.galleryListRef = ref}>
         {rows && rows.map((galleryItem, index) => {
