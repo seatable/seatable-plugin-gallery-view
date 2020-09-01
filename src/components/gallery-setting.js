@@ -4,7 +4,7 @@ import intl from 'react-intl-universal';
 import PluginSelect from './plugin-select';
 import { SETTING_KEY, zIndexes, CELL_TYPE } from '../constants';
 import GallerySettingItem from './setting/gallery-setting-item';
-import { calculateColumns, calculateColumnsName, calculateCurrentColumnsName } from '../utils/utils';
+import { calculateColumns, calculateColumnsName } from '../utils/utils';
 import '../locale';
 
 import '../css/gallery-setting.css';

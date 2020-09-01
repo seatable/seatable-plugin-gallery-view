@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
-import { calculateColumns, calculateColumnsName, calculateCurrentColumnsName } from '../../utils/utils';
+import { calculateColumns, calculateColumnsName } from '../../utils/utils';
 
 const propTypes = {
   galleryItem: PropTypes.object,
