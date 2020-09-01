@@ -57,7 +57,18 @@ class EditorFormatter extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    const { row, column, CellType } = nextProps;
+    if (column.type === CellType.LAST_MODIFIER) {
+      this.getCollaborator(row._last_modifier);
+    }
+    if (column.type === CellType.CREATOR) {
+      this.getCollaborator(row._creator);
+    }
+  }
+
   getCollaborator = (value) => {
+    this.setState({isDataLoaded: false, collaborator: null});
     if (!value) {
       this.setState({isDataLoaded: true, collaborator: null});
       return;

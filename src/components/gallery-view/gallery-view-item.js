@@ -115,9 +115,8 @@ class GalleryViewItem extends React.Component {
     const { settings, currentColumns } = this.props;
     const { shown_column_names, shown_title_name } = settings;
 
-    let nameColumnMap = calculateCurrentColumnsName(currentColumns);
-    let newNameColumnMap = settings.column_name ? calculateColumnsName(settings.column_name, nameColumnMap) : nameColumnMap;
-    let newColumns = calculateColumns(newNameColumnMap, nameColumnMap, currentColumns);
+    let newNameColumnsName = calculateColumnsName(currentColumns, settings.column_name);
+    let newColumns = calculateColumns(newNameColumnsName, currentColumns);
     let filteredColumns = [];
     if (shown_column_names) {
       filteredColumns = newColumns.filter(item => {

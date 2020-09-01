@@ -86,8 +86,7 @@ class GallerySetting extends React.Component {
   onMoveColumn = (source, target) => {
     let { settings, currentColumns } = this.props;
 
-    let currentColumnsName = calculateCurrentColumnsName(currentColumns);
-    let newColumnsName = settings.name_columns ? calculateColumnsName(settings.name_columns, currentColumnsName) : currentColumnsName;
+    let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
     let sourceIndex, targetIndex, movedColumnName, unMovedColumnsName = [];
     newColumnsName.forEach((column_name, index) => {
       if (column_name === source) {
@@ -119,9 +118,8 @@ class GallerySetting extends React.Component {
     let { settings, currentColumns } = this.props;
     let filteredColumns = [];
     let { shown_title_name } = settings;
-    let currentColumnsName = calculateCurrentColumnsName(currentColumns);
-    let newColumnsName = settings.column_name ? calculateColumnsName(settings.column_name, currentColumnsName) : currentColumnsName;
-    let newColumns = calculateColumns(newColumnsName, currentColumnsName, currentColumns);
+    let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
+    let newColumns = calculateColumns(newColumnsName, currentColumns);
     if (!shown_title_name) {
       filteredColumns = newColumns.filter(column => column.key !== '0000');
     } else {
