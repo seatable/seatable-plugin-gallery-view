@@ -37,8 +37,8 @@ export const isValidEmail = (email) => {
   return reg.test(email);
 };
 
-export const calculateColumns = (galleryColumnsMap, currentColumnsMap, currentColumns) =>  {
-  let newColumnsMap = new Set([...galleryColumnsMap, ...currentColumnsMap]);
+export const calculateColumns = (galleryColumnName, currentColumnName, currentColumns) =>  {
+  let newColumnsMap = new Set([...galleryColumnName, ...currentColumnName]);
   let newColumns = [];
   newColumnsMap.forEach(columnName => {
     let column = currentColumns.find(column => columnName === column.name);
@@ -49,7 +49,7 @@ export const calculateColumns = (galleryColumnsMap, currentColumnsMap, currentCo
   return newColumns;
 };
 
-export const calculateCurrentColumnsMap = (currentColumns) => {
+export const calculateCurrentColumnsName = (currentColumns) => {
   let nameColumnsMap = [];
   currentColumns.forEach(column => {
     nameColumnsMap.push(column.name);
@@ -57,7 +57,7 @@ export const calculateCurrentColumnsMap = (currentColumns) => {
   return nameColumnsMap;
 }
 
-export const calculateColumnsMap = (galleryColumnsMap, currentColumnsMap) => {
+export const calculateColumnsName = (galleryColumnsMap, currentColumnsMap) => {
   let newColumnsMap = Array.from(new Set([...galleryColumnsMap, ...currentColumnsMap]));
   newColumnsMap = newColumnsMap.filter(columnName => currentColumnsMap.some(c => c === columnName));
   return newColumnsMap;

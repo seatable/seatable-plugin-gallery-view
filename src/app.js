@@ -376,7 +376,7 @@ class App extends React.Component {
 
   render() {
     let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting,
-     itemShowRowLength } = this.state;
+      itemShowRowLength } = this.state;
     if (isLoading) {
       return '';
     }
@@ -401,7 +401,7 @@ class App extends React.Component {
     } else {
       rowsList = rows.filter((item, index) => {
         return index < itemShowRowLength;
-      })
+      });
     }
     return (
       <Modal isOpen={showDialog} toggle={this.onPluginToggle} className="dtable-plugin plugin-container" contentClassName="gallery-view-content" zIndex={GALLERY_DIALOG_MODAL} size="lg">

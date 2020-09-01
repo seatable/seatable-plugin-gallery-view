@@ -4,7 +4,7 @@ import intl from 'react-intl-universal';
 import PluginSelect from './plugin-select';
 import { SETTING_KEY, zIndexes, CELL_TYPE } from '../constants';
 import GallerySettingItem from './setting/gallery-setting-item';
-import { calculateColumns, calculateColumnsMap, calculateCurrentColumnsMap } from '../utils/utils';
+import { calculateColumns, calculateColumnsName, calculateCurrentColumnsName } from '../utils/utils';
 import '../locale';
 
 import '../css/gallery-setting.css';
@@ -86,10 +86,10 @@ class GallerySetting extends React.Component {
   onMoveColumn = (source, target) => {
     let { settings, currentColumns } = this.props;
 
-    let nameColumnMap = calculateCurrentColumnsMap(currentColumns);
-    let newNameColumnMap = settings.name_column_map ? calculateColumnsMap(settings.name_column_map, nameColumnMap) : nameColumnMap;
+    let currentColumnsName = calculateCurrentColumnsName(currentColumns);
+    let newColumnsName = settings.name_columns ? calculateColumnsName(settings.name_columns, currentColumnsName) : currentColumnsName;
     let sourceIndex, targetIndex, movedColumnName, unMovedColumnsName = [];
-    newNameColumnMap.forEach((column_name, index) => {
+    newColumnsName.forEach((column_name, index) => {
       if (column_name === source) {
         sourceIndex = index;
         movedColumnName = column_name;
@@ -105,13 +105,13 @@ class GallerySetting extends React.Component {
       target_index = target_index + 1;
     }
     unMovedColumnsName.splice(target_index, 0, movedColumnName);
-    let updated = Object.assign({}, settings, {name_column_map: unMovedColumnsName});
+    let updated = Object.assign({}, settings, {column_name: unMovedColumnsName});
     this.props.onModifyGallerySettings(updated);
   }
 
   getTitleColumns = () => {
     let { currentColumns } = this.props;
-    let titleColumns = currentColumns.filter(column => SHOW_TITLE_COLUMN_TYPE.includes(column.type))
+    let titleColumns = currentColumns.filter(column => SHOW_TITLE_COLUMN_TYPE.includes(column.type));
     return titleColumns;
   }
 
@@ -119,9 +119,9 @@ class GallerySetting extends React.Component {
     let { settings, currentColumns } = this.props;
     let filteredColumns = [];
     let { shown_title_name } = settings;
-    let nameColumnMap = calculateCurrentColumnsMap(currentColumns);
-    let newNameColumnMap = settings.name_column_map ? calculateColumnsMap(settings.name_column_map, nameColumnMap) : nameColumnMap;
-    let newColumns = calculateColumns(newNameColumnMap, nameColumnMap, currentColumns);
+    let currentColumnsName = calculateCurrentColumnsName(currentColumns);
+    let newColumnsName = settings.column_name ? calculateColumnsName(settings.column_name, currentColumnsName) : currentColumnsName;
+    let newColumns = calculateColumns(newColumnsName, currentColumnsName, currentColumns);
     if (!shown_title_name) {
       filteredColumns = newColumns.filter(column => column.key !== '0000');
     } else {
