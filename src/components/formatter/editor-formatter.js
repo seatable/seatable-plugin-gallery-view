@@ -48,31 +48,28 @@ class EditorFormatter extends React.Component {
   }
 
   componentDidMount() {
-    const { row, column, CellType } = this.props;
-    if (column.type === CellType.LAST_MODIFIER) {
-      this.getCollaborator(row._last_modifier);
-    }
-    if (column.type === CellType.CREATOR) {
-      this.getCollaborator(row._creator);
-    }
+    this.calculateCollaboratorData(this.props);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { row, column, CellType } = nextProps;
+    this.calculateCollaboratorData(nextProps);
+  }
+
+  calculateCollaboratorData = (props) => {
+    const { row, column, CellType } = props;
     if (column.type === CellType.LAST_MODIFIER) {
       this.getCollaborator(row._last_modifier);
-    }
-    if (column.type === CellType.CREATOR) {
+    } else if (column.type === CellType.CREATOR) {
       this.getCollaborator(row._creator);
     }
   }
 
   getCollaborator = (value) => {
-    this.setState({isDataLoaded: false, collaborator: null});
     if (!value) {
       this.setState({isDataLoaded: true, collaborator: null});
       return;
     }
+    this.setState({isDataLoaded: false, collaborator: null});
     let { collaborators } = this.props;
     let collaborator = collaborators && collaborators.find(c => c.email === value);
     if (collaborator) {

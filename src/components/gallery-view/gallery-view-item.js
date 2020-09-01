@@ -115,8 +115,8 @@ class GalleryViewItem extends React.Component {
     const { settings, currentColumns } = this.props;
     const { shown_column_names, shown_title_name } = settings;
 
-    let newNameColumnsName = calculateColumnsName(currentColumns, settings.column_name);
-    let newColumns = calculateColumns(newNameColumnsName, currentColumns);
+    let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
+    let newColumns = calculateColumns(newColumnsName, currentColumns);
     let filteredColumns = [];
     if (shown_column_names) {
       filteredColumns = newColumns.filter(item => {
@@ -194,7 +194,7 @@ class GalleryViewItem extends React.Component {
       }
     }
     return (
-      <div className="gallery-item"  style={style}>
+      <div className="gallery-item" style={style}>
         {imageNumber > 1 && 
           <div className="gallery-image-number">
             {imageNumber}

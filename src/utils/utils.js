@@ -37,9 +37,9 @@ export const isValidEmail = (email) => {
   return reg.test(email);
 };
 
-export const calculateColumns = (galleryColumnName, currentColumns) =>  {
+export const calculateColumns = (galleryColumnsName, currentColumns) => {
   let newColumns = [];
-  galleryColumnName.forEach(columnName => {
+  galleryColumnsName.forEach(columnName => {
     let column = currentColumns.find(column => columnName === column.name);
     if (column) {
       newColumns.push(column);
@@ -54,8 +54,8 @@ export const calculateColumnsName = (currentColumns, galleryColumnsName) => {
     newColumnsName.push(column.name);
   });
   if (galleryColumnsName) {
-    newColumnsName = Array.from(new Set([...galleryColumnsName, ...newColumnsName]));
-    newColumnsName = newColumnsName.filter(columnName => newColumnsName.some(c => c === columnName));
+    let columnsName = Array.from(new Set([...galleryColumnsName, ...newColumnsName]));
+    newColumnsName = columnsName.filter(columnName => newColumnsName.some(c => c === columnName));
   }
   return newColumnsName;
 }
