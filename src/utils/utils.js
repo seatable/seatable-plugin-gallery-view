@@ -36,3 +36,26 @@ export const isValidEmail = (email) => {
 
   return reg.test(email);
 };
+
+export const calculateColumns = (galleryColumnsName, currentColumns) => {
+  let newColumns = [];
+  galleryColumnsName.forEach(columnName => {
+    let column = currentColumns.find(column => columnName === column.name);
+    if (column) {
+      newColumns.push(column);
+    } 
+  });
+  return newColumns;
+};
+
+export const calculateColumnsName = (currentColumns, galleryColumnsName) => {
+  let newColumnsName = [];
+  currentColumns.forEach(column => {
+    newColumnsName.push(column.name);
+  });
+  if (galleryColumnsName) {
+    let columnsName = Array.from(new Set([...galleryColumnsName, ...newColumnsName]));
+    newColumnsName = columnsName.filter(columnName => newColumnsName.some(c => c === columnName));
+  }
+  return newColumnsName;
+}

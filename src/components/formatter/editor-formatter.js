@@ -48,9 +48,20 @@ class EditorFormatter extends React.Component {
   }
 
   componentDidMount() {
-    const { row } = this.props;
-    this.getCollaborator(row._creator);
-    this.getCollaborator(row._last_modifier);
+    this.calculateCollaboratorData(this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.calculateCollaboratorData(nextProps);
+  }
+
+  calculateCollaboratorData = (props) => {
+    const { row, column, CellType } = props;
+    if (column.type === CellType.LAST_MODIFIER) {
+      this.getCollaborator(row._last_modifier);
+    } else if (column.type === CellType.CREATOR) {
+      this.getCollaborator(row._creator);
+    }
   }
 
   getCollaborator = (value) => {
@@ -58,6 +69,7 @@ class EditorFormatter extends React.Component {
       this.setState({isDataLoaded: true, collaborator: null});
       return;
     }
+    this.setState({isDataLoaded: false, collaborator: null});
     let { collaborators } = this.props;
     let collaborator = collaborators && collaborators.find(c => c.email === value);
     if (collaborator) {
@@ -156,14 +168,14 @@ class EditorFormatter extends React.Component {
         return <MTimeFormatter value={row._mtime} />;
       }
       case CellType.CREATOR: {
-        if (!row._creator) return this.renderEmptyFormatter();
+        if (!row._creator || !collaborator) return this.renderEmptyFormatter();
         if (isDataLoaded) {
           return <CreatorFormatter collaborators={[collaborator]} value={row._creator} />;
         }
         return null
       }
       case CellType.LAST_MODIFIER: {
-        if (!row._last_modifier) return this.renderEmptyFormatter();
+        if (!row._last_modifier || !collaborator) return this.renderEmptyFormatter();
         if (isDataLoaded) {
           return <LastModifierFormatter collaborators={[collaborator]} value={row._last_modifier} />;
         }

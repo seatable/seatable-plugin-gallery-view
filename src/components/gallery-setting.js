@@ -4,6 +4,7 @@ import intl from 'react-intl-universal';
 import PluginSelect from './plugin-select';
 import { SETTING_KEY, zIndexes, CELL_TYPE } from '../constants';
 import GallerySettingItem from './setting/gallery-setting-item';
+import { calculateColumns, calculateColumnsName } from '../utils/utils';
 import '../locale';
 
 import '../css/gallery-setting.css';
@@ -82,9 +83,34 @@ class GallerySetting extends React.Component {
     this.props.onModifyGallerySettings(updated);
   }
 
+  onMoveColumn = (source, target) => {
+    let { settings, currentColumns } = this.props;
+
+    let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
+    let sourceIndex, targetIndex, movedColumnName, unMovedColumnsName = [];
+    newColumnsName.forEach((column_name, index) => {
+      if (column_name === source) {
+        sourceIndex = index;
+        movedColumnName = column_name;
+      } else {
+        if (column_name === target) {
+          targetIndex = index;
+        }
+        unMovedColumnsName.push(column_name);
+      }
+    });
+    let target_index = unMovedColumnsName.findIndex(column_name => column_name === target);
+    if (sourceIndex < targetIndex) {
+      target_index = target_index + 1;
+    }
+    unMovedColumnsName.splice(target_index, 0, movedColumnName);
+    let updated = Object.assign({}, settings, {column_name: unMovedColumnsName});
+    this.props.onModifyGallerySettings(updated);
+  }
+
   getTitleColumns = () => {
     let { currentColumns } = this.props;
-    let titleColumns = currentColumns.filter(column => SHOW_TITLE_COLUMN_TYPE.includes(column.type))
+    let titleColumns = currentColumns.filter(column => SHOW_TITLE_COLUMN_TYPE.includes(column.type));
     return titleColumns;
   }
 
@@ -92,10 +118,12 @@ class GallerySetting extends React.Component {
     let { settings, currentColumns } = this.props;
     let filteredColumns = [];
     let { shown_title_name } = settings;
+    let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
+    let newColumns = calculateColumns(newColumnsName, currentColumns);
     if (!shown_title_name) {
-      filteredColumns = currentColumns.filter(column => column.key !== '0000');
+      filteredColumns = newColumns.filter(column => column.key !== '0000');
     } else {
-      filteredColumns = currentColumns.filter(column => column.name !== shown_title_name);
+      filteredColumns = newColumns.filter(column => column.name !== shown_title_name);
     }
     return filteredColumns;
   }
@@ -133,7 +161,6 @@ class GallerySetting extends React.Component {
       onChange={this.onModifyFieldsSettings}
     />
   }
-
 
   renderSelector = (source, settingKey, valueKey, labelKey) => {
     let { settings } = this.props;
@@ -192,16 +219,18 @@ class GallerySetting extends React.Component {
                   {this.renderChooseFields()}
                 </div>
                 <div className="fields-setting-body">
-                    {filteredColumns.map((column, index) => {
-                      return (
-                        <GallerySettingItem 
-                          key={`gallery-setting-item${index}`}
-                          column={column}
-                          onColumnItemClick={this.onColumnItemClick}
-                          settings={settings.shown_column_names || []}
-                        />
-                      );
-                    })}
+                  {filteredColumns.map((column, index) => {
+                    return (
+                      <GallerySettingItem 
+                        key={`gallery-setting-item${index}`}
+                        column={column}
+                        onColumnItemClick={this.onColumnItemClick}
+                        settings={settings.shown_column_names || []}
+                        onMoveColumn={this.onMoveColumn}
+                        selectedTable={this.props.selectedTable}
+                      />
+                    );
+                  })}
                 </div>
               </div>
             </div>

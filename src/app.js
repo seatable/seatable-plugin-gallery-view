@@ -279,7 +279,9 @@ class App extends React.Component {
     let viewRows = this.dtable.getViewRows(view, table);
     let insertedRow = viewRows[viewRows.length - 1];
     if (insertedRow) {
-      window.app.expandRow(insertedRow, table);
+      if (window.app && window.app.expandRow) {
+        window.app.expandRow(insertedRow, table);
+      }
     }
   }
 
@@ -374,7 +376,7 @@ class App extends React.Component {
 
   render() {
     let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting,
-     itemShowRowLength } = this.state;
+      itemShowRowLength } = this.state;
     if (isLoading) {
       return '';
     }
@@ -399,7 +401,7 @@ class App extends React.Component {
     } else {
       rowsList = rows.filter((item, index) => {
         return index < itemShowRowLength;
-      })
+      });
     }
     return (
       <Modal isOpen={showDialog} toggle={this.onPluginToggle} className="dtable-plugin plugin-container" contentClassName="gallery-view-content" zIndex={GALLERY_DIALOG_MODAL} size="lg">

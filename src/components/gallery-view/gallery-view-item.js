@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
+import { calculateColumns, calculateColumnsName } from '../../utils/utils';
 
 const propTypes = {
   galleryItem: PropTypes.object,
@@ -78,7 +79,9 @@ class GalleryViewItem extends React.Component {
   onRowExpand = () => {
     let { table,  galleryItem } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
-    window.app.expandRow(row, table);
+    if (window.app && window.app.expandRow) {
+      window.app.expandRow(row, table);
+    }
   }
 
   getGalleryImageColumn = () => {
@@ -111,9 +114,12 @@ class GalleryViewItem extends React.Component {
   getFilteredColumns = () => {
     const { settings, currentColumns } = this.props;
     const { shown_column_names, shown_title_name } = settings;
+
+    let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
+    let newColumns = calculateColumns(newColumnsName, currentColumns);
     let filteredColumns = [];
     if (shown_column_names) {
-      filteredColumns = currentColumns.filter(item => {
+      filteredColumns = newColumns.filter(item => {
         return shown_column_names.some(showColumnName => {
           return item.name === showColumnName && showColumnName !== shown_title_name });
       }); 
@@ -188,7 +194,7 @@ class GalleryViewItem extends React.Component {
       }
     }
     return (
-      <div className="gallery-item"  style={style}>
+      <div className="gallery-item" style={style}>
         {imageNumber > 1 && 
           <div className="gallery-image-number">
             {imageNumber}

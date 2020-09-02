@@ -136,24 +136,24 @@ class GalleryViewsTabs extends React.Component {
                         <i className="dtable-font dtable-icon-drop-down"></i>
                         {isShowViewDropdown &&
                           <ModalPortal>
-                          <DropdownMenu
-                            dropdownMenuPosition={dropdownMenuPosition}
-                            options={
-                              <React.Fragment>
-                                <button className="dropdown-item" onClick={this.onRenameViewToggle}>
-                                  <i className="item-icon dtable-font dtable-icon-rename"></i>
-                                  <span className="item-text">{intl.get('Rename_View')}</span>
-                                </button>
-                                {i > 0 &&
-                                  <button className="dropdown-item" onClick={this.props.onDeleteView.bind(this, _id)}>
-                                    <i className="item-icon dtable-font dtable-icon-delete"></i>
-                                    <span className="item-text">{intl.get('Delete_View')}</span>
+                            <DropdownMenu
+                              dropdownMenuPosition={dropdownMenuPosition}
+                              options={
+                                <React.Fragment>
+                                  <button className="dropdown-item" onClick={this.onRenameViewToggle}>
+                                    <i className="item-icon dtable-font dtable-icon-rename"></i>
+                                    <span className="item-text">{intl.get('Rename_View')}</span>
                                   </button>
-                                }
-                              </React.Fragment>
-                            }
-                          />
-                        </ModalPortal>
+                                  {i > 0 &&
+                                    <button className="dropdown-item" onClick={this.props.onDeleteView.bind(this, _id)}>
+                                      <i className="item-icon dtable-font dtable-icon-delete"></i>
+                                      <span className="item-text">{intl.get('Delete_View')}</span>
+                                    </button>
+                                  }
+                                </React.Fragment>
+                              }
+                            />
+                          </ModalPortal>
                         }
                       </div>
                     }

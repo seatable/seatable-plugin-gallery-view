@@ -12,21 +12,19 @@ const propTypes = {
 function Switch(props) {
   const { onChange, checked, placeholder, disabled } = props;
   return(
-    <div className={`gallery-setting-item`}>
-      <div className="gallery-column-switch">
-        <label className="custom-switch">
-          <input 
-            className="custom-switch-input" 
-            type="checkbox" 
-            checked={checked} 
-            onChange={onChange} 
-            name="custom-switch-checkbox" 
-            disabled={disabled}
-          />
-          <span className="custom-switch-description text-truncate">{placeholder}</span>
-          <span className="custom-switch-indicator"></span>
-        </label>
-      </div>
+    <div className="gallery-column-switch">
+      <label className="custom-switch">
+        <input 
+          className="custom-switch-input" 
+          type="checkbox" 
+          checked={checked} 
+          onChange={onChange} 
+          name="custom-switch-checkbox" 
+          disabled={disabled}
+        />
+        <span className="custom-switch-description text-truncate">{placeholder}</span>
+        <span className="custom-switch-indicator"></span>
+      </label>
     </div>
   );
 }
