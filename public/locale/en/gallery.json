@@ -1,5 +1,4 @@
-
-const de = {
+{
   "Rename_View": "Rename View",
   "Delete_View": "Delete View",
   "New_View": "New View",
@@ -19,6 +18,4 @@ const de = {
   "Title_fields": "Title fields",
   "Other_fields": "Other fields",
   "Hide_all": "Hide all"
-};
-
-export default de;
+}

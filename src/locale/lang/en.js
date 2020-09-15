@@ -1,3 +1,4 @@
+
 const en = {
   "Rename_View": "Rename View",
   "Delete_View": "Delete View",
@@ -20,4 +21,4 @@ const en = {
   "Hide_all": "Hide all"
 };
 
-export default en; 
+export default en;

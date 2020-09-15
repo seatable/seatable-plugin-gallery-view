@@ -22,6 +22,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
+    "push-translate": "tx push -s",
+    "pull-translate": "tx pull -a && node scripts/translate.js",
     "build-plugin": "export GENERATE_SOURCEMAP=false && npm run clean && npm run build && node scripts/build-plugin.js"
   },
   "browserslist": {
