@@ -1,4 +1,3 @@
-
 const zh_CN = {
   "Rename_View": "重命名视图",
   "Delete_View": "删除视图",

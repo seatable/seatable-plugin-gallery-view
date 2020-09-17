@@ -1,4 +1,3 @@
-
 const en = {
   "Rename_View": "Rename View",
   "Delete_View": "Delete View",
