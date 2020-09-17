@@ -17,6 +17,7 @@ export const CELL_TYPE = {
   'LAST_MODIFIER': 'last-modifier',
   'CREATOR': 'creator',
   'LINK_COMMON_DATASET': 'link-common-dataset',
+  'AUTO_NUMBER': 'auto-number'
 };
 
 export const CELL_ICON = {
@@ -38,4 +39,5 @@ export const CELL_ICON = {
   [CELL_TYPE.LAST_MODIFIER]: 'dtable-font dtable-icon-creator',
   [CELL_TYPE.CREATOR]: 'dtable-font dtable-icon-creator',
   [CELL_TYPE.LINK_COMMON_DATASET]: 'dtable-font dtable-icon-link-common-dataset',
+  [CELL_TYPE.AUTO_NUMBER]: 'dtable-font dtable-icon-autonumber'
 };

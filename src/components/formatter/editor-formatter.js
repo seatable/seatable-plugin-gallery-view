@@ -17,7 +17,8 @@ import {
   CTimeFormatter,
   CreatorFormatter,
   LastModifierFormatter,
-  MTimeFormatter
+  MTimeFormatter,
+  AutoNumberFormatter
 } from 'dtable-ui-component';
 import { isValidEmail } from '../../utils/utils';
 import intl from 'react-intl-universal';
@@ -203,6 +204,10 @@ class EditorFormatter extends React.Component {
           }
         }
         return <LinkFormatter column={column} row={row} currentTableId={this.props.table._id} linkMetaData={linkMetaData} containerClassName="gallery-link-container" />;
+      }
+      case CellType.AUTO_NUMBER: {
+        if (!row[columnKey]) return this.renderEmptyFormatter();
+        return <AutoNumberFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
       }
       default:
         return null
