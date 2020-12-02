@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import Switch from './switch';
-import { CELL_ICON } from '../../constants/cell-constants';
 
 const propTypes = {
   selectedTable: PropTypes.object,
+  columnIconConfig: PropTypes.object,
   column: PropTypes.object.isRequired,
   settings: PropTypes.array,
   onColumnItemClick: PropTypes.func.isRequired,
@@ -101,8 +101,8 @@ class GallerySettingItem extends React.Component {
   }
 
   render() {
-   const { column } = this.props;
-    let placeholder = <Fragment><i className={`dtable-font ${CELL_ICON[column.type]}`}></i><span>{column.name}</span></Fragment>;
+    const { column, columnIconConfig } = this.props;
+    let placeholder = <Fragment><i className={`dtable-font ${columnIconConfig[column.type]}`}></i><span>{column.name}</span></Fragment>;
     return (
       <div 
         className={`gallery-setting-item ${this.state.isItemDropTipShow ? 'column-can-drop' : ''}`} 

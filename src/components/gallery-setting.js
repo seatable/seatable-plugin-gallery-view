@@ -18,6 +18,7 @@ const propTypes = {
   settings: PropTypes.object,
   onModifyGallerySettings: PropTypes.func,
   onHideGallerySetting: PropTypes.func,
+  getColumnIconConfig: PropTypes.func,
 };
 
 const SHOW_TITLE_COLUMN_TYPE = [CELL_TYPE.TEXT, CELL_TYPE.SINGLE_SELECT, CELL_TYPE.MULTIPLE_SELECT, CELL_TYPE.NUMBER, CELL_TYPE.FORMULA,
@@ -25,6 +26,11 @@ const SHOW_TITLE_COLUMN_TYPE = [CELL_TYPE.TEXT, CELL_TYPE.SINGLE_SELECT, CELL_TY
   CELL_TYPE.LAST_MODIFIER];
 
 class GallerySetting extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.columnIconConfig = props.getColumnIconConfig();
+  }
 
   onModifySettings = (selectedOption) => {
     let { settings } = this.props;
@@ -228,6 +234,7 @@ class GallerySetting extends React.Component {
                         settings={settings.shown_column_names || []}
                         onMoveColumn={this.onMoveColumn}
                         selectedTable={this.props.selectedTable}
+                        columnIconConfig={this.columnIconConfig}
                       />
                     );
                   })}

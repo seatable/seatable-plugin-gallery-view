@@ -18,7 +18,8 @@ import {
   CreatorFormatter,
   LastModifierFormatter,
   MTimeFormatter,
-  AutoNumberFormatter
+  AutoNumberFormatter,
+  UrlFormatter
 } from 'dtable-ui-component';
 import { isValidEmail } from '../../utils/utils';
 import intl from 'react-intl-universal';
@@ -208,6 +209,10 @@ class EditorFormatter extends React.Component {
       case CellType.AUTO_NUMBER: {
         if (!row[columnKey]) return this.renderEmptyFormatter();
         return <AutoNumberFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+      }
+      case CellType.URL: {
+        if (!row[columnKey]) return this.renderEmptyFormatter();
+        return <UrlFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
       }
       default:
         return null
