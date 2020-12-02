@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import PluginSelect from './plugin-select';
-import { SETTING_KEY, zIndexes, CELL_TYPE } from '../constants';
+import { SETTING_KEY, zIndexes } from '../constants';
 import GallerySettingItem from './setting/gallery-setting-item';
 import { calculateColumns, calculateColumnsName } from '../utils/utils';
 import '../locale';
@@ -21,15 +21,15 @@ const propTypes = {
   getColumnIconConfig: PropTypes.func,
 };
 
-const SHOW_TITLE_COLUMN_TYPE = [CELL_TYPE.TEXT, CELL_TYPE.SINGLE_SELECT, CELL_TYPE.MULTIPLE_SELECT, CELL_TYPE.NUMBER, CELL_TYPE.FORMULA,
-  CELL_TYPE.DATE, CELL_TYPE.COLLABORATOR, CELL_TYPE.GEOLOCATION, CELL_TYPE.CTIME, CELL_TYPE.MTIME, CELL_TYPE.CREATOR, 
-  CELL_TYPE.LAST_MODIFIER];
-
 class GallerySetting extends React.Component {
 
   constructor(props) {
     super(props);
     this.columnIconConfig = props.getColumnIconConfig();
+    const CellType = props.CellType;
+    this.SHOW_TITLE_COLUMN_TYPE = [CellType.TEXT, CellType.SINGLE_SELECT, CellType.MULTIPLE_SELECT, CellType.NUMBER, CellType.FORMULA,
+      CellType.DATE, CellType.COLLABORATOR, CellType.GEOLOCATION, CellType.CTIME, CellType.MTIME, CellType.CREATOR, 
+      CellType.LAST_MODIFIER];
   }
 
   onModifySettings = (selectedOption) => {
@@ -116,7 +116,7 @@ class GallerySetting extends React.Component {
 
   getTitleColumns = () => {
     let { currentColumns } = this.props;
-    let titleColumns = currentColumns.filter(column => SHOW_TITLE_COLUMN_TYPE.includes(column.type));
+    let titleColumns = currentColumns.filter(column => this.SHOW_TITLE_COLUMN_TYPE.includes(column.type));
     return titleColumns;
   }
 

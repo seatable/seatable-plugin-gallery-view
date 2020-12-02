@@ -459,6 +459,7 @@ class App extends React.Component {
               currentColumns={currentColumns}
               imageColumns={imageColumns}
               getColumnIconConfig={this.getColumnIconConfig}
+              CellType={CellType}
             />
           }
         </ModalBody>

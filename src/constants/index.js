@@ -6,6 +6,5 @@ const PLUGIN_NAME = 'gallery';
 export {
   PLUGIN_NAME,
   zIndexes,
-  SETTING_KEY,
-  CELL_TYPE
+  SETTING_KEY
 };
