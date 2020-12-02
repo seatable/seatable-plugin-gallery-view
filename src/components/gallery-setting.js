@@ -16,6 +16,7 @@ const propTypes = {
   imageColumns: PropTypes.array,
   selectedTable: PropTypes.object,
   settings: PropTypes.object,
+  CellType: PropTypes.object,
   onModifyGallerySettings: PropTypes.func,
   onHideGallerySetting: PropTypes.func,
   getColumnIconConfig: PropTypes.func,
