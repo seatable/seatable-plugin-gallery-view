@@ -314,6 +314,10 @@ class App extends React.Component {
     return this.dtable.getRowById(table, rowID);
   }
 
+  getColumnIconConfig = () => {
+    return this.dtable.getColumnIconConfig();
+  }
+
   getInsertedRowInitData = (view, table, rowID) => {
     return this.dtable.getInsertedRowInitData(view, table, rowID);
   }
@@ -454,6 +458,8 @@ class App extends React.Component {
               onHideGallerySetting={this.onHideGallerySetting}
               currentColumns={currentColumns}
               imageColumns={imageColumns}
+              getColumnIconConfig={this.getColumnIconConfig}
+              CellType={CellType}
             />
           }
         </ModalBody>
