@@ -171,11 +171,11 @@ class GalleryViewsTabs extends React.Component {
     return (
       <div className="gallery-views-tabs">
         <div className="tabs-scroll-container">
-          {tabsScrollLeft > 0 && <div className="tabs-scroll-before">A</div>}
+          {tabsScrollLeft > 0 && <div className="tabs-scroll-before"></div>}
           <div className="tabs-scroll" ref={ref => this.viewsTabsScroll = ref} onScroll={this.onTabsScroll}>
             <div className="tabs-content">{this.renderViewsItems()}</div>
           </div>
-          {tabsScrollLeft + this.tabsNavWidth < this.tabsNavTotalWidth && <div className="tabs-scroll-after">B</div>}
+          {tabsScrollLeft + this.tabsNavWidth < this.tabsNavTotalWidth && <div className="tabs-scroll-after"></div>}
         </div>
         <div className="views-tabs-add-btn" onClick={this.onNewViewToggle}>
           <i className="dtable-font dtable-icon-add-table"></i>

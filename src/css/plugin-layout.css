@@ -50,6 +50,7 @@
   display: flex;
   min-height: 0;
   overflow: hidden;
+  background-color: #fff;
 }
 
 .gallery-plugin-container .gallery-content .gallery-list-content {
