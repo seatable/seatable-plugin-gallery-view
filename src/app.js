@@ -1,18 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import DTable from 'dtable-sdk';
-import './locale/index.js';
 import GalleryViewsTabs from './components/gallery-views-tabs';
 import { PLUGIN_NAME, SETTING_KEY } from './constants';
 import View from './model/view';
 import { generatorViewId } from './utils/utils';
 import GallerySetting from './components/gallery-setting';
 import Gallery from './gallery';
-import { GALLERY_DIALOG_MODAL } from './constants/zIndexes';
+import './locale/index.js';
 
-import './css/plugin-layout.css';
 import cardLogo from './assets/image/card-view.png';
+import './css/plugin-layout.css';
 
 const DEFAULT_PLUGIN_SETTINGS = {
   views: [
@@ -357,17 +355,6 @@ class App extends React.Component {
     return settings && Object.keys(settings).length > 0;
   }
 
-  renderBtnGroups = () => {
-    return (
-      <div className="gallery-header-btn d-flex align-items-center">
-        <span className="btn-close gallery-setting" onClick={this.onGallerySettingToggle}>
-          <i className="dtable-font dtable-icon-settings"></i>
-        </span>
-        <span className="dtable-font dtable-icon-x btn-close" onClick={this.onPluginToggle}></span>
-      </div>
-    );
-  }
-
   onAddGalleryRowList = () => {
     let newGalleryRowList = this.state.itemShowRowLength + 50;
     this.setState({itemShowRowLength: newGalleryRowList});
@@ -379,8 +366,7 @@ class App extends React.Component {
   }
 
   render() {
-    let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting,
-      itemShowRowLength } = this.state;
+    let { isLoading, plugin_settings, selectedViewIdx, isShowGallerySetting, itemShowRowLength } = this.state;
     if (isLoading) {
       return '';
     }
@@ -408,11 +394,11 @@ class App extends React.Component {
       });
     }
     return (
-      <Modal isOpen={showDialog} toggle={this.onPluginToggle} className="dtable-plugin plugin-container" contentClassName="gallery-view-content" zIndex={GALLERY_DIALOG_MODAL} size="lg">
-        <ModalHeader className="plugin-header" close={this.renderBtnGroups()}>
-          <div className="logo-title d-flex align-items-center">
-            <img className="plugin-logo" src={cardLogo} alt="" />
-            <span className="plugin-title">{'Gallery'}</span>
+      <div className="dtable-plugin gallery-plugin-container" >
+        <div className="plugin-header">
+          <div className="plugin-logo">
+            <img className="logo" src={cardLogo} alt="logo" width="20" height="20" />
+            <span className="title">{'Gallery'}</span>
           </div>
           <GalleryViewsTabs
             ref={ref => this.viewsTabs = ref}
@@ -423,8 +409,14 @@ class App extends React.Component {
             onDeleteView={this.onDeleteView}
             onRenameView={this.onRenameView}
           />
-        </ModalHeader>
-        <ModalBody className="test-plugin-content gallery-dialog-body">
+          <div className="gallery-operator">
+            <span className="dtable-font dtable-icon-settings gallery-setting" onClick={this.onGallerySettingToggle}></span>
+          </div>
+          <div className="gallery-operator">
+            <span className="dtable-font dtable-icon-x btn-close" onClick={this.onPluginToggle}></span>
+          </div>
+        </div>
+        <div className="gallery-content">
           <Gallery
             rows={rowsList}
             selectedGalleryView={selectedGalleryView}
@@ -463,8 +455,8 @@ class App extends React.Component {
               CellType={CellType}
             />
           }
-        </ModalBody>
-      </Modal>
+        </div>
+      </div>
     );
   }
 }

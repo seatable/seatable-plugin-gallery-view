@@ -1,162 +1,61 @@
-.dtable-plugin.plugin-container {
-  width: 90%;
-  max-width: 1398px;
-  position: absolute;
-  margin-left: 50%;
-  transform: translateX(-50%) !important;
-  top: 0;
-  bottom: 0;
-}
-
-.plugin-container .gallery-view-content .plugin-header {
-  align-items: center;
-  padding: 0 1rem;
-}
-
-.plugin-container .gallery-view-content .modal-title {
+.dtable-plugin.gallery-plugin-container {
+  flex: 1;
   display: flex;
-  flex: 1;
-  height: 100%;
+  flex-direction: column;
+  overflow: hidden;
+  min-height: 0;
 }
 
-.plugin-container .gallery-view-content .logo-title {
-  width: calc(180px - 1rem);
+.gallery-plugin-container .plugin-header {
+  display: flex;
+  align-items: center;
+  height: 50px;
   padding: 10px 0;
-}
-
-.plugin-container .gallery-view-content .modal-title .plugin-logo {
-  width: 24px;
-  height: 24px;
-  margin-right: 10px;
-}
-
-.gallery-dialog-body {
-  padding: 0;
-  height: calc(100% - 56px);
-  overflow: hidden;
-}
-
-.gallery-dialog-body .gallery-list-content {
-  padding: 0 7px 1rem;
-  overflow: auto;
-  height: 100%;
-}
-
-.plugin-container .gallery-view-content .gallery-views-tabs {
-  flex: 1;
-  font-size: 14px;
-  font-weight: 500;
-  overflow: hidden;
-}
-
-.plugin-container .gallery-view-content .views-tabs-scroll {
-  overflow-x: scroll;
-  overflow-y: hidden;
-}
-
-.plugin-container .gallery-view-content .views-tabs-scroll::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
-}
-
-.plugin-container .gallery-view-content .gallery-views-tabs .views {
-  height: 100%;
-}
-
-.plugin-container .gallery-view-content .view-item {
-  height: 100%;
-  padding: 0 16px;
-  flex: 1 0 auto;
-}
-
-.plugin-container .gallery-view-content .view-item .view-item-content {
-  width: 100%;
-  height: 100%;
-  border-bottom: 2px solid transparent;
-  color: #999;
-}
-
-.plugin-container .gallery-view-content .view-item .view-item-content:hover {
-  border-color: #3b88fd;
-  color: #444;
-  cursor: pointer;
-}
-
-.plugin-container .gallery-view-content .view-item.active .view-item-content {
-  border-color: #3b88fd;
-  color: #444;
-  cursor: default;
-}
-
-.plugin-container .gallery-view-content .btn-view-dropdown {
-  width: 20px;
-  height: 20px;
-  margin-left: 5px;
-  margin-right: -5px;
-  line-height: 20px;
-  cursor: pointer;
-}
-
-.plugin-container .gallery-view-content .btn-view-dropdown .dtable-icon-drop-down {
-  display: inline-block;
-  height: 18px;
-  font-size: 12px;
-  color: #949494;
-  transform: scale(.8);
-  transition: all .1s;
-}
-
-.plugin-container .gallery-view-content .btn-view-dropdown:hover .dtable-icon-drop-down {
-  color: #aaa;
-}
-
-.plugin-container .gallery-view-content .btn-add-view {
-  width: 24px;
-  height: 100%;
-}
-
-.plugin-container .gallery-view-content .btn-add-view .dtable-icon-add-table {
-  height: 24px;
-  width: 24px;
-  text-align: center;
-  cursor: pointer;
-  color: #000;
-  opacity: 0.5;
-  font-size: 14px;
-  font-weight: 500;
-  line-height: 24px;
-}
-
-.plugin-container .gallery-view-content {
-  height: 100%;
-  overflow: hidden;
-}
-
-.plugin-container .gallery-view-content .plugin-body {
-  padding: 0;
-  overflow: hidden;
   background-color: #fff;
 }
 
-.plugin-container .gallery-view-content .gallery-header-btn {
-  height: 100%;
+.gallery-plugin-container .plugin-header .plugin-logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 80px 0 16px;
 }
 
-.plugin-container .gallery-view-content .gallery-header-btn .gallery-setting {
-  margin-right: 10px;
+.gallery-plugin-container .plugin-header .plugin-logo img {
+  margin-right: 4px;
 }
 
-.plugin-container .gallery-view-content .btn-close {
-  height: 24px;
-  width: 24px;
-  text-align: center;
-  cursor: pointer;
-  color: #000;
-  opacity: 0.5;
-  font-weight: 700;
+.gallery-plugin-container .plugin-header .gallery-views-tabs {
+  flex: 1;
 }
 
-.plugin-container .gallery-view-content .btn-close:hover {
+.gallery-plugin-container .plugin-header .gallery-operator {
+  margin-left: 80px;
+  color: #999;
+}
+
+.gallery-plugin-container .plugin-header .gallery-operator:last-child {
+  margin-left: 10px;
+  margin-right: 16px;
+  color: #999;
+}
+
+.gallery-plugin-container .plugin-header .gallery-operator:hover {
   opacity: 0.8;
+}
+
+.gallery-plugin-container .gallery-content {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.gallery-plugin-container .gallery-content .gallery-list-content {
+  flex: 1;
+  display: flex;
+  padding: 0 7px 1rem;
+  min-height: 0;
+  overflow: auto;
+  position: relative;
 }

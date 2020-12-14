@@ -8,6 +8,8 @@ import NewViewDialog from './dialog/new-view-dialog';
 import RenameViewDialog from './dialog/rename-view-dialog';
 import '../locale';
 
+import '../css/gallery-tabs.css';
+
 const propTypes = {
   views: PropTypes.array,
   selectedViewIdx: PropTypes.number,
@@ -107,7 +109,7 @@ class GalleryViewsTabs extends React.Component {
     let { isShowViewDropdown, dropdownMenuPosition, isShowNewViewDialog, isShowRenameViewDialog } = this.state;
     let selectedGridView = views[selectedViewIdx] || {};
     return (
-      <div className="gallery-views-tabs d-flex">
+      <div className="gallery-views-tabs">
         <div className="views-tabs-scroll" ref={ref => this.viewsTabsScroll = ref}>
           <div className="views d-inline-flex">
             {views.map((v, i) => {
@@ -163,7 +165,7 @@ class GalleryViewsTabs extends React.Component {
             })}
           </div>
         </div>
-        <div className="btn-add-view d-flex align-items-center" onClick={this.onNewViewToggle}>
+        <div className="views-tabs-add-btn" onClick={this.onNewViewToggle}>
           <i className="dtable-font dtable-icon-add-table"></i>
         </div>
         {isShowNewViewDialog &&
