@@ -6,6 +6,7 @@ import AddGalleryItem from './components/add-gallery-item';
 import './css/gallery.css';
 
 const propTypes = {
+  tables: PropTypes.array,
   rows: PropTypes.array.isRequired,
   selectedGalleryView: PropTypes.object,
   table: PropTypes.object,
@@ -60,6 +61,7 @@ class Gallery extends React.Component {
             getMediaUrl={this.props.getMediaUrl}
             CellType={this.props.CellType}
             selectedImageColumn={this.props.selectedImageColumn}
+            tables={this.props.tables}
           />
           <AddGalleryItem 
             table={this.props.table}
