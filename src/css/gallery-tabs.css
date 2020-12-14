@@ -6,18 +6,55 @@
   overflow: hidden;
 }
 
-.gallery-views-tabs .views-tabs-scroll {
+.gallery-views-tabs .tabs-scroll-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.gallery-views-tabs .tabs-scroll-before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 23px;
+  z-index: 5;
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+
+.gallery-views-tabs .tabs-scroll-after {
+  position: absolute;
+  width: 30px;
+  height: 23px;
+  top: 0;
+  right: 0px;
+  z-index: 5;
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+
+.gallery-views-tabs .tabs-scroll {
+  flex: 1;
+  display: flex;
   overflow-x: scroll;
   overflow-y: hidden;
 }
 
-.gallery-views-tabs .views-tabs-scroll::-webkit-scrollbar {
+.gallery-views-tabs .tabs-scroll::-webkit-scrollbar {
   display: none;
   width: 0;
   height: 0;
 }
 
-.gallery-views-tabs .views {
+
+.gallery-views-tabs .tabs-content {
+  display: inline-flex;
   height: 100%;
 }
 

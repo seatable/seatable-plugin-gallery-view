@@ -31,22 +31,37 @@ class GalleryViewsTabs extends React.Component {
       },
       isShowNewViewDialog: false,
       isShowRenameViewDialog: false,
+      scrollLeft: 0
     };
     this.views = [];
   }
 
   componentDidMount() {
     let { selectedViewIdx } = this.props;
-    let { left } = this.views[selectedViewIdx].getBoundingClientRect();
-    let { offsetWidth } = this.viewsTabsScroll;
-    if (left > offsetWidth) {
-      this.viewsTabsScroll.scrollLeft = left - offsetWidth;
-    }
+    this.selectView(selectedViewIdx);
     document.addEventListener('click', this.onHideViewDropdown);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.onHideViewDropdown);
+  }
+
+  selectView(selectedViewIdx) {
+    // get current view's distance with container's left
+    let { left } = this.views[selectedViewIdx].getBoundingClientRect();
+
+    // get container's view with and total width
+    let { offsetWidth, scrollWidth } = this.viewsTabsScroll;
+    if (left > offsetWidth) {
+      this.viewsTabsScroll.scrollLeft = left - offsetWidth; 
+      this.setState({tabsScrollLeft: left - offsetWidth});
+    }
+    this.tabsNavWidth = offsetWidth;
+    this.tabsNavTotalWidth = scrollWidth;
+  }
+
+  onTabsScroll = (event) => {
+    this.setState({tabsScrollLeft: event.target.scrollLeft});
   }
 
   onDropdownToggle = (evt) => {
@@ -151,14 +166,16 @@ class GalleryViewsTabs extends React.Component {
 
   render() {
     let { views, selectedViewIdx } = this.props;
-    let { isShowNewViewDialog, isShowRenameViewDialog } = this.state;
+    let { tabsScrollLeft, isShowNewViewDialog, isShowRenameViewDialog } = this.state;
     let selectedGridView = views[selectedViewIdx] || {};
     return (
       <div className="gallery-views-tabs">
-        <div className="views-tabs-scroll" ref={ref => this.viewsTabsScroll = ref}>
-          <div className="views d-inline-flex">
-            {this.renderViewsItems()}
+        <div className="tabs-scroll-container">
+          {tabsScrollLeft > 0 && <div className="tabs-scroll-before">A</div>}
+          <div className="tabs-scroll" ref={ref => this.viewsTabsScroll = ref} onScroll={this.onTabsScroll}>
+            <div className="tabs-content">{this.renderViewsItems()}</div>
           </div>
+          {tabsScrollLeft + this.tabsNavWidth < this.tabsNavTotalWidth && <div className="tabs-scroll-after">B</div>}
         </div>
         <div className="views-tabs-add-btn" onClick={this.onNewViewToggle}>
           <i className="dtable-font dtable-icon-add-table"></i>
