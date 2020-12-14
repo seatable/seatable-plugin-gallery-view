@@ -27,6 +27,7 @@ import intl from 'react-intl-universal';
 
 const propTypes = {
   type: PropTypes.string,
+  tables: PropTypes.array,
   column: PropTypes.object.isRequired,
   selectedView: PropTypes.object,
   row: PropTypes.object.isRequired,
@@ -113,7 +114,7 @@ class EditorFormatter extends React.Component {
   }
 
   renderFormatter = () => {
-    const { column, row, collaborators, CellType } = this.props;
+    const { column, row, collaborators, CellType, tables } = this.props;
     let {type: columnType, key: columnKey} = column;
     const { isDataLoaded, collaborator } = this.state;
     const _this = this;
@@ -141,7 +142,7 @@ class EditorFormatter extends React.Component {
       }
       case CellType.NUMBER: {
         if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <NumberFormatter value={row[columnKey]} format={column.data.format} />;
+        return <NumberFormatter value={row[columnKey]} data={column.data} />;
       }
       case CellType.DATE: {
         if (!row[columnKey]) return this.renderEmptyFormatter();
@@ -188,7 +189,7 @@ class EditorFormatter extends React.Component {
         let formulaRows = this.props.selectedView.formula_rows;
         let formulaValue = formulaRows ? formulaRows[row._id][columnKey] : '';
         if (!formulaValue) return this.renderEmptyFormatter();
-        return <FormulaFormatter value={formulaValue} resultType={column.data.result_type} containerClassName="gallery-formula-container" />;
+        return <FormulaFormatter value={formulaValue} column={column} collaborators={collaborators} tables={tables} containerClassName="gallery-formula-container" />;
       }
       case CellType.LINK: {
         let linkMetaData = {

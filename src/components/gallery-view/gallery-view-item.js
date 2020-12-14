@@ -6,6 +6,7 @@ import EditorFormatter from '../formatter/editor-formatter';
 import { calculateColumns, calculateColumnsName } from '../../utils/utils';
 
 const propTypes = {
+  tables: PropTypes.array,
   galleryItem: PropTypes.object,
   imageColumn: PropTypes.object,
   getRow: PropTypes.func,
@@ -146,6 +147,7 @@ class GalleryViewItem extends React.Component {
             getUserCommonInfo={this.props.getUserCommonInfo}
             getMediaUrl={this.props.getMediaUrl}
             CellType={this.props.CellType}
+            tables={this.props.tables}
           /></div>);
     })
   }
@@ -168,6 +170,7 @@ class GalleryViewItem extends React.Component {
         getMediaUrl={this.props.getMediaUrl}
         CellType={this.props.CellType}
         type="row_title"
+        tables={this.props.tables}
       />
     </div>);
   }

@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import GalleryViewItem from './gallery-view-item';
 
 const propTypes = {
+  tables: PropTypes.array,
   rows: PropTypes.array.isRequired,
   imageColumn: PropTypes.object,
   getRow: PropTypes.func,
@@ -81,6 +82,7 @@ class GalleryViewList extends React.Component {
               getUserCommonInfo={this.props.getUserCommonInfo}
               getMediaUrl={this.props.getMediaUrl}
               CellType={this.props.CellType}
+              tables={this.props.tables}
             />
           );
         })}
