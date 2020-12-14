@@ -104,65 +104,60 @@ class GalleryViewsTabs extends React.Component {
     this.props.onSelectView(id);
   }
 
+  renderViewsItems = () => {
+    let { views, selectedViewIdx } = this.props;
+    let { isShowViewDropdown, dropdownMenuPosition } = this.state;
+    return (
+      views.map((v, i) => {
+        let { _id, name } = v;
+        let isActiveView = selectedViewIdx === i;
+        let activeViewClass = classnames({'view-item': true, 'active': isActiveView});
+        return (
+          <div key={`gallery-views-${_id}`} className={activeViewClass}>
+            <div className="view-item-content" ref={this.setViewItem(i)} onClick={this.props.onSelectView.bind(this, _id, i)}>
+              <div className="view-name">{name}</div>
+              {isActiveView && (
+                <div className="btn-view-dropdown" ref={ref => this.btnViewDropdown = ref} onClick={this.onDropdownToggle}>
+                  <i className="dtable-font dtable-icon-drop-down"></i>
+                </div>
+              )}
+              {isShowViewDropdown &&
+                <ModalPortal>
+                  <DropdownMenu
+                    dropdownMenuPosition={dropdownMenuPosition}
+                    options={
+                      <React.Fragment>
+                        <button className="dropdown-item" onClick={this.onRenameViewToggle}>
+                          <i className="item-icon dtable-font dtable-icon-rename"></i>
+                          <span className="item-text">{intl.get('Rename_View')}</span>
+                        </button>
+                        {i > 0 &&
+                          <button className="dropdown-item" onClick={this.props.onDeleteView.bind(this, _id)}>
+                            <i className="item-icon dtable-font dtable-icon-delete"></i>
+                            <span className="item-text">{intl.get('Delete_View')}</span>
+                          </button>
+                        }
+                      </React.Fragment>
+                    }
+                  />
+                </ModalPortal>
+              }
+            </div>
+          </div>
+        );
+      })
+    );
+  }
+
   render() {
     let { views, selectedViewIdx } = this.props;
-    let { isShowViewDropdown, dropdownMenuPosition, isShowNewViewDialog, isShowRenameViewDialog } = this.state;
+    let { isShowNewViewDialog, isShowRenameViewDialog } = this.state;
     let selectedGridView = views[selectedViewIdx] || {};
     return (
       <div className="gallery-views-tabs">
         <div className="views-tabs-scroll" ref={ref => this.viewsTabsScroll = ref}>
           <div className="views d-inline-flex">
-            {views.map((v, i) => {
-              let { _id, name } = v;
-              let isActiveView = selectedViewIdx === i;
-              return (
-                <div
-                  key={`gallery-views-${_id}`}
-                  className={classnames({
-                    'view-item': true, 
-                    'active': isActiveView
-                  })
-                }>
-                  <div
-                    className="view-item-content d-flex align-items-center justify-content-center position-relative"
-                    ref={this.setViewItem(i)}
-                    onClick={this.props.onSelectView.bind(this, _id, i)}
-                  >
-                    <div className="view-name">{name}</div>
-                    {isActiveView &&
-                      <div
-                        className="btn-view-dropdown d-flex align-items-center justify-content-center"
-                        ref={ref => this.btnViewDropdown = ref}
-                        onClick={this.onDropdownToggle}
-                      >
-                        <i className="dtable-font dtable-icon-drop-down"></i>
-                        {isShowViewDropdown &&
-                          <ModalPortal>
-                            <DropdownMenu
-                              dropdownMenuPosition={dropdownMenuPosition}
-                              options={
-                                <React.Fragment>
-                                  <button className="dropdown-item" onClick={this.onRenameViewToggle}>
-                                    <i className="item-icon dtable-font dtable-icon-rename"></i>
-                                    <span className="item-text">{intl.get('Rename_View')}</span>
-                                  </button>
-                                  {i > 0 &&
-                                    <button className="dropdown-item" onClick={this.props.onDeleteView.bind(this, _id)}>
-                                      <i className="item-icon dtable-font dtable-icon-delete"></i>
-                                      <span className="item-text">{intl.get('Delete_View')}</span>
-                                    </button>
-                                  }
-                                </React.Fragment>
-                              }
-                            />
-                          </ModalPortal>
-                        }
-                      </div>
-                    }
-                  </div>
-                </div>
-              );
-            })}
+            {this.renderViewsItems()}
           </div>
         </div>
         <div className="views-tabs-add-btn" onClick={this.onNewViewToggle}>
