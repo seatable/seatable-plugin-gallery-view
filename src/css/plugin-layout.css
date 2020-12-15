@@ -48,6 +48,7 @@
 .gallery-plugin-container .gallery-content {
   flex: 1;
   display: flex;
+  position: relative;
   min-height: 0;
   overflow: hidden;
   background-color: #fff;

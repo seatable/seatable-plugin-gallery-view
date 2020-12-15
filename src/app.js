@@ -25,16 +25,19 @@ const DEFAULT_PLUGIN_SETTINGS = {
 const KEY_SELECTED_VIEW_IDS = `${PLUGIN_NAME}-selectedViewIds`;
 
 const propTypes = {
-  showDialog: PropTypes.bool
+  isDevelopment: PropTypes.bool,
+  
 };
-
 class App extends React.Component {
+
+  static defaultProps = {
+    isDevelopment: false
+  };
 
   constructor(props) {
     super(props);
     this.state = {
       isLoading: true,
-      showDialog: props.showDialog || false,
       table: null,
       itemShowRowLength: 50,
       selectedViewIdx: 0,
@@ -48,12 +51,9 @@ class App extends React.Component {
     this.initPluginDTableData();
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.setState({showDialog: nextProps.showDialog});
-  } 
-
   async initPluginDTableData() {
-    if (window.app === undefined) {
+    const { isDevelopment } = this.props;
+    if (isDevelopment) {
       // local develop
       window.app = {};
       await this.dtable.init(window.dtablePluginConfig);
@@ -94,7 +94,7 @@ class App extends React.Component {
   }
 
   resetData = (init = false) => {
-    let { showDialog, isShowGallerySetting } = this.state;
+    let { isShowGallerySetting } = this.state;
     let plugin_settings = this.dtable.getPluginSettings(PLUGIN_NAME) || {};
     if (!plugin_settings || Object.keys(plugin_settings).length === 0) {
       plugin_settings = DEFAULT_PLUGIN_SETTINGS;
@@ -107,11 +107,9 @@ class App extends React.Component {
     selectedViewIdx = selectedViewIdx > 0 ? selectedViewIdx : 0;
     if (init) {
       isShowGallerySetting = !this.isValidViewSettings(views[selectedViewIdx].settings);
-      showDialog = true;
     }
     this.setState({
       isLoading: false,
-      showDialog,
       plugin_settings,
       selectedViewIdx,
       isShowGallerySetting
@@ -141,7 +139,6 @@ class App extends React.Component {
   }
 
   onPluginToggle = () => {
-    this.setState({showDialog: false});
     window.app.onClosePlugin();
   }
 
