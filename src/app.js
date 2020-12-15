@@ -55,7 +55,7 @@ class App extends React.Component {
     const { isDevelopment } = this.props;
     if (isDevelopment) {
       // local develop
-      window.app = {};
+      window.app = window.app ? window.app : {};
       await this.dtable.init(window.dtablePluginConfig);
       await this.dtable.syncWithServer();
       let relatedUsersRes = await this.getRelatedUsersFromServer(this.dtable.dtableStore);
