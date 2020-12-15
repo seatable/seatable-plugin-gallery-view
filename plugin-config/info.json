@@ -1,6 +1,7 @@
 {
   "name": "gallery",
   "version": "0.1.22",
+  "display_type": "overlay",
   "display_name": {
     "de": "Galerie",
     "en": "Gallery",
