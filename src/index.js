@@ -6,7 +6,7 @@ import './setting';
 class TaskList {
 
   static execute() {
-    ReactDOM.render(<App isDevelopment={true}/>, document.getElementById('root'));
+    ReactDOM.render(<App isDevelopment={true} showDialog={true} />, document.getElementById('root'));
   }
 
 }
@@ -15,8 +15,7 @@ TaskList.execute();
 
 window.app = window.app ? window.app : {};
 window.app.onClosePlugin = function() {
-  const pluginWrapper = document.getElementById('root');
-  ReactDOM.unmountComponentAtNode(pluginWrapper);
+
 }
 
 const openBtn = document.getElementById('plugin-controller');

@@ -25,8 +25,8 @@ const DEFAULT_PLUGIN_SETTINGS = {
 const KEY_SELECTED_VIEW_IDS = `${PLUGIN_NAME}-selectedViewIds`;
 
 const propTypes = {
+  showDialog: PropTypes.bool,
   isDevelopment: PropTypes.bool,
-  
 };
 class App extends React.Component {
 
@@ -38,6 +38,7 @@ class App extends React.Component {
     super(props);
     this.state = {
       isLoading: true,
+      showDialog: props.showDialog || false,
       table: null,
       itemShowRowLength: 50,
       selectedViewIdx: 0,
@@ -50,6 +51,10 @@ class App extends React.Component {
   componentDidMount() {
     this.initPluginDTableData();
   }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({showDialog: nextProps.showDialog});
+  } 
 
   async initPluginDTableData() {
     const { isDevelopment } = this.props;
@@ -94,7 +99,7 @@ class App extends React.Component {
   }
 
   resetData = (init = false) => {
-    let { isShowGallerySetting } = this.state;
+    let { showDialog, isShowGallerySetting } = this.state;
     let plugin_settings = this.dtable.getPluginSettings(PLUGIN_NAME) || {};
     if (!plugin_settings || Object.keys(plugin_settings).length === 0) {
       plugin_settings = DEFAULT_PLUGIN_SETTINGS;
@@ -107,9 +112,11 @@ class App extends React.Component {
     selectedViewIdx = selectedViewIdx > 0 ? selectedViewIdx : 0;
     if (init) {
       isShowGallerySetting = !this.isValidViewSettings(views[selectedViewIdx].settings);
+      showDialog = true;
     }
     this.setState({
       isLoading: false,
+      showDialog,
       plugin_settings,
       selectedViewIdx,
       isShowGallerySetting
@@ -139,6 +146,7 @@ class App extends React.Component {
   }
 
   onPluginToggle = () => {
+    this.setState({showDialog: false});
     window.app.onClosePlugin();
   }
 
@@ -363,8 +371,8 @@ class App extends React.Component {
   }
 
   render() {
-    let { isLoading, plugin_settings, selectedViewIdx, isShowGallerySetting, itemShowRowLength } = this.state;
-    if (isLoading) {
+    let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting, itemShowRowLength } = this.state;
+    if (isLoading || !showDialog) {
       return '';
     }
     let CellType = this.dtable.getCellType();
