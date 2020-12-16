@@ -253,6 +253,9 @@ class App extends React.Component {
     let newRowData = {};
     for (let key in rowData) {
       let column = columns.find(column => column.key === key);
+      if (!column) {
+        continue;
+      }
       switch(column.type) {
         case 'single-select': {
           let singleSelectName = '';
