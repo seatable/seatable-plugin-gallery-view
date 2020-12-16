@@ -146,7 +146,9 @@ class App extends React.Component {
   }
 
   onPluginToggle = () => {
-    this.setState({showDialog: false});
+    setTimeout(() => {
+      this.setState({showDialog: false});
+    }, 500);
     window.app.onClosePlugin();
   }
 
