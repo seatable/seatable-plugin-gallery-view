@@ -35,6 +35,7 @@
 .gallery-plugin-container .plugin-header .gallery-operator {
   margin-left: 80px;
   color: #999;
+  cursor: pointer;
 }
 
 .gallery-plugin-container .plugin-header .gallery-operator:last-child {
