@@ -2,6 +2,7 @@
 .gallery-list-content .gallery-list {
   display: flex;
   flex-wrap: wrap;
+  padding-bottom: 150px;
 }
 
 .gallery-list .gallery-item {

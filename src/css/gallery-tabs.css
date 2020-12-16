@@ -1,0 +1,128 @@
+.gallery-views-tabs {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-weight: 500;
+  overflow: hidden;
+}
+
+.gallery-views-tabs .tabs-scroll-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  overflow: hidden;
+  margin-top: 2px;
+}
+
+.gallery-views-tabs .tabs-scroll-before {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 23px;
+  z-index: 5;
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+
+.gallery-views-tabs .tabs-scroll-after {
+  position: absolute;
+  width: 30px;
+  height: 23px;
+  top: 0;
+  right: 0px;
+  z-index: 5;
+  color: #ffffff;
+  opacity: 0.5;
+}
+
+
+.gallery-views-tabs .tabs-scroll {
+  flex: 1;
+  display: flex;
+  overflow-x: scroll;
+  overflow-y: hidden;
+}
+
+.gallery-views-tabs .tabs-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+
+.gallery-views-tabs .tabs-content {
+  display: inline-flex;
+  height: 100%;
+}
+
+.gallery-views-tabs .view-item {
+  height: 100%;
+  padding: 0 16px;
+  flex: 1 0 auto;
+}
+
+.gallery-views-tabs .view-item .view-item-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-bottom: 2px solid transparent;
+  color: #999;
+}
+
+.gallery-views-tabs .view-item .view-item-content:hover {
+  border-color: #3b88fd;
+  color: #444;
+  cursor: pointer;
+}
+
+.gallery-views-tabs .view-item.active .view-item-content {
+  border-color: #3b88fd;
+  color: #444;
+  cursor: default;
+}
+
+.gallery-views-tabs .btn-view-dropdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 5px;
+  margin-right: -5px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  cursor: pointer;
+}
+
+.gallery-views-tabs .btn-view-dropdown .dtable-icon-drop-down {
+  display: inline-block;
+  height: 18px;
+  font-size: 12px;
+  color: #949494;
+  transform: scale(.8);
+  transition: all .1s;
+}
+
+.gallery-views-tabs .btn-view-dropdown:hover .dtable-icon-drop-down {
+  color: #aaa;
+}
+
+.gallery-views-tabs .btn-add-view {
+  width: 24px;
+  height: 100%;
+}
+
+.gallery-views-tabs .views-tabs-add-btn {
+  height: 24px;
+  width: 24px;
+  font-size: 14px;
+  line-height: 24px;
+  font-weight: 500;
+  text-align: center;
+  cursor: pointer;
+  color: #999;
+}

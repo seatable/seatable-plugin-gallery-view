@@ -8,6 +8,8 @@ import NewViewDialog from './dialog/new-view-dialog';
 import RenameViewDialog from './dialog/rename-view-dialog';
 import '../locale';
 
+import '../css/gallery-tabs.css';
+
 const propTypes = {
   views: PropTypes.array,
   selectedViewIdx: PropTypes.number,
@@ -29,22 +31,37 @@ class GalleryViewsTabs extends React.Component {
       },
       isShowNewViewDialog: false,
       isShowRenameViewDialog: false,
+      scrollLeft: 0
     };
     this.views = [];
   }
 
   componentDidMount() {
     let { selectedViewIdx } = this.props;
-    let { left } = this.views[selectedViewIdx].getBoundingClientRect();
-    let { offsetWidth } = this.viewsTabsScroll;
-    if (left > offsetWidth) {
-      this.viewsTabsScroll.scrollLeft = left - offsetWidth;
-    }
+    this.selectView(selectedViewIdx);
     document.addEventListener('click', this.onHideViewDropdown);
   }
 
   componentWillUnmount() {
     document.removeEventListener('click', this.onHideViewDropdown);
+  }
+
+  selectView(selectedViewIdx) {
+    // get current view's distance with container's left
+    let { left } = this.views[selectedViewIdx].getBoundingClientRect();
+
+    // get container's view with and total width
+    let { offsetWidth, scrollWidth } = this.viewsTabsScroll;
+    if (left > offsetWidth) {
+      this.viewsTabsScroll.scrollLeft = left - offsetWidth; 
+      this.setState({tabsScrollLeft: left - offsetWidth});
+    }
+    this.tabsNavWidth = offsetWidth;
+    this.tabsNavTotalWidth = scrollWidth;
+  }
+
+  onTabsScroll = (event) => {
+    this.setState({tabsScrollLeft: event.target.scrollLeft});
   }
 
   onDropdownToggle = (evt) => {
@@ -102,68 +119,65 @@ class GalleryViewsTabs extends React.Component {
     this.props.onSelectView(id);
   }
 
+  renderViewsItems = () => {
+    let { views, selectedViewIdx } = this.props;
+    let { isShowViewDropdown, dropdownMenuPosition } = this.state;
+    return (
+      views.map((v, i) => {
+        let { _id, name } = v;
+        let isActiveView = selectedViewIdx === i;
+        let activeViewClass = classnames({'view-item': true, 'active': isActiveView});
+        return (
+          <div key={`gallery-views-${_id}`} className={activeViewClass}>
+            <div className="view-item-content" ref={this.setViewItem(i)} onClick={this.props.onSelectView.bind(this, _id, i)}>
+              <div className="view-name">{name}</div>
+              {isActiveView && (
+                <div className="btn-view-dropdown" ref={ref => this.btnViewDropdown = ref} onClick={this.onDropdownToggle}>
+                  <i className="dtable-font dtable-icon-drop-down"></i>
+                </div>
+              )}
+              {isShowViewDropdown &&
+                <ModalPortal>
+                  <DropdownMenu
+                    dropdownMenuPosition={dropdownMenuPosition}
+                    options={
+                      <React.Fragment>
+                        <button className="dropdown-item" onClick={this.onRenameViewToggle}>
+                          <i className="item-icon dtable-font dtable-icon-rename"></i>
+                          <span className="item-text">{intl.get('Rename_View')}</span>
+                        </button>
+                        {i > 0 &&
+                          <button className="dropdown-item" onClick={this.props.onDeleteView.bind(this, _id)}>
+                            <i className="item-icon dtable-font dtable-icon-delete"></i>
+                            <span className="item-text">{intl.get('Delete_View')}</span>
+                          </button>
+                        }
+                      </React.Fragment>
+                    }
+                  />
+                </ModalPortal>
+              }
+            </div>
+          </div>
+        );
+      })
+    );
+  }
+
   render() {
     let { views, selectedViewIdx } = this.props;
-    let { isShowViewDropdown, dropdownMenuPosition, isShowNewViewDialog, isShowRenameViewDialog } = this.state;
+    let { tabsScrollLeft, isShowNewViewDialog, isShowRenameViewDialog } = this.state;
     let selectedGridView = views[selectedViewIdx] || {};
     return (
-      <div className="gallery-views-tabs d-flex">
-        <div className="views-tabs-scroll" ref={ref => this.viewsTabsScroll = ref}>
-          <div className="views d-inline-flex">
-            {views.map((v, i) => {
-              let { _id, name } = v;
-              let isActiveView = selectedViewIdx === i;
-              return (
-                <div
-                  key={`gallery-views-${_id}`}
-                  className={classnames({
-                    'view-item': true, 
-                    'active': isActiveView
-                  })
-                }>
-                  <div
-                    className="view-item-content d-flex align-items-center justify-content-center position-relative"
-                    ref={this.setViewItem(i)}
-                    onClick={this.props.onSelectView.bind(this, _id, i)}
-                  >
-                    <div className="view-name">{name}</div>
-                    {isActiveView &&
-                      <div
-                        className="btn-view-dropdown d-flex align-items-center justify-content-center"
-                        ref={ref => this.btnViewDropdown = ref}
-                        onClick={this.onDropdownToggle}
-                      >
-                        <i className="dtable-font dtable-icon-drop-down"></i>
-                        {isShowViewDropdown &&
-                          <ModalPortal>
-                            <DropdownMenu
-                              dropdownMenuPosition={dropdownMenuPosition}
-                              options={
-                                <React.Fragment>
-                                  <button className="dropdown-item" onClick={this.onRenameViewToggle}>
-                                    <i className="item-icon dtable-font dtable-icon-rename"></i>
-                                    <span className="item-text">{intl.get('Rename_View')}</span>
-                                  </button>
-                                  {i > 0 &&
-                                    <button className="dropdown-item" onClick={this.props.onDeleteView.bind(this, _id)}>
-                                      <i className="item-icon dtable-font dtable-icon-delete"></i>
-                                      <span className="item-text">{intl.get('Delete_View')}</span>
-                                    </button>
-                                  }
-                                </React.Fragment>
-                              }
-                            />
-                          </ModalPortal>
-                        }
-                      </div>
-                    }
-                  </div>
-                </div>
-              );
-            })}
+      <div className="gallery-views-tabs">
+        <div className="tabs-scroll-container">
+          {tabsScrollLeft > 0 && <div className="tabs-scroll-before"></div>}
+          <div className="tabs-scroll" ref={ref => this.viewsTabsScroll = ref} onScroll={this.onTabsScroll}>
+            <div className="tabs-content">{this.renderViewsItems()}</div>
           </div>
+          {tabsScrollLeft + this.tabsNavWidth < this.tabsNavTotalWidth && <div className="tabs-scroll-after"></div>}
         </div>
-        <div className="btn-add-view d-flex align-items-center" onClick={this.onNewViewToggle}>
+        <div className="views-tabs-add-btn" onClick={this.onNewViewToggle}>
           <i className="dtable-font dtable-icon-add-table"></i>
         </div>
         {isShowNewViewDialog &&

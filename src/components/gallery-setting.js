@@ -192,7 +192,7 @@ class GallerySetting extends React.Component {
     let filteredColumns = this.getFilteredColumns();
     let titleColumns = this.getTitleColumns();
     return (
-      <div className="plugin-gallery-setting position-absolute" style={{zIndex: zIndexes.GALLERY_SETTING}} ref={ref => this.GallerySetting = ref}>
+      <div className="plugin-gallery-setting" style={{zIndex: zIndexes.GALLERY_SETTING}} ref={ref => this.GallerySetting = ref}>
         <div className="setting-container">
           <div className="setting-header-container d-flex">
             <div className="setting-header-wrapper">

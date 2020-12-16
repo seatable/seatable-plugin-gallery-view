@@ -1,5 +1,6 @@
 .gallery-modal-portal .dropdown-menu {
-  font-weight: normal;
+  font-weight: 400;
+  box-shadow: 0 0 5px #ccc;
 }
 
 .gallery-modal-portal .dropdown-menu .no-options {
