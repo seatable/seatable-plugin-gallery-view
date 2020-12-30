@@ -83,6 +83,7 @@ class GalleryViewList extends React.Component {
               getMediaUrl={this.props.getMediaUrl}
               CellType={this.props.CellType}
               tables={this.props.tables}
+              formulaRows={this.props.formulaRows}
             />
           );
         })}

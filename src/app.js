@@ -375,6 +375,11 @@ class App extends React.Component {
    this.onInsertRow(table, view, rowData);
   }
 
+  getTableFormulaRows = (table, view) => {
+    let rows = this.dtable.getViewRows(view, table);
+    return this.dtable.getTableFormulaResults(table, rows);
+  }
+
   render() {
     let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting, itemShowRowLength } = this.state;
     if (isLoading || !showDialog) {
@@ -395,6 +400,7 @@ class App extends React.Component {
     let isShowAllRowList = false;
     let rowsList = [];
     let collaborators = this.getRelatedUsersFromLocal();
+    let formulaRows = this.getTableFormulaRows(selectedTable, selectedView);
     if (rows.length < itemShowRowLength) {
       rowsList = rows;
       isShowAllRowList = true;
@@ -450,6 +456,7 @@ class App extends React.Component {
             getMediaUrl={this.getMediaUrl}
             CellType={CellType}
             tables={tables}
+            formulaRows={formulaRows}
           />
           {isShowGallerySetting &&
             <GallerySetting
