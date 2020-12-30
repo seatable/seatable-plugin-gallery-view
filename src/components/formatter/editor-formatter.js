@@ -187,8 +187,8 @@ class EditorFormatter extends React.Component {
         return null
       }
       case CellType.FORMULA: {
-        let formulaRows = this.props.selectedView.formula_rows;
-        let formulaValue = formulaRows ? formulaRows[row._id][columnKey] : '';
+        let formulaRows = this.props.formulaRows ? {...this.props.formulaRows} : {};
+        let formulaValue = formulaRows[row._id] ? formulaRows[row._id][columnKey] : '';
         if (!formulaValue) return this.renderEmptyFormatter();
         return <FormulaFormatter value={formulaValue} column={column} collaborators={collaborators} tables={tables} containerClassName="gallery-formula-container" />;
       }

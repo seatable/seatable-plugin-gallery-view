@@ -62,6 +62,7 @@ class Gallery extends React.Component {
             CellType={this.props.CellType}
             selectedImageColumn={this.props.selectedImageColumn}
             tables={this.props.tables}
+            formulaRows={this.props.formulaRows}
           />
           <AddGalleryItem 
             table={this.props.table}
