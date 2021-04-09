@@ -53,7 +53,7 @@ class GalleryViewsTabs extends React.Component {
     // get container's view with and total width
     let { offsetWidth, scrollWidth } = this.viewsTabsScroll;
     if (left > offsetWidth) {
-      this.viewsTabsScroll.scrollLeft = left - offsetWidth; 
+      this.viewsTabsScroll.scrollLeft = left - offsetWidth;
       this.setState({tabsScrollLeft: left - offsetWidth});
     }
     this.tabsNavWidth = offsetWidth;
@@ -65,7 +65,7 @@ class GalleryViewsTabs extends React.Component {
   }
 
   onDropdownToggle = (evt) => {
-    evt.nativeEvent.stopImmediatePropagation()
+    evt.nativeEvent.stopImmediatePropagation();
     let { top, left, height } = this.btnViewDropdown.parentNode.getBoundingClientRect();
     this.setState({
       isShowViewDropdown: !this.state.isShowViewDropdown,
@@ -131,31 +131,31 @@ class GalleryViewsTabs extends React.Component {
           <div key={`gallery-views-${_id}`} className={activeViewClass}>
             <div className="view-item-content" ref={this.setViewItem(i)} onClick={this.props.onSelectView.bind(this, _id, i)}>
               <div className="view-name">{name}</div>
-              {isActiveView && (
+              {isActiveView &&
                 <div className="btn-view-dropdown" ref={ref => this.btnViewDropdown = ref} onClick={this.onDropdownToggle}>
                   <i className="dtable-font dtable-icon-drop-down"></i>
-                </div>
-              )}
-              {isShowViewDropdown &&
-                <ModalPortal>
-                  <DropdownMenu
-                    dropdownMenuPosition={dropdownMenuPosition}
-                    options={
-                      <React.Fragment>
-                        <button className="dropdown-item" onClick={this.onRenameViewToggle}>
-                          <i className="item-icon dtable-font dtable-icon-rename"></i>
-                          <span className="item-text">{intl.get('Rename_View')}</span>
-                        </button>
-                        {i > 0 &&
-                          <button className="dropdown-item" onClick={this.props.onDeleteView.bind(this, _id)}>
-                            <i className="item-icon dtable-font dtable-icon-delete"></i>
-                            <span className="item-text">{intl.get('Delete_View')}</span>
-                          </button>
+                  {isShowViewDropdown &&
+                    <ModalPortal>
+                      <DropdownMenu
+                        dropdownMenuPosition={dropdownMenuPosition}
+                        options={
+                          <React.Fragment>
+                            <button className="dropdown-item" onClick={this.onRenameViewToggle}>
+                              <i className="item-icon dtable-font dtable-icon-rename"></i>
+                              <span className="item-text">{intl.get('Rename_View')}</span>
+                            </button>
+                            {i > 0 &&
+                              <button className="dropdown-item" onClick={this.props.onDeleteView.bind(this, _id)}>
+                                <i className="item-icon dtable-font dtable-icon-delete"></i>
+                                <span className="item-text">{intl.get('Delete_View')}</span>
+                              </button>
+                            }
+                          </React.Fragment>
                         }
-                      </React.Fragment>
-                    }
-                  />
-                </ModalPortal>
+                      />
+                    </ModalPortal>
+                  }
+                </div>
               }
             </div>
           </div>
