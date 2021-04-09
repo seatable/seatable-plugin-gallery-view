@@ -425,12 +425,10 @@ class App extends React.Component {
             onDeleteView={this.onDeleteView}
             onRenameView={this.onRenameView}
           />
-          <div className="gallery-operator">
-            <span className="dtable-font dtable-icon-settings gallery-setting" onClick={this.onGallerySettingToggle}></span>
-          </div>
-          <div className="gallery-operator">
-            <span className="dtable-font dtable-icon-x btn-close" onClick={this.onPluginToggle}></span>
-          </div>
+          <div className="gallery-operators">
+            <span className="gallery-operator dtable-font dtable-icon-settings gallery-setting" onClick={this.onGallerySettingToggle}></span>
+            <span className="gallery-operator ml-1 dtable-font dtable-icon-x btn-close" onClick={this.onPluginToggle}></span>
+          </div>        
         </div>
         <div className="gallery-content">
           <Gallery
