@@ -411,7 +411,7 @@ class App extends React.Component {
       });
     }
     return (
-      <div className="dtable-plugin gallery-plugin-container">
+      <div className="dtable-plugin gallery-plugin-container w-100">
         {isDesktop ? (
           <div className="plugin-header">
             <div className="plugin-logo mr-9">
@@ -427,7 +427,7 @@ class App extends React.Component {
               onDeleteView={this.onDeleteView}
               onRenameView={this.onRenameView}
             />
-            <div className="ml-2">
+            <div className="ml-6">
               <span className="dtable-font dtable-icon-settings mr-2 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
               <span className="dtable-font dtable-icon-x gallery-op-icon" onClick={this.onPluginToggle}></span>
             </div>
