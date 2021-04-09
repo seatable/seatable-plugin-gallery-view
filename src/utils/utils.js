@@ -59,3 +59,7 @@ export const calculateColumnsName = (currentColumns, galleryColumnsName) => {
   }
   return newColumnsName;
 }
+
+export const checkDesktop = () => {
+  return window.innerWidth >= 768;
+}

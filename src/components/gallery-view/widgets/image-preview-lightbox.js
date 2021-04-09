@@ -1,35 +1,48 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
 import * as zIndexes from '../../../constants/zIndexes';
+import { checkDesktop } from '../../../utils/utils';
+import ModalPortal from '../../../components/dialog/modal-portal';
 import Lightbox from '@seafile/react-image-lightbox';
 import '@seafile/react-image-lightbox/style.css';
+import { Button } from 'reactstrap';
 
 function ImagePreviewerLightbox(props) {
   const { imageItems, imageIndex } = props;
   const imageItemsLength = imageItems.length;
   const URL = imageItems[imageIndex];
-  const imageTitle = URL ? decodeURI(URL.slice(URL.lastIndexOf('/') + 1)) : '';
-  const isMobile = window.isMobile;
-  let reactModalStyle;
-  if (isMobile) {
-    reactModalStyle = {
-      overlay: {
-        zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX,
-        backgroundColor: '#000',
-        height: 'calc(100% - 100px)',
-      }
-    }
-  } else {
-    reactModalStyle = {
-      overlay: {
-        zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX
-      }
-    }
+  const imageTitle = URL ? URL.slice(URL.lastIndexOf('/') + 1, URL.indexOf('?')) : '';
+  const isDesktop = checkDesktop();
+  let overlay = {
+    zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX
+  };
+  let reactModalStyle = { overlay };
+  if (!isDesktop) {
+    Object.assign(overlay, {
+      backgroundColor: '#000'
+    });
   }
+
+  const downloadImage = () => {
+    let image = new Image();
+    image.crossOrigin = 'anonymous';
+    image.onload = function () {
+      let canvas = document.createElement('canvas');
+      canvas.width = this.naturalWidth;
+      canvas.height = this.naturalHeight;
+      canvas.getContext('2d').drawImage(this, 0, 0);
+
+      let eleA = document.createElement('a');
+      eleA.href = canvas.toDataURL('image/png');
+      eleA.download = imageTitle;
+      eleA.click();
+    };
+    image.src = URL;
+  };
+
   return (
     <Fragment>
       <Lightbox
-        wrapperClassName={isMobile ? "mobile-image-previewer" : "PC-image-previewer"}
         imageTitle={imageTitle}
         mainSrc={imageItems[imageIndex]}
         nextSrc={imageItems[(imageIndex + 1) % imageItemsLength]}
@@ -37,10 +50,18 @@ function ImagePreviewerLightbox(props) {
         onCloseRequest={props.closeImagePopup}
         onMovePrevRequest={props.moveToPrevImage}
         onMoveNextRequest={props.moveToNextImage}
-        imagePadding={isMobile ? 0 : 70}
         animationDisabled={true}
         reactModalStyle={reactModalStyle}
+        enableZoom={isDesktop}
       />
+      {!isDesktop && (
+        <ModalPortal>
+          <Button className="text-white position-fixed" style={{
+            zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX + 1,
+            background: '#333', bottom: '20px', right:'20px'
+          }} onClick={downloadImage}><span className="dtable-font dtable-icon-download"></span></Button>
+        </ModalPortal>
+      )}
     </Fragment>
   );
 }

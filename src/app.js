@@ -4,7 +4,7 @@ import DTable from 'dtable-sdk';
 import GalleryViewsTabs from './components/gallery-views-tabs';
 import { PLUGIN_NAME, SETTING_KEY } from './constants';
 import View from './model/view';
-import { generatorViewId } from './utils/utils';
+import { generatorViewId, checkDesktop } from './utils/utils';
 import GallerySetting from './components/gallery-setting';
 import Gallery from './gallery';
 import './locale/index.js';
@@ -54,7 +54,7 @@ class App extends React.Component {
 
   componentWillReceiveProps(nextProps) {
     this.setState({showDialog: nextProps.showDialog});
-  } 
+  }
 
   async initPluginDTableData() {
     const { isDevelopment } = this.props;
@@ -66,12 +66,12 @@ class App extends React.Component {
       let relatedUsersRes = await this.getRelatedUsersFromServer(this.dtable.dtableStore);
       window.app.collaborators = relatedUsersRes.data.user_list;
       this.dtable.subscribe('dtable-connect', () => { this.onDTableConnect(); });
-    } else { 
+    } else {
       // integrated to dtable app
       this.dtable.initInBrowser(window.app.dtableStore);
     }
     let table = this.dtable.getActiveTable();
-    this.setState({table})
+    this.setState({table});
     this.dtable.subscribe('local-dtable-changed', () => { this.onDTableChanged(); });
     this.dtable.subscribe('remote-dtable-changed', () => { this.onDTableChanged(); });
     this.resetData(true);
@@ -239,7 +239,7 @@ class App extends React.Component {
     if (!type) {
       updatedSettings = Object.assign({}, updatedSettings, updated);
     } else {
-      const initUpdated = this.initGallerySetting(updated)
+      const initUpdated = this.initGallerySetting(updated);
       updatedSettings = Object.assign({}, updated, initUpdated);
     }
     updatedView.settings = updatedSettings;
@@ -277,7 +277,7 @@ class App extends React.Component {
 
           break;
         }
-        default: 
+        default:
           newRowData[column.name] = rowData[key];
       }
     }
@@ -313,7 +313,7 @@ class App extends React.Component {
   getRows = (tableName, viewName, settings = {}) => {
     let rows = [];
     this.dtable.forEachRow(tableName, viewName, (row) => {
-      rows.push(row)
+      rows.push(row);
     });
     return rows;
   }
@@ -371,8 +371,8 @@ class App extends React.Component {
   }
 
   onAddGalleryItem = (view, table, rowID) => {
-   let rowData = this.getInsertedRowInitData(view, table, rowID);
-   this.onInsertRow(table, view, rowData);
+    let rowData = this.getInsertedRowInitData(view, table, rowID);
+    this.onInsertRow(table, view, rowData);
   }
 
   getTableFormulaRows = (table, view) => {
@@ -381,6 +381,7 @@ class App extends React.Component {
   }
 
   render() {
+    const isDesktop = checkDesktop();
     let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting, itemShowRowLength } = this.state;
     if (isLoading || !showDialog) {
       return '';
@@ -393,7 +394,7 @@ class App extends React.Component {
     let selectedTable = this.getSelectedTable(tables, settings);
     let { name: tableName, columns: currentColumns } = selectedTable || {};
     let views = this.dtable.getViews(selectedTable);
-    let selectedView = this.getSelectedView(selectedTable, settings) || views[0];   
+    let selectedView = this.getSelectedView(selectedTable, settings) || views[0];
     let { name: viewName } = selectedView;
     let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
     let rows = this.getRows(tableName, viewName, settings);
@@ -410,28 +411,51 @@ class App extends React.Component {
       });
     }
     return (
-      <div className="dtable-plugin gallery-plugin-container" >
-        <div className="plugin-header">
-          <div className="plugin-logo">
-            <img className="logo" src={cardLogo} alt="logo" width="20" height="20" />
-            <span className="title">{'Gallery'}</span>
-          </div>
-          <GalleryViewsTabs
-            ref={ref => this.viewsTabs = ref}
-            views={galleryViews}
-            onSelectView={this.onSelectView}
-            selectedViewIdx={selectedViewIdx}
-            onAddView={this.onAddView}
-            onDeleteView={this.onDeleteView}
-            onRenameView={this.onRenameView}
-          />
-          <div className="gallery-operator">
-            <span className="dtable-font dtable-icon-settings gallery-setting" onClick={this.onGallerySettingToggle}></span>
-          </div>
-          <div className="gallery-operator">
-            <span className="dtable-font dtable-icon-x btn-close" onClick={this.onPluginToggle}></span>
-          </div>
-        </div>
+      <div className="dtable-plugin gallery-plugin-container">
+        {isDesktop ? (
+          <div className="plugin-header">
+            <div className="plugin-logo mr-9">
+              <img className="mr-2" src={cardLogo} alt="logo" width="20" height="20" />
+              <span className="title">{'Gallery'}</span>
+            </div>
+            <GalleryViewsTabs
+              ref={ref => this.viewsTabs = ref}
+              views={galleryViews}
+              onSelectView={this.onSelectView}
+              selectedViewIdx={selectedViewIdx}
+              onAddView={this.onAddView}
+              onDeleteView={this.onDeleteView}
+              onRenameView={this.onRenameView}
+            />
+            <div className="ml-2">
+              <span className="dtable-font dtable-icon-settings mr-2 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
+              <span className="dtable-font dtable-icon-x gallery-op-icon" onClick={this.onPluginToggle}></span>
+            </div>
+          </div>) : (
+          <React.Fragment>
+            <div className="plugin-header justify-content-between">
+              <div className="plugin-logo">
+                <img className="mr-2" src={cardLogo} alt="logo" width="20" height="20" />
+                <span className="title">{'Gallery'}</span>
+              </div>
+              <div className="ml-2">
+                <span className="dtable-font dtable-icon-settings mr-2 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
+                <span className="dtable-font dtable-icon-x gallery-op-icon" onClick={this.onPluginToggle}></span>
+              </div>
+            </div>
+            <div className="plugin-header">
+              <GalleryViewsTabs
+                ref={ref => this.viewsTabs = ref}
+                views={galleryViews}
+                onSelectView={this.onSelectView}
+                selectedViewIdx={selectedViewIdx}
+                onAddView={this.onAddView}
+                onDeleteView={this.onDeleteView}
+                onRenameView={this.onRenameView}
+              />
+            </div>
+          </React.Fragment>
+        )}
         <div className="gallery-content">
           <Gallery
             rows={rowsList}
