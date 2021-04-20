@@ -177,7 +177,7 @@ class GalleryViewsTabs extends React.Component {
           </div>
           {tabsScrollLeft + this.tabsNavWidth < this.tabsNavTotalWidth && <div className="tabs-scroll-after"></div>}
         </div>
-        <div className="views-tabs-add-btn" onClick={this.onNewViewToggle}>
+        <div className="views-tabs-add-btn flex-shrink-0" onClick={this.onNewViewToggle}>
           <i className="dtable-font dtable-icon-add-table"></i>
         </div>
         {isShowNewViewDialog &&

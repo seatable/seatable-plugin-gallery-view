@@ -28,8 +28,14 @@
 }
 
 .gallery-op-icon {
-  color: #999;
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  text-align: center;
+  color: #333;
+  opacity: 0.5;
   cursor: pointer;
+  font-weight: 700;
 }
 
 .gallery-op-icon:hover {
