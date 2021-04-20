@@ -59,7 +59,7 @@
 
 .gallery-views-tabs .view-item {
   height: 100%;
-  padding: 0 16px;
+  padding-right: 16px;
   flex: 1 0 auto;
 }
 

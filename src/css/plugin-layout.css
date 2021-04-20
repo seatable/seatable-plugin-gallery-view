@@ -14,7 +14,11 @@
   padding: 10px 16px;
   background-color: #fff;
   border-bottom: 1px solid #e7eaec;
-  border-radius: 12px 12px 0 0;
+}
+@media screen and (min-width: 768px) {
+  .gallery-plugin-container .plugin-header {
+    border-radius: 12px 12px 0 0;
+  }
 }
 
 .gallery-plugin-container .plugin-header .plugin-logo {
