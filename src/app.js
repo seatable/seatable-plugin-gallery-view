@@ -415,7 +415,7 @@ class App extends React.Component {
         {isDesktop ? (
           <div className="plugin-header">
             <div className="plugin-logo mr-9">
-              <img className="mr-2" src={cardLogo} alt="logo" width="20" height="20" />
+              <img className="mr-2" src={cardLogo} alt="logo" width="24" height="24" />
               <span className="title">{'Gallery'}</span>
             </div>
             <GalleryViewsTabs
@@ -435,7 +435,7 @@ class App extends React.Component {
           <React.Fragment>
             <div className="plugin-header justify-content-between">
               <div className="plugin-logo">
-                <img className="mr-2" src={cardLogo} alt="logo" width="20" height="20" />
+                <img className="mr-2" src={cardLogo} alt="logo" width="24" height="24" />
                 <span className="title">{'Gallery'}</span>
               </div>
               <div className="ml-2">
