@@ -199,13 +199,13 @@ class GalleryViewItem extends React.Component {
     }
     return (
       <div className="gallery-item" style={style}>
-        {imageNumber > 1 && 
-          <div className="gallery-image-number">
-            {imageNumber}
-          </div>
-        }
         <div className="gallery-image-container">
           {itemImage}
+          {imageNumber > 1 && 
+            <div className="gallery-image-number">
+              {imageNumber}
+            </div>
+          }
         </div>
         <div className="text-truncate gallery-row-content">
           <div className="gallery-title-container">
