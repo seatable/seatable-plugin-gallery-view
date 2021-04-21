@@ -1,6 +1,5 @@
 .gallery-views-tabs {
   display: flex;
-  align-items: center;
   font-size: 14px;
   font-weight: 500;
   overflow: hidden;
@@ -8,7 +7,6 @@
 
 .gallery-views-tabs .tabs-scroll-container {
   display: flex;
-  align-items: center;
   position: relative;
   overflow: hidden;
   margin-top: 2px;
@@ -75,13 +73,13 @@
 }
 
 .gallery-views-tabs .view-item .view-item-content:hover {
-  border-color: #3b88fd;
+  border-color: #ff8000;
   color: #444;
   cursor: pointer;
 }
 
 .gallery-views-tabs .view-item.active .view-item-content {
-  border-color: #3b88fd;
+  border-color: #ff8000;
   color: #444;
   cursor: default;
 }

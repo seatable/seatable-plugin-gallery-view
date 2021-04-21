@@ -427,7 +427,7 @@ class App extends React.Component {
               onDeleteView={this.onDeleteView}
               onRenameView={this.onRenameView}
             />
-            <div className="ml-6">
+            <div className="ml-6 align-self-center">
               <span className="dtable-font dtable-icon-settings mr-2 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
               <span className="dtable-font dtable-icon-x gallery-op-icon" onClick={this.onPluginToggle}></span>
             </div>
@@ -438,7 +438,7 @@ class App extends React.Component {
                 <img className="mr-2" src={cardLogo} alt="logo" width="24" height="24" />
                 <span className="title">{'Gallery'}</span>
               </div>
-              <div className="ml-2">
+              <div className="ml-2 align-self-center">
                 <span className="dtable-font dtable-icon-settings mr-2 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
                 <span className="dtable-font dtable-icon-x gallery-op-icon" onClick={this.onPluginToggle}></span>
               </div>
