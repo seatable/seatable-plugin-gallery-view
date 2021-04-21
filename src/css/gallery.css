@@ -37,7 +37,7 @@
   height: 162px;
   text-align: center;
   border-bottom: 1px solid #e2e2e2;
-  background: #fff url('../assets/image/picture.png') no-repeat center center;
+  background: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,7 +47,7 @@
 }
 
 .gallery-item .gallery-image-container img {
-  height: 162px;
+  max-height: 100%;
   max-width: none;
 }
 

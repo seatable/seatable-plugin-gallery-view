@@ -4,6 +4,7 @@ import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
 import { calculateColumns, calculateColumnsName } from '../../utils/utils';
+import placeholderImage from '../../assets/image/picture.png';
 
 const propTypes = {
   tables: PropTypes.array,
@@ -201,6 +202,9 @@ class GalleryViewItem extends React.Component {
       <div className="gallery-item" style={style}>
         <div className="gallery-image-container">
           {itemImage}
+          {imageNumber == 0 && 
+            <img src={placeholderImage} alt="" width="49" />
+          }
           {imageNumber > 1 && 
             <div className="gallery-image-number">
               {imageNumber}
