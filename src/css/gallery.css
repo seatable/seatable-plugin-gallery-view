@@ -15,6 +15,7 @@
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
   max-height: 350px;
   overflow: auto;
+  background: #fff;
 }
 
 .gallery-list .gallery-item:hover {
@@ -37,7 +38,7 @@
   height: 162px;
   text-align: center;
   border-bottom: 1px solid #e2e2e2;
-  background: #fff;
+  background: #efefef;
   display: flex;
   align-items: center;
   justify-content: center;
