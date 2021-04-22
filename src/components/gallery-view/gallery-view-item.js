@@ -176,6 +176,12 @@ class GalleryViewItem extends React.Component {
     </div>);
   }
 
+  clickImage = (e) => {
+    if (this.imageRef) {
+      this.imageRef.onImageClick(e);
+    }
+  }
+
   render() {
     let { images, largeImageIndex } = this.state;
     let { galleryItem, itemMarginRightNone } = this.props;
@@ -186,7 +192,7 @@ class GalleryViewItem extends React.Component {
       let imageColumnName = selectedImageColumn.name;
       if (galleryItem[imageColumnName] && galleryItem[imageColumnName].length > 0) {
         imageNumber = galleryItem[imageColumnName].length;
-        itemImage = <ImageLazyLoad imageUrl={galleryItem[imageColumnName][0]} onImageClick={this.onImageClick} />
+        itemImage = <ImageLazyLoad ref={ref => this.imageRef = ref} imageUrl={galleryItem[imageColumnName][0]} onImageClick={this.onImageClick} />
       }
     }
 
@@ -199,7 +205,7 @@ class GalleryViewItem extends React.Component {
     }
     return (
       <div className="gallery-item" style={style}>
-        <div className="gallery-image-container">
+        <div className="gallery-image-container" onClick={this.clickImage}>
           {itemImage}
           {imageNumber > 1 && 
             <div className="gallery-image-number">
