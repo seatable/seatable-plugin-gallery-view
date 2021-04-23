@@ -1,4 +1,4 @@
-class Provider {
+class PluginContext {
 
   constructor() {
     this.settings = window.dtable ? window.dtable : window.dtablePluginConfig;
@@ -32,6 +32,6 @@ class Provider {
 
 }
 
-const provider =  new Provider();
+const pluginContext =  new PluginContext();
 
-export default provider;
+export default pluginContext;

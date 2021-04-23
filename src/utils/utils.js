@@ -1,4 +1,4 @@
-import provider from '../provider';
+import pluginContext from '../plugin-context';
 
 export const generatorBase64Code = (keyLength = 4) => {
   let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz0123456789';
@@ -24,7 +24,7 @@ export const generatorViewId = (views) => {
 };
 
 export const getImageThumbnailUrl = (url) => {
-  const server = provider.getSetting('server');
+  const server = pluginContext.getSetting('server');
   let isInternalLink = url.indexOf(server) > -1;
   if (isInternalLink) {
     let imageThumbnailUrl = url.replace('/workspace', '/thumbnail/workspace') + '?size=256';

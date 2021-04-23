@@ -1,5 +1,5 @@
 import intl from 'react-intl-universal';
-import provider from '../provider';
+import pluginContext from '../plugin-context';
 import de from './lang/de';
 import en from './lang/en';
 import fr from './lang/fr';
@@ -14,5 +14,5 @@ const LOCALES = {
 
 const LAUGUAGE = 'zh-cn';
 
-const lang = provider.getSetting('lang') || LAUGUAGE;
+const lang = pluginContext.getSetting('lang') || LAUGUAGE;
 intl.init({currentLocale: lang, locales: LOCALES});

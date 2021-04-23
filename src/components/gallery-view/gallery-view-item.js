@@ -4,7 +4,7 @@ import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
 import { calculateColumns, calculateColumnsName } from '../../utils/utils';
-import provider from '../../provider';
+import pluginContext from '../../plugin-context';
 
 const propTypes = {
   tables: PropTypes.array,
@@ -81,7 +81,7 @@ class GalleryViewItem extends React.Component {
   onRowExpand = () => {
     let { table,  galleryItem } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
-    provider.expandRow(row, table);
+    pluginContext.expandRow(row, table);
   }
 
   getGalleryImageColumn = () => {

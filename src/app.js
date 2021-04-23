@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import DTable from 'dtable-sdk';
 import { PLUGIN_NAME, SETTING_KEY } from './constants';
-import provider from './provider';
+import pluginContext from './plugin-context';
 import { generatorViewId, checkDesktop } from './utils/utils';
 import GalleryViewsTabs from './components/gallery-views-tabs';
 import View from './model/view';
@@ -62,12 +62,12 @@ class App extends React.Component {
     if (isDevelopment) {
       // local develop
       // todo
-      await this.dtable.init(provider.getConfig());
+      await this.dtable.init(pluginContext.getConfig());
       await this.dtable.syncWithServer();
       this.dtable.subscribe('dtable-connect', () => { this.onDTableConnect(); });
     } else {
       // integrated to dtable app
-      const initData = provider.getInitData();
+      const initData = pluginContext.getInitData();
       this.dtable.initInBrowser(initData);
     }
     let table = this.dtable.getActiveTable();
@@ -123,18 +123,18 @@ class App extends React.Component {
   }
 
   getDtableUuid = () => {
-    provider.getSetting('dtableUuid');
+    pluginContext.getSetting('dtableUuid');
   }
 
   getMediaUrl = () => {
-    provider.getSetting('mediaUrl');
+    pluginContext.getSetting('mediaUrl');
   }
 
   onPluginToggle = () => {
     setTimeout(() => {
       this.setState({showDialog: false});
     }, 500);
-    provider.closePlugin();
+    pluginContext.closePlugin();
   }
 
   onSelectView = (viewId) => {
@@ -272,7 +272,7 @@ class App extends React.Component {
     let viewRows = this.dtable.getViewRows(view, table);
     let insertedRow = viewRows[viewRows.length - 1];
     if (insertedRow) {
-      provider.expandRow(insertedRow, table);
+      pluginContext.expandRow(insertedRow, table);
     }
   }
 
@@ -326,7 +326,7 @@ class App extends React.Component {
   }
 
   getUserCommonInfo = (email, avatar_size) => {
-    provider.getUserCommonInfo(email, avatar_size);
+    pluginContext.getUserCommonInfo(email, avatar_size);
   }
 
   storeSelectedViewId = (viewId) => {
