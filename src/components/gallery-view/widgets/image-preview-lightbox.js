@@ -44,7 +44,7 @@ function ImagePreviewerLightbox(props) {
   return (
     <Fragment>
       <Lightbox
-        imageTitle={imageTitle}
+        imageTitle={`${imageTitle}(${imageIndex + 1}/${imageItemsLength})`}
         mainSrc={imageItems[imageIndex]}
         nextSrc={imageItems[(imageIndex + 1) % imageItemsLength]}
         prevSrc={imageItems[(imageIndex + imageItemsLength - 1) % imageItemsLength]}
@@ -54,6 +54,7 @@ function ImagePreviewerLightbox(props) {
         animationDisabled={true}
         reactModalStyle={reactModalStyle}
         enableZoom={isDesktop}
+        isDesktop={isDesktop}
       />
       {!isDesktop && (
         <ModalPortal>
