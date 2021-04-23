@@ -5,9 +5,9 @@ import { PLUGIN_NAME, SETTING_KEY } from './constants';
 import pluginContext from './plugin-context';
 import { generatorViewId, checkDesktop } from './utils/utils';
 import GalleryViewsTabs from './components/gallery-views-tabs';
-import View from './model/view';
 import GallerySetting from './components/gallery-setting';
-import Gallery from './gallery';
+import Gallery from './components/gallery';
+import View from './model/view';
 import './locale/index.js';
 
 import cardLogo from './assets/image/card-view.png';

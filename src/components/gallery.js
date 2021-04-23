@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import GalleryViewList from './components/gallery-view/gallery-view-list';
-import AddGalleryItem from './components/add-gallery-item';
+import GalleryViewList from './gallery-view/gallery-view-list';
+import AddGalleryItem from './add-gallery-item';
 
-import './css/gallery.css';
+import '../css/gallery.css';
 
 const propTypes = {
   tables: PropTypes.array,
