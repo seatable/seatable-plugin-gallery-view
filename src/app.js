@@ -123,11 +123,11 @@ class App extends React.Component {
   }
 
   getDtableUuid = () => {
-    pluginContext.getSetting('dtableUuid');
+    return pluginContext.getSetting('dtableUuid');
   }
 
   getMediaUrl = () => {
-    pluginContext.getSetting('mediaUrl');
+    return pluginContext.getSetting('mediaUrl');
   }
 
   onPluginToggle = () => {
