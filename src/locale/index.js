@@ -1,4 +1,5 @@
 import intl from 'react-intl-universal';
+import pluginContext from '../plugin-context';
 import de from './lang/de';
 import en from './lang/en';
 import fr from './lang/fr';
@@ -13,5 +14,5 @@ const LOCALES = {
 
 const LAUGUAGE = 'zh-cn';
 
-let lang = (window.dtable && window.dtable.lang) ? window.dtable.lang : LAUGUAGE;
+const lang = pluginContext.getSetting('lang') || LAUGUAGE;
 intl.init({currentLocale: lang, locales: LOCALES});

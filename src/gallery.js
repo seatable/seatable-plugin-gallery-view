@@ -45,7 +45,7 @@ class Gallery extends React.Component {
     return (
       <div className="gallery-list-content" ref={ref => this.galleryListRef = ref} onScroll={this.onScroll}>
         <div className="flex-fill" ref={ref => this.galleryBodyRef = ref}>
-          <GalleryViewList 
+          <GalleryViewList
             rows={this.props.rows}
             getRow={this.props.getRow}
             table={this.props.table}
@@ -64,7 +64,7 @@ class Gallery extends React.Component {
             tables={this.props.tables}
             formulaRows={this.props.formulaRows}
           />
-          <AddGalleryItem 
+          <AddGalleryItem
             table={this.props.table}
             selectedView={this.props.selectedView}
             rows={this.props.rows}

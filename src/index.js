@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import './setting'; // should init before app component
 import App from './app';
-import './setting';
 
 class TaskList {
 
@@ -12,11 +12,6 @@ class TaskList {
 }
 
 TaskList.execute();
-
-window.app = window.app ? window.app : {};
-window.app.onClosePlugin = function() {
-
-}
 
 const openBtn = document.getElementById('plugin-controller');
 openBtn.addEventListener('click', function() {

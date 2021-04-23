@@ -1,3 +1,5 @@
+import pluginContext from '../plugin-context';
+
 export const generatorBase64Code = (keyLength = 4) => {
   let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz0123456789';
   let key = '';
@@ -22,7 +24,7 @@ export const generatorViewId = (views) => {
 };
 
 export const getImageThumbnailUrl = (url) => {
-  let { server } = window.dtable;
+  const server = pluginContext.getSetting('server');
   let isInternalLink = url.indexOf(server) > -1;
   if (isInternalLink) {
     let imageThumbnailUrl = url.replace('/workspace', '/thumbnail/workspace') + '?size=256';
@@ -43,7 +45,7 @@ export const calculateColumns = (galleryColumnsName, currentColumns) => {
     let column = currentColumns.find(column => columnName === column.name);
     if (column) {
       newColumns.push(column);
-    } 
+    }
   });
   return newColumns;
 };
@@ -58,8 +60,8 @@ export const calculateColumnsName = (currentColumns, galleryColumnsName) => {
     newColumnsName = columnsName.filter(columnName => newColumnsName.some(c => c === columnName));
   }
   return newColumnsName;
-}
+};
 
 export const checkDesktop = () => {
   return window.innerWidth >= 768;
-}
+};
