@@ -1,11 +1,12 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { Button } from 'reactstrap';
+import Lightbox from '@seafile/react-image-lightbox';
 import * as zIndexes from '../../../constants/zIndexes';
 import { checkDesktop } from '../../../utils/utils';
 import ModalPortal from '../../../components/dialog/modal-portal';
-import Lightbox from '@seafile/react-image-lightbox';
+
 import '@seafile/react-image-lightbox/style.css';
-import { Button } from 'reactstrap';
 
 function ImagePreviewerLightbox(props) {
   const { imageItems, imageIndex } = props;

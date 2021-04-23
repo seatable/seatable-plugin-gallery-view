@@ -8,7 +8,7 @@ import NewViewDialog from './dialog/new-view-dialog';
 import RenameViewDialog from './dialog/rename-view-dialog';
 import '../locale';
 
-import '../css/gallery-tabs.css';
+import '../assets/css/gallery-tabs.css';
 
 const propTypes = {
   views: PropTypes.array,

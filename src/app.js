@@ -11,7 +11,7 @@ import View from './model/view';
 import './locale/index.js';
 
 import cardLogo from './assets/image/card-view.png';
-import './css/plugin-layout.css';
+import './assets/css/plugin-layout.css';
 
 const DEFAULT_PLUGIN_SETTINGS = {
   views: [

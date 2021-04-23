@@ -23,8 +23,8 @@ import {
   EmailFormatter,
   DurationFormatter
 } from 'dtable-ui-component';
-import { isValidEmail } from '../../utils/utils';
 import intl from 'react-intl-universal';
+import { isValidEmail } from '../../utils/utils';
 
 const propTypes = {
   type: PropTypes.string,

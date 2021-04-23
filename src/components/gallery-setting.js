@@ -7,7 +7,7 @@ import GallerySettingItem from './setting/gallery-setting-item';
 import { calculateColumns, calculateColumnsName } from '../utils/utils';
 import '../locale';
 
-import '../css/gallery-setting.css';
+import '../assets/css/gallery-setting.css';
 
 const propTypes = {
   tables: PropTypes.array,

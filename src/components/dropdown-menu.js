@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import { zIndexes } from '../constants'
 
-import '../css/dropdown-menu.css';
+import '../assets/css/dropdown-menu.css';
 
 const propTypes = {
   dropdownMenuPosition: PropTypes.object,

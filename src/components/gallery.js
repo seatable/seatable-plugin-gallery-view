@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import GalleryViewList from './gallery-view/gallery-view-list';
 import AddGalleryItem from './add-gallery-item';
 
-import '../css/gallery.css';
+import '../assets/css/gallery.css';
 
 const propTypes = {
   tables: PropTypes.array,
