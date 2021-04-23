@@ -78,7 +78,7 @@ class App extends React.Component {
   }
 
   getTableRelatedUsers = () => {
-    this.dtable.getRelatedUsers();
+    return this.dtable.getRelatedUsers();
   }
 
   onDTableConnect = () => {

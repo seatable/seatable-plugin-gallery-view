@@ -1,5 +1,5 @@
 class Provider {
-  
+
   constructor() {
     this.settings = window.dtable ? window.dtable : window.dtablePluginConfig;
     this.api = window.dtableWebAPI ? window.dtableWebAPI : null;

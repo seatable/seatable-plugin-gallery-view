@@ -35,7 +35,7 @@ class GalleryViewItem extends React.Component {
       isShowLargeImage: false,
       canOpenImage: false,
       largeImageIndex: '',
-      images: [], 
+      images: [],
     };
   }
 
@@ -66,7 +66,7 @@ class GalleryViewItem extends React.Component {
       largeImageIndex: (prevState.largeImageIndex + 1) % images.length,
     }));
   }
-  
+
   movePrev = (e) => {
     e.preventDefault();
     let { galleryItem } = this.props;
@@ -77,7 +77,7 @@ class GalleryViewItem extends React.Component {
       largeImageIndex: (prevState.largeImageIndex + images.length - 1) % images.length,
     }));
   }
-  
+
   onRowExpand = () => {
     let { table,  galleryItem } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
@@ -121,8 +121,9 @@ class GalleryViewItem extends React.Component {
     if (shown_column_names) {
       filteredColumns = newColumns.filter(item => {
         return shown_column_names.some(showColumnName => {
-          return item.name === showColumnName && showColumnName !== shown_title_name });
-      }); 
+          return item.name === showColumnName && showColumnName !== shown_title_name;
+        });
+      });
     }
     return filteredColumns;
   }
@@ -149,7 +150,7 @@ class GalleryViewItem extends React.Component {
             tables={this.props.tables}
             formulaRows={this.props.formulaRows}
           /></div>);
-    })
+    });
   }
 
   renderRowTitle = () => {
@@ -191,7 +192,7 @@ class GalleryViewItem extends React.Component {
       let imageColumnName = selectedImageColumn.name;
       if (galleryItem[imageColumnName] && galleryItem[imageColumnName].length > 0) {
         imageNumber = galleryItem[imageColumnName].length;
-        itemImage = <ImageLazyLoad ref={ref => this.imageRef = ref} imageUrl={galleryItem[imageColumnName][0]} onImageClick={this.onImageClick} />
+        itemImage = <ImageLazyLoad ref={ref => this.imageRef = ref} imageUrl={galleryItem[imageColumnName][0]} onImageClick={this.onImageClick} />;
       }
     }
 
@@ -200,13 +201,13 @@ class GalleryViewItem extends React.Component {
       style = {
         width: `${this.props.width}px`,
         marginRight: 0
-      }
+      };
     }
     return (
       <div className="gallery-item" style={style}>
         <div className="gallery-image-container" onClick={this.clickImage}>
           {itemImage}
-          {imageNumber > 1 && 
+          {imageNumber > 1 &&
             <div className="gallery-image-number">
               {imageNumber}
             </div>
@@ -220,14 +221,14 @@ class GalleryViewItem extends React.Component {
             {this.renderEditorFormatter()}
           </div>
         </div>
-        {this.state.isShowLargeImage && 
-          <ImagePreviewerLightbox 
+        {this.state.isShowLargeImage &&
+          <ImagePreviewerLightbox
             imageItems={images}
             imageIndex={largeImageIndex}
             closeImagePopup={this.hideLargeImage}
             moveToPrevImage={this.movePrev}
             moveToNextImage={this.moveNext}
-          /> 
+          />
         }
       </div>
     );
