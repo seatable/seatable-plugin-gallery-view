@@ -1,3 +1,5 @@
+import provider from "../provider";
+
 export const generatorBase64Code = (keyLength = 4) => {
   let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvwxyz0123456789';
   let key = '';
@@ -22,7 +24,7 @@ export const generatorViewId = (views) => {
 };
 
 export const getImageThumbnailUrl = (url) => {
-  let { server } = window.dtable;
+  const server = provider.getSetting('server');
   let isInternalLink = url.indexOf(server) > -1;
   if (isInternalLink) {
     let imageThumbnailUrl = url.replace('/workspace', '/thumbnail/workspace') + '?size=256';

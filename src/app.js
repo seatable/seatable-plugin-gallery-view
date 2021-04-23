@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DTable from 'dtable-sdk';
-import GalleryViewsTabs from './components/gallery-views-tabs';
 import { PLUGIN_NAME, SETTING_KEY } from './constants';
-import View from './model/view';
+import provider from './provider';
 import { generatorViewId, checkDesktop } from './utils/utils';
+import GalleryViewsTabs from './components/gallery-views-tabs';
+import View from './model/view';
 import GallerySetting from './components/gallery-setting';
 import Gallery from './gallery';
 import './locale/index.js';
@@ -60,15 +61,14 @@ class App extends React.Component {
     const { isDevelopment } = this.props;
     if (isDevelopment) {
       // local develop
-      window.app = window.app ? window.app : {};
-      await this.dtable.init(window.dtablePluginConfig);
+      // todo
+      await this.dtable.init(provider.getConfig());
       await this.dtable.syncWithServer();
-      let relatedUsersRes = await this.getRelatedUsersFromServer(this.dtable.dtableStore);
-      window.app.collaborators = relatedUsersRes.data.user_list;
       this.dtable.subscribe('dtable-connect', () => { this.onDTableConnect(); });
     } else {
       // integrated to dtable app
-      this.dtable.initInBrowser(window.app.dtableStore);
+      const initData = provider.getInitData();
+      this.dtable.initInBrowser(initData);
     }
     let table = this.dtable.getActiveTable();
     this.setState({table});
@@ -77,17 +77,8 @@ class App extends React.Component {
     this.resetData(true);
   }
 
-  async getRelatedUsersFromServer(dtableStore) {
-    return dtableStore.dtableAPI.getTableRelatedUsers();
-  }
-
-  getRelatedUsersFromLocal = () => {
-    let { collaborators, state } = window.app;
-    if (!collaborators) {
-      // dtable app
-      return state && state.collaborators;
-    }
-    return collaborators; // local develop
+  getTableRelatedUsers = () => {
+    this.dtable.getRelatedUsers();
   }
 
   onDTableConnect = () => {
@@ -132,24 +123,18 @@ class App extends React.Component {
   }
 
   getDtableUuid = () => {
-    if (window.dtable) {
-      return window.dtable.dtableUuid;
-    }
-    return window.dtablePluginConfig.dtableUuid;
+    provider.getSetting('dtableUuid');
   }
 
   getMediaUrl = () => {
-    if (window.dtable) {
-      return window.dtable.mediaUrl;
-    }
-    return window.dtablePluginConfig.mediaUrl;
+    provider.getSetting('mediaUrl');
   }
 
   onPluginToggle = () => {
     setTimeout(() => {
       this.setState({showDialog: false});
     }, 500);
-    window.app.onClosePlugin();
+    provider.closePlugin();
   }
 
   onSelectView = (viewId) => {
@@ -287,9 +272,7 @@ class App extends React.Component {
     let viewRows = this.dtable.getViewRows(view, table);
     let insertedRow = viewRows[viewRows.length - 1];
     if (insertedRow) {
-      if (window.app && window.app.expandRow) {
-        window.app.expandRow(insertedRow, table);
-      }
+      provider.expandRow(insertedRow, table);
     }
   }
 
@@ -343,10 +326,7 @@ class App extends React.Component {
   }
 
   getUserCommonInfo = (email, avatar_size) => {
-    if (window.dtableWebAPI) {
-      return window.dtableWebAPI.getUserCommonInfo(email, avatar_size);
-    }
-    return Promise.reject();
+    provider.getUserCommonInfo(email, avatar_size);
   }
 
   storeSelectedViewId = (viewId) => {
@@ -400,7 +380,7 @@ class App extends React.Component {
     let rows = this.getRows(tableName, viewName, settings);
     let isShowAllRowList = false;
     let rowsList = [];
-    let collaborators = this.getRelatedUsersFromLocal();
+    let collaborators = this.getTableRelatedUsers();
     let formulaRows = this.getTableFormulaRows(selectedTable, selectedView);
     if (rows.length < itemShowRowLength) {
       rowsList = rows;
