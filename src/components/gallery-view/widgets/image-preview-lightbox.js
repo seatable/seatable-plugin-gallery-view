@@ -11,8 +11,13 @@ import '@seafile/react-image-lightbox/style.css';
 function ImagePreviewerLightbox(props) {
   const { imageItems, imageIndex } = props;
   const imageItemsLength = imageItems.length;
-  const URL = imageItems[imageIndex];
-  const imageTitle = URL ? URL.slice(URL.lastIndexOf('/') + 1, URL.indexOf('?')) : '';
+  const imageURL = imageItems[imageIndex];
+
+  const sliceStartIndex = imageURL.lastIndexOf('/') + 1;
+  const sliceEndIndex = imageURL.indexOf('?') == -1 ? undefined : imageURL.indexOf('?');
+  const imageTitle = imageURL ?
+    decodeURIComponent(imageURL.slice(sliceStartIndex, sliceEndIndex)) : '';
+
   const isDesktop = checkDesktop();
   let overlay = {
     zIndex: zIndexes.IMAGE_PREVIEW_LIGHTBOX
@@ -38,13 +43,20 @@ function ImagePreviewerLightbox(props) {
       eleA.download = imageTitle;
       eleA.click();
     };
-    image.src = URL;
+    image.src = imageURL;
   };
+
+  const imageTitleEl = (
+    <span className="d-flex">
+      <span className="text-truncate">{imageTitle}</span>
+      <span className="flex-shrink-0">({imageIndex + 1}/{imageItemsLength})</span>
+    </span>
+  );
 
   return (
     <Fragment>
       <Lightbox
-        imageTitle={`${imageTitle}(${imageIndex + 1}/${imageItemsLength})`}
+        imageTitle={imageTitleEl}
         mainSrc={imageItems[imageIndex]}
         nextSrc={imageItems[(imageIndex + 1) % imageItemsLength]}
         prevSrc={imageItems[(imageIndex + imageItemsLength - 1) % imageItemsLength]}
