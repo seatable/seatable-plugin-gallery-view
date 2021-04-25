@@ -57,7 +57,7 @@ class GalleryViewItem extends React.Component {
     });
   }
 
-  moveNext = (e) => {
+  moveNext = () => {
     let { galleryItem } = this.props;
     let selectedImageColumn = this.getGalleryImageColumn();
     let imageColumnName = selectedImageColumn.name;
@@ -67,8 +67,7 @@ class GalleryViewItem extends React.Component {
     }));
   }
 
-  movePrev = (e) => {
-    e.preventDefault();
+  movePrev = () => {
     let { galleryItem } = this.props;
     let selectedImageColumn = this.getGalleryImageColumn();
     let imageColumnName = selectedImageColumn.name;
