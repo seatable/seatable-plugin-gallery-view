@@ -65,3 +65,11 @@ export const calculateColumnsName = (currentColumns, galleryColumnsName) => {
 export const checkDesktop = () => {
   return window.innerWidth >= 768;
 };
+
+export const canCreateRows = (table) => {
+  let isCreateRows = true;
+  if (table && table.table_permissions && table.table_permissions.add_rows_permission) {
+    isCreateRows = table.table_permissions.add_rows_permission.can_create_rows;
+  }
+  return isCreateRows;
+};
