@@ -27,6 +27,7 @@ const propTypes = {
   getUserCommonInfo: PropTypes.func,
   getMediaUrl: PropTypes.func,
   CellType: PropTypes.object,
+  getOptionColors: PropTypes.func,
 };
 
 class Gallery extends React.Component {
@@ -63,6 +64,7 @@ class Gallery extends React.Component {
             selectedImageColumn={this.props.selectedImageColumn}
             tables={this.props.tables}
             formulaRows={this.props.formulaRows}
+            getOptionColors={this.props.getOptionColors}
           />
           <AddGalleryItem
             table={this.props.table}

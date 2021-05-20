@@ -25,6 +25,7 @@ const propTypes = {
   getUserCommonInfo: PropTypes.func,
   getMediaUrl: PropTypes.func,
   CellType: PropTypes.object,
+  getOptionColors: PropTypes.func,
 };
 
 class GalleryViewItem extends React.Component {
@@ -148,6 +149,7 @@ class GalleryViewItem extends React.Component {
             CellType={this.props.CellType}
             tables={this.props.tables}
             formulaRows={this.props.formulaRows}
+            getOptionColors={this.props.getOptionColors}
           /></div>);
     });
   }
@@ -171,6 +173,7 @@ class GalleryViewItem extends React.Component {
         CellType={this.props.CellType}
         type="row_title"
         tables={this.props.tables}
+        getOptionColors={this.props.getOptionColors}
       />
     </div>);
   }

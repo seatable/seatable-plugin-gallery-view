@@ -49,15 +49,15 @@ class ImageLazyLoad extends React.Component {
       reject('img path is require');
       return;
     }
-    this.setState({isShowLoading: true})
+    this.setState({isShowLoading: true});
     const image = new Image();
     image.src = url;
     image.onload = () => {
       resolve(image);
-      this.setState({isShowLoading: false})
+      this.setState({isShowLoading: false});
     };
     image.onerror = () => {
-      this.setState({isShowLoading: false})
+      this.setState({isShowLoading: false});
     };
   }
 
@@ -77,14 +77,14 @@ class ImageLazyLoad extends React.Component {
     }
 
     if (isShowLoading) {
-      return <Loading />
+      return <Loading />;
     }
     return (
-      <img 
-        alt='' 
+      <img
+        alt=''
         src={imageUrl}
         onMouseDown={this.onMouseDown}
-        onClick={this.onImageClick} 
+        onClick={this.onImageClick}
       />
     );
   }

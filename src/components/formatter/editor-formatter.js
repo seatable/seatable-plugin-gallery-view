@@ -1,6 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
-import { 
+import {
   TextFormatter,
   NumberFormatter,
   CheckboxFormatter,
@@ -21,7 +21,9 @@ import {
   AutoNumberFormatter,
   UrlFormatter,
   EmailFormatter,
-  DurationFormatter
+  DurationFormatter,
+  RateFormatter,
+  ButtonFormatter
 } from 'dtable-ui-component';
 import intl from 'react-intl-universal';
 import { isValidEmail } from '../../utils/utils';
@@ -40,6 +42,7 @@ const propTypes = {
   getTableById: PropTypes.func,
   getUserCommonInfo: PropTypes.func,
   getMediaUrl: PropTypes.func,
+  getOptionColors: PropTypes.func,
 };
 
 class EditorFormatter extends React.Component {
@@ -49,7 +52,7 @@ class EditorFormatter extends React.Component {
     this.state = {
       isDataLoaded: false,
       collaborator: null
-    }
+    };
   }
 
   componentDidMount() {
@@ -92,7 +95,7 @@ class EditorFormatter extends React.Component {
       this.setState({isDataLoaded: true, collaborator: collaborator});
       return;
     }
-    
+
     this.props.getUserCommonInfo(value).then(res => {
       collaborator = res.data;
       this.setState({isDataLoaded: true, collaborator: collaborator});
@@ -119,7 +122,7 @@ class EditorFormatter extends React.Component {
     let {type: columnType, key: columnKey} = column;
     const { isDataLoaded, collaborator } = this.state;
     const _this = this;
-    
+
     switch(columnType) {
       case CellType.TEXT: {
         if (!row[columnKey]) return this.renderEmptyFormatter();
@@ -177,14 +180,14 @@ class EditorFormatter extends React.Component {
         if (isDataLoaded) {
           return <CreatorFormatter collaborators={[collaborator]} value={row._creator} />;
         }
-        return null
+        return null;
       }
       case CellType.LAST_MODIFIER: {
         if (!row._last_modifier || !collaborator) return this.renderEmptyFormatter();
         if (isDataLoaded) {
           return <LastModifierFormatter collaborators={[collaborator]} value={row._last_modifier} />;
         }
-        return null
+        return null;
       }
       case CellType.FORMULA: {
         let formulaRows = this.props.formulaRows ? {...this.props.formulaRows} : {};
@@ -204,9 +207,9 @@ class EditorFormatter extends React.Component {
             return _this.props.getTableById(tableId);
           },
           expandLinkedTableRow: function(row, tableId) {
-            return false
+            return false;
           }
-        }
+        };
         return <LinkFormatter column={column} row={row} currentTableId={this.props.table._id} linkMetaData={linkMetaData} containerClassName="gallery-link-container" />;
       }
       case CellType.AUTO_NUMBER: {
@@ -225,8 +228,18 @@ class EditorFormatter extends React.Component {
         if (!row[columnKey]) return this.renderEmptyFormatter();
         return <DurationFormatter value={row[columnKey]} format={column.data.duration_format} containerClassName="gallery-text-editor" />;
       }
+      case CellType.RATE: {
+        if (!row[columnKey]) return this.renderEmptyFormatter();
+        return <RateFormatter value={row[columnKey]} data={column.data} containerClassName="gallery-text-editor" />;
+      }
+      case CellType.BUTTON: {
+        const { data = {} } = column;
+        const optionColors = this.props.getOptionColors();
+        if (!data.button_name) return this.renderEmptyFormatter();
+        return <ButtonFormatter data={data} optionColors={optionColors} containerClassName="text-center" />;
+      }
       default:
-        return null
+        return null;
     }
   }
 
