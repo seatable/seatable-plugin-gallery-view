@@ -325,6 +325,10 @@ class App extends React.Component {
     return this.dtable.getTableById(table_id);
   }
 
+  getOptionColors = () => {
+    return this.dtable.getOptionColors();
+  }
+
   getUserCommonInfo = (email, avatar_size) => {
     pluginContext.getUserCommonInfo(email, avatar_size);
   }
@@ -455,6 +459,7 @@ class App extends React.Component {
             getLinkCellValue={this.getLinkCellValue}
             getRowsByID={this.getRowsByID}
             getTableById={this.getTableById}
+            getOptionColors={this.getOptionColors}
             collaborators={collaborators}
             getUserCommonInfo={this.getUserCommonInfo}
             getMediaUrl={this.getMediaUrl}

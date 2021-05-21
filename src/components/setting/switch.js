@@ -14,12 +14,12 @@ function Switch(props) {
   return(
     <div className="gallery-column-switch">
       <label className="custom-switch">
-        <input 
-          className="custom-switch-input" 
-          type="checkbox" 
-          checked={checked} 
-          onChange={onChange} 
-          name="custom-switch-checkbox" 
+        <input
+          className="custom-switch-input"
+          type="checkbox"
+          checked={checked}
+          onChange={onChange}
+          name="custom-switch-checkbox"
           disabled={disabled}
         />
         <span className="custom-switch-description text-truncate">{placeholder}</span>

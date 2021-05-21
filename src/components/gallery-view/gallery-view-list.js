@@ -19,6 +19,7 @@ const propTypes = {
   getUserCommonInfo: PropTypes.func,
   getMediaUrl: PropTypes.func,
   CellType: PropTypes.object,
+  getOptionColors: PropTypes.func,
 };
 
 class GalleryViewList extends React.Component {
@@ -36,7 +37,7 @@ class GalleryViewList extends React.Component {
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.onResize)
+    window.removeEventListener('resize', this.onResize);
   }
 
   onResize = () => {
@@ -52,18 +53,18 @@ class GalleryViewList extends React.Component {
     this.setState({
       galleryItemWidth: galleryItemWidth,
       galleryItemNumber: galleryItemNumber
-    })
+    });
   }
 
   render() {
     const { rows, imageColumn } = this.props;
     const { galleryItemWidth,  galleryItemNumber } = this.state;
-    
+
     return (
       <div className="gallery-list" ref={ref => this.galleryListRef = ref}>
         {rows && rows.map((galleryItem, index) => {
           return (
-            <GalleryViewItem 
+            <GalleryViewItem
               key={`galleryItem${index}`}
               galleryItem={galleryItem}
               imageColumn={imageColumn}
@@ -84,6 +85,7 @@ class GalleryViewList extends React.Component {
               CellType={this.props.CellType}
               tables={this.props.tables}
               formulaRows={this.props.formulaRows}
+              getOptionColors={this.props.getOptionColors}
             />
           );
         })}

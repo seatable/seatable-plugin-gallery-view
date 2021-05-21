@@ -45,7 +45,7 @@ class GallerySettingItem extends React.Component {
     }
     let { column } = this.props;
     this.setState({isChecked: value}, () => {
-      this.props.onColumnItemClick(column, value); 
+      this.props.onColumnItemClick(column, value);
     });
   }
 
@@ -91,7 +91,7 @@ class GallerySettingItem extends React.Component {
     event.preventDefault();
     this.enteredCounter = 0;
     this.setState({isItemDropTipShow: false});
-    let sourceColumn = event.dataTransfer.getData("text/plain");
+    let sourceColumn = event.dataTransfer.getData('text/plain');
     sourceColumn = JSON.parse(sourceColumn);
     const { onMoveColumn, column } = this.props;
     if (sourceColumn.name === column.name) {
@@ -104,20 +104,20 @@ class GallerySettingItem extends React.Component {
     const { column, columnIconConfig } = this.props;
     let placeholder = <Fragment><i className={`dtable-font ${columnIconConfig[column.type]}`}></i><span>{column.name}</span></Fragment>;
     return (
-      <div 
-        className={`gallery-setting-item ${this.state.isItemDropTipShow ? 'column-can-drop' : ''}`} 
+      <div
+        className={`gallery-setting-item ${this.state.isItemDropTipShow ? 'column-can-drop' : ''}`}
         ref={ref => this.galleryItemRef = ref}
         onDrop={this.onDrop}
         onDragEnter={this.onTableDragEnter}
         onDragOver={this.onDragOver}
         onDragLeave={this.onDragLeave}
       >
-        <div 
-          className="drag-column-handle" 
+        <div
+          className="drag-column-handle"
           draggable="true"
           onDragStart={this.onDragStart}
         ><i className="dtable-font dtable-icon-drag"></i></div>
-        <Switch 
+        <Switch
           checked={this.state.isChecked}
           placeholder={placeholder}
           onChange={this.onColumnItemClick}

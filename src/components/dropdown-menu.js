@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
-import { zIndexes } from '../constants'
+import { zIndexes } from '../constants';
 
 import '../assets/css/dropdown-menu.css';
 

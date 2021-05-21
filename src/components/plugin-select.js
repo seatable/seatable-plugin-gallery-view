@@ -55,7 +55,7 @@ class PluginSelect extends React.Component {
         menuShouldScrollIntoView
         menuPortalTarget={this.getMenuPortalTarget()}
       />
-    ); 
+    );
   }
 }
 
