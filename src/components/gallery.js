@@ -34,7 +34,7 @@ class Gallery extends React.Component {
 
   constructor(props) {
     super(props);
-    this.isCreateRows = canCreateRows(props.table);
+    this._canCreateRows = canCreateRows(props.table);
   }
 
   onScroll = () => {
@@ -70,7 +70,7 @@ class Gallery extends React.Component {
             tables={this.props.tables}
             formulaRows={this.props.formulaRows}
           />
-          {this.isCreateRows &&
+          {this._canCreateRows &&
             <AddGalleryItem
               table={this.props.table}
               selectedView={this.props.selectedView}
