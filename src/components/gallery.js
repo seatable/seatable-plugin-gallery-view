@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import GalleryViewList from './gallery-view/gallery-view-list';
 import AddGalleryItem from './add-gallery-item';
+import { canCreateRows } from '../utils/utils';
 
 import '../assets/css/gallery.css';
 
@@ -31,6 +32,11 @@ const propTypes = {
 };
 
 class Gallery extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this._canCreateRows = canCreateRows(props.table);
+  }
 
   onScroll = () => {
     if (this.props.isShowAllRowList) {
@@ -66,12 +72,14 @@ class Gallery extends React.Component {
             formulaRows={this.props.formulaRows}
             getOptionColors={this.props.getOptionColors}
           />
-          <AddGalleryItem
-            table={this.props.table}
-            selectedView={this.props.selectedView}
-            rows={this.props.rows}
-            onAddGalleryItem={this.props.onAddGalleryItem}
-          />
+          {this._canCreateRows &&
+            <AddGalleryItem
+              table={this.props.table}
+              selectedView={this.props.selectedView}
+              rows={this.props.rows}
+              onAddGalleryItem={this.props.onAddGalleryItem}
+            />
+          }
         </div>
       </div>
     );

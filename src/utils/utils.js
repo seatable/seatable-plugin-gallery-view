@@ -65,3 +65,29 @@ export const calculateColumnsName = (currentColumns, galleryColumnsName) => {
 export const checkDesktop = () => {
   return window.innerWidth >= 768;
 };
+
+export const isTableEditable = ({permission_type = 'default', permitted_users = []}) => {
+  const { isAdmin, username } = window.dtable ? window.dtable :  window.dtablePluginConfig;
+
+  if (!permission_type) {
+    return true;
+  }
+  if (permission_type === TABLE_PERMISSION_TYPE.DEFAULT) {
+    return true;
+  }
+  if (permission_type === TABLE_PERMISSION_TYPE.ADMINS && isAdmin) {
+    return true;
+  }
+  if (permission_type === TABLE_PERMISSION_TYPE.SPECIFIC_USERS && permitted_users.includes(username)) {
+    return true;
+  }
+  return false;
+};
+
+export const canCreateRows = (table) => {
+  let canCreateRows = true;
+  if (table && table.table_permissions && table.table_permissions.add_rows_permission) {
+    canCreateRows = isTableEditable(table.table_permissions.add_rows_permission);
+  }
+  return canCreateRows;
+};
