@@ -66,7 +66,7 @@ export const checkDesktop = () => {
   return window.innerWidth >= 768;
 };
 
-export const isTableEditable = ({permission_type = 'default', permitted_users = []}) => {
+export const isTableEditable = ({permission_type = 'default', permitted_users = []}, TABLE_PERMISSION_TYPE) => {
   const { isAdmin, username } = window.dtable ? window.dtable :  window.dtablePluginConfig;
 
   if (!permission_type) {
@@ -84,10 +84,10 @@ export const isTableEditable = ({permission_type = 'default', permitted_users = 
   return false;
 };
 
-export const canCreateRows = (table) => {
+export const canCreateRows = (table, TABLE_PERMISSION_TYPE) => {
   let canCreateRows = true;
   if (table && table.table_permissions && table.table_permissions.add_rows_permission) {
-    canCreateRows = isTableEditable(table.table_permissions.add_rows_permission);
+    canCreateRows = isTableEditable(table.table_permissions.add_rows_permission, TABLE_PERMISSION_TYPE);
   }
   return canCreateRows;
 };

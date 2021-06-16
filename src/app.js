@@ -329,6 +329,10 @@ class App extends React.Component {
     return this.dtable.getOptionColors();
   }
 
+  getTablePermissionType = () => {
+    return  this.dtable.getTablePermissionType();
+  }
+
   getUserCommonInfo = (email, avatar_size) => {
     pluginContext.getUserCommonInfo(email, avatar_size);
   }
@@ -466,6 +470,7 @@ class App extends React.Component {
             CellType={CellType}
             tables={tables}
             formulaRows={formulaRows}
+            getTablePermissionType={this.getTablePermissionType}
           />
           {isShowGallerySetting &&
             <GallerySetting

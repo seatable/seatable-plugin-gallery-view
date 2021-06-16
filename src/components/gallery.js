@@ -29,13 +29,15 @@ const propTypes = {
   getMediaUrl: PropTypes.func,
   CellType: PropTypes.object,
   getOptionColors: PropTypes.func,
+  getTablePermissionType: PropTypes.func,
 };
 
 class Gallery extends React.Component {
 
   constructor(props) {
     super(props);
-    this._canCreateRows = canCreateRows(props.table);
+    const TABLE_PERMISSION_TYPE = this.props.getTablePermissionType();
+    this._canCreateRows = canCreateRows(props.table, TABLE_PERMISSION_TYPE);
   }
 
   onScroll = () => {
