@@ -381,7 +381,7 @@ class App extends React.Component {
     let tables = this.dtable.getTables();
     let selectedTable = this.getSelectedTable(tables, settings);
     let { name: tableName, columns: currentColumns } = selectedTable || {};
-    let views = this.dtable.getViews(selectedTable);
+    let views = this.dtable.getNonArchiveViews(selectedTable);
     let selectedView = this.getSelectedView(selectedTable, settings) || views[0];
     let { name: viewName } = selectedView;
     let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
