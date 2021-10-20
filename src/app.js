@@ -468,7 +468,6 @@ class App extends React.Component {
             getUserCommonInfo={this.getUserCommonInfo}
             getMediaUrl={this.getMediaUrl}
             CellType={CellType}
-            tables={tables}
             formulaRows={formulaRows}
             getTablePermissionType={this.getTablePermissionType}
           />

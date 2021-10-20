@@ -7,7 +7,6 @@ import { canCreateRows } from '../utils/utils';
 import '../assets/css/gallery.css';
 
 const propTypes = {
-  tables: PropTypes.array,
   rows: PropTypes.array.isRequired,
   selectedGalleryView: PropTypes.object,
   table: PropTypes.object,
@@ -70,7 +69,6 @@ class Gallery extends React.Component {
             getMediaUrl={this.props.getMediaUrl}
             CellType={this.props.CellType}
             selectedImageColumn={this.props.selectedImageColumn}
-            tables={this.props.tables}
             formulaRows={this.props.formulaRows}
             getOptionColors={this.props.getOptionColors}
           />

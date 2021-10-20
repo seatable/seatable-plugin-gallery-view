@@ -30,7 +30,6 @@ import { isValidEmail } from '../../utils/utils';
 
 const propTypes = {
   type: PropTypes.string,
-  tables: PropTypes.array,
   column: PropTypes.object.isRequired,
   selectedView: PropTypes.object,
   row: PropTypes.object.isRequired,
@@ -118,7 +117,7 @@ class EditorFormatter extends React.Component {
   }
 
   renderFormatter = () => {
-    const { column, row, collaborators, CellType, tables } = this.props;
+    const { column, row, collaborators, CellType } = this.props;
     let {type: columnType, key: columnKey} = column;
     const { isDataLoaded, collaborator } = this.state;
     const _this = this;
@@ -189,11 +188,12 @@ class EditorFormatter extends React.Component {
         }
         return null;
       }
-      case CellType.FORMULA: {
+      case CellType.FORMULA:
+      case CellType.LINK_FORMULA: {
         let formulaRows = this.props.formulaRows ? {...this.props.formulaRows} : {};
         let formulaValue = formulaRows[row._id] ? formulaRows[row._id][columnKey] : '';
         if (!formulaValue) return this.renderEmptyFormatter();
-        return <FormulaFormatter value={formulaValue} column={column} collaborators={collaborators} tables={tables} containerClassName="gallery-formula-container" />;
+        return <FormulaFormatter value={formulaValue} column={column} collaborators={collaborators} containerClassName="gallery-formula-container" />;
       }
       case CellType.LINK: {
         let linkMetaData = {
