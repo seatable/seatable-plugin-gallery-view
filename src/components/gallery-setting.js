@@ -28,9 +28,12 @@ class GallerySetting extends React.Component {
     super(props);
     this.columnIconConfig = props.getColumnIconConfig();
     const CellType = props.CellType;
-    this.SHOW_TITLE_COLUMN_TYPE = [CellType.TEXT, CellType.SINGLE_SELECT, CellType.MULTIPLE_SELECT, CellType.NUMBER, CellType.FORMULA,
-      CellType.DATE, CellType.COLLABORATOR, CellType.GEOLOCATION, CellType.CTIME, CellType.MTIME, CellType.CREATOR,
-      CellType.LAST_MODIFIER, CellType.RATE];
+    this.SHOW_TITLE_COLUMN_TYPE = [
+      CellType.TEXT, CellType.SINGLE_SELECT, CellType.MULTIPLE_SELECT, CellType.NUMBER,
+      CellType.FORMULA, CellType.LINK_FORMULA, CellType.DATE, CellType.COLLABORATOR,
+      CellType.GEOLOCATION, CellType.CTIME, CellType.MTIME, CellType.CREATOR,
+      CellType.LAST_MODIFIER, CellType.RATE
+    ];
   }
 
   onModifySettings = (selectedOption) => {

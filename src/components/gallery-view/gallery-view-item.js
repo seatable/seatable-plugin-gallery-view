@@ -7,7 +7,6 @@ import { calculateColumns, calculateColumnsName } from '../../utils/utils';
 import pluginContext from '../../plugin-context';
 
 const propTypes = {
-  tables: PropTypes.array,
   galleryItem: PropTypes.object,
   imageColumn: PropTypes.object,
   getRow: PropTypes.func,
@@ -147,7 +146,6 @@ class GalleryViewItem extends React.Component {
             getUserCommonInfo={this.props.getUserCommonInfo}
             getMediaUrl={this.props.getMediaUrl}
             CellType={this.props.CellType}
-            tables={this.props.tables}
             formulaRows={this.props.formulaRows}
             getOptionColors={this.props.getOptionColors}
           /></div>);
@@ -171,8 +169,8 @@ class GalleryViewItem extends React.Component {
         getUserCommonInfo={this.props.getUserCommonInfo}
         getMediaUrl={this.props.getMediaUrl}
         CellType={this.props.CellType}
+        formulaRows={this.props.formulaRows}
         type="row_title"
-        tables={this.props.tables}
         getOptionColors={this.props.getOptionColors}
       />
     </div>);
