@@ -36,7 +36,7 @@ class GallerySetting extends React.Component {
       CellType.LAST_MODIFIER, CellType.RATE
     ];
     this.state = {
-      isShowColumnName: settings.display_column_name || false,
+      isShowColumnName: settings.display_field_name || false,
     };
   }
 
@@ -125,7 +125,7 @@ class GallerySetting extends React.Component {
   showColumnNameToggle = () => {
     let { settings } = this.props;
     const updateShowColumnName = !this.state.isShowColumnName;
-    let updated = Object.assign({}, settings, {display_column_name: updateShowColumnName});
+    let updated = Object.assign({}, settings, {display_field_name: updateShowColumnName});
     this.props.onModifyGallerySettings(updated);
     this.setState({isShowColumnName: updateShowColumnName});
   }
@@ -240,7 +240,7 @@ class GallerySetting extends React.Component {
                 <div className="gallery-setting-item">
                   <Switch
                     checked={isShowColumnName}
-                    placeholder={intl.get('Display_column_name')}
+                    placeholder={intl.get('Display_field_name')}
                     onChange={this.showColumnNameToggle}
                     switchClassName='pl-0'
                   />

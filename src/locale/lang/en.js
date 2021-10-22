@@ -18,7 +18,7 @@ const en = {
   "Title_fields": "Title fields",
   "Other_fields": "Other fields",
   "Hide_all": "Hide all",
-  "Display_column_name": "Display column name"
+  "Display_field_name": "Display field name"
 };
 
 export default en;

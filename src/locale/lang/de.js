@@ -18,7 +18,7 @@ const de = {
   "Title_fields": "Titel",
   "Other_fields": "Weitere Spalten",
   "Hide_all": "Alle ausblenden",
-  "Display_column_name": "Display column name"
+  "Display_field_name": "Display field name"
 };
 
 export default de;

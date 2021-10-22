@@ -148,7 +148,7 @@ class GalleryViewItem extends React.Component {
             CellType={this.props.CellType}
             formulaRows={this.props.formulaRows}
             getOptionColors={this.props.getOptionColors}
-            displayColumnName={settings.display_column_name || false}
+            displayColumnName={settings.display_field_name || false}
           /></div>);
     });
   }
@@ -173,7 +173,7 @@ class GalleryViewItem extends React.Component {
         formulaRows={this.props.formulaRows}
         type="row_title"
         getOptionColors={this.props.getOptionColors}
-        displayColumnName={settings.display_column_name || false}
+        displayColumnName={settings.display_field_name || false}
       />
     </div>);
   }
