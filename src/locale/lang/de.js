@@ -3,21 +3,22 @@ const de = {
   "Delete_View": "Ansicht löschen",
   "New_View": "Neue Ansicht",
   "Name": "Name",
-  "Name_is_required": "Name ist erforderlich",
+  "Name_is_required": "Der Name ist eine Pflichtangabe.",
   "Cancel": "Abbrechen",
   "Submit": "Absenden",
   "Settings": "Einstellungen",
   "Table": "Tabelle",
   "View": "Ansicht",
-  "Name_Column": "Namensspalte",
+  "Name_Column": "Name",
   "No_options": "Keine Optionen",
   "Unnamed_record": "Neuer Eintrag",
-  "Choose_fields": "Felder auswählen",
+  "Choose_fields": "Spalten auswählen",
   "Choose_all": "Alle anzeigen\n",
   "Image_fields": "Bild",
   "Title_fields": "Titel",
   "Other_fields": "Weitere Spalten",
-  "Hide_all": "Alle ausblenden"
+  "Hide_all": "Alle ausblenden",
+  "Display_column_name": "Display column name"
 };
 
 export default de;

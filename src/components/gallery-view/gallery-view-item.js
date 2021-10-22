@@ -128,7 +128,7 @@ class GalleryViewItem extends React.Component {
   }
 
   renderEditorFormatter = () => {
-    let { galleryItem, table } = this.props;
+    let { galleryItem, table, settings } = this.props;
     let filteredColumns = this.getFilteredColumns();
     let row = this.props.getRow(table, galleryItem._id);
     return filteredColumns.map((column, index) => {
@@ -148,13 +148,14 @@ class GalleryViewItem extends React.Component {
             CellType={this.props.CellType}
             formulaRows={this.props.formulaRows}
             getOptionColors={this.props.getOptionColors}
+            displayColumnName={settings.display_column_name || false}
           /></div>);
     });
   }
 
   renderRowTitle = () => {
     let titleColumn = this.getGalleryTitleColumn();
-    const { galleryItem, table } = this.props;
+    const { galleryItem, table, settings } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
     return (<div className="row-title" onClick={this.onRowExpand}>
       <EditorFormatter
@@ -172,6 +173,7 @@ class GalleryViewItem extends React.Component {
         formulaRows={this.props.formulaRows}
         type="row_title"
         getOptionColors={this.props.getOptionColors}
+        displayColumnName={settings.display_column_name || false}
       />
     </div>);
   }
