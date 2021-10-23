@@ -114,8 +114,26 @@
   margin-top: 7px;
   min-height: 28px;
   display: flex;
-  align-items: center;
   font-size: 14px;
+  flex-direction: column;
+}
+
+.gallery-editor-container .gallery-editor-title {
+  font-size: 12px;
+}
+
+.gallery-editor-container .gallery-editor-title .dtable-font {
+  color: #999;
+  font-size: 12px;
+  margin-right: 0.5rem;
+}
+
+.gallery-editor-container .gallery-editor-title .gallery-editor-title-text {
+  color: #666;
+}
+
+.gallery-editor-container .cell-formatter-container {
+  line-height: 28px;
 }
 
 .gallery-row-content .gallery-text-editor {

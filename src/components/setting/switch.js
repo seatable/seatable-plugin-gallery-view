@@ -10,9 +10,9 @@ const propTypes = {
 };
 
 function Switch(props) {
-  const { onChange, checked, placeholder, disabled } = props;
+  const { onChange, checked, placeholder, disabled, switchClassName } = props;
   return(
-    <div className="gallery-column-switch">
+    <div className={`gallery-column-switch ${switchClassName || ''}`}>
       <label className="custom-switch">
         <input
           className="custom-switch-input"

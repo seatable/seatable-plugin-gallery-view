@@ -29,9 +29,11 @@ import intl from 'react-intl-universal';
 import { isValidEmail } from '../../utils/utils';
 
 const propTypes = {
+  displayColumnName: PropTypes.bool,
   type: PropTypes.string,
   column: PropTypes.object.isRequired,
   selectedView: PropTypes.object,
+  columnIconConfig: PropTypes.object,
   row: PropTypes.object.isRequired,
   table: PropTypes.object.isRequired,
   CellType: PropTypes.object,
@@ -110,81 +112,175 @@ class EditorFormatter extends React.Component {
   }
 
   renderEmptyFormatter = () => {
+    const { displayColumnName } = this.props;
+    let emptyFormatter = <span className="row-cell-empty d-inline-block"></span>;
     if (this.props.type === 'row_title') {
-      return <span>{intl.get('Unnamed_record')}</span>;
+      emptyFormatter = <span>{intl.get('Unnamed_record')}</span>;
     }
-    return <span className="row-cell-empty d-inline-block"></span>;
+    if (displayColumnName)  {
+      emptyFormatter = this.renderColumnFormatter(emptyFormatter);
+    }
+    return emptyFormatter;
+  }
+
+  renderColumnFormatter = (formatter) => {
+    const { column, columnIconConfig } = this.props;
+    const { name: columnName, type: columnType } = column;
+    return (
+      <>
+        <div className="gallery-editor-title">
+          <i className={`dtable-font ${columnIconConfig[columnType]}`}></i>
+          <span className="gallery-editor-title-text">{columnName}</span>
+        </div>
+        <div style={{minHeight: 28}}>
+          {formatter}
+        </div>
+      </>
+    );
   }
 
   renderFormatter = () => {
-    const { column, row, collaborators, CellType } = this.props;
-    let {type: columnType, key: columnKey} = column;
+    const { column, row, collaborators, CellType, displayColumnName } = this.props;
+    const { type: columnType, key: columnKey } = column;
     const { isDataLoaded, collaborator } = this.state;
     const _this = this;
 
     switch(columnType) {
       case CellType.TEXT: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <TextFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        let textFormatter = <TextFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        if (!row[columnKey]) {
+          textFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          textFormatter = this.renderColumnFormatter(textFormatter);
+        }
+        return textFormatter;
+
       }
       case CellType.COLLABORATOR: {
-        if (!row[columnKey] || row[columnKey].length === 0) return this.renderEmptyFormatter();
-        return <CollaboratorFormatter value={row[columnKey]} collaborators={collaborators} />;
+        let collaboratorFormatter = <CollaboratorFormatter value={row[columnKey]} collaborators={collaborators}  containerClassName="gallery-text-editor"  />;
+        if (!row[columnKey] || row[columnKey].length === 0) {
+          collaboratorFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          collaboratorFormatter = this.renderColumnFormatter(collaboratorFormatter);
+        }
+        return collaboratorFormatter;
       }
       case CellType.LONG_TEXT: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <LongTextFormatter value={row[columnKey]} />;
+        let longTextFormatter = <LongTextFormatter value={row[columnKey]} />;
+        if (!row[columnKey]) {
+          longTextFormatter =  this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          longTextFormatter = this.renderColumnFormatter(longTextFormatter);
+        }
+        return longTextFormatter;
       }
       case CellType.IMAGE: {
-        if (!row[columnKey] || row[columnKey].length === 0) return this.renderEmptyFormatter();
-        return <ImageFormatter value={row[columnKey]} isSample />;
+        let imageFormatter = <ImageFormatter value={row[columnKey]} isSample />;
+        if (!row[columnKey] || row[columnKey].length === 0){
+          imageFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          imageFormatter = this.renderColumnFormatter(imageFormatter);
+        }
+        return imageFormatter;
       }
       case CellType.GEOLOCATION : {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <GeolocationFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        let geolocationFormatter = <GeolocationFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        if (!row[columnKey]) {
+          geolocationFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          geolocationFormatter = this.renderColumnFormatter(geolocationFormatter);
+        }
+        return geolocationFormatter;
       }
       case CellType.NUMBER: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <NumberFormatter value={row[columnKey]} data={column.data} />;
+        let numberFormatter = <NumberFormatter value={row[columnKey]} data={column.data} />;
+        if (!row[columnKey]) {
+          numberFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          numberFormatter = this.renderColumnFormatter(numberFormatter);
+        }
+        return numberFormatter;
       }
       case CellType.DATE: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <DateFormatter value={row[columnKey]} format={column.data.format} />;
+        let dateFormatter = <DateFormatter value={row[columnKey]} format={column.data.format} />;
+        if (!row[columnKey]) {
+          dateFormatter =  this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          dateFormatter = this.renderColumnFormatter(dateFormatter);
+        }
+        return dateFormatter;
       }
       case CellType.MULTIPLE_SELECT: {
-        if (!row[columnKey] || row[columnKey].length === 0) return this.renderEmptyFormatter();
-        return <MultipleSelectFormatter value={row[columnKey]} options={column.data.options} />;
+        let multipleSelectFormatter = <MultipleSelectFormatter value={row[columnKey]} options={column.data.options} />;
+        if (!row[columnKey] || row[columnKey].length === 0) {
+          multipleSelectFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          multipleSelectFormatter = this.renderColumnFormatter(multipleSelectFormatter);
+        }
+        return multipleSelectFormatter;
       }
       case CellType.SINGLE_SELECT: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <SingleSelectFormatter value={row[columnKey]} options={column.data.options} />;
+        let singleSelectFormatter = <SingleSelectFormatter value={row[columnKey]} options={column.data.options} />;
+        if (!row[columnKey]) {
+          singleSelectFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          singleSelectFormatter = this.renderColumnFormatter(singleSelectFormatter);
+        }
+        return singleSelectFormatter;
       }
       case CellType.FILE: {
-        if (!row[columnKey] || row[columnKey].length === 0) return this.renderEmptyFormatter();
-        return <FileFormatter value={row[columnKey]} isSample />;
+        let fileFormatter = <FileFormatter value={row[columnKey]} isSample />;
+        if (!row[columnKey] || row[columnKey].length === 0) {
+          fileFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          fileFormatter = this.renderColumnFormatter(fileFormatter);
+        }
+        return fileFormatter;
       }
       case CellType.CHECKBOX: {
-        return <CheckboxFormatter value={row[columnKey]} />;
+        let checkboxFormatter = <CheckboxFormatter value={row[columnKey]} />;
+        if (displayColumnName) {
+          checkboxFormatter = this.renderColumnFormatter(checkboxFormatter);
+        }
+        return checkboxFormatter;
       }
       case CellType.CTIME: {
-        if (!row._ctime) return this.renderEmptyFormatter();
-        return <CTimeFormatter value={row._ctime} />;
+        let cTimeFormatter = <CTimeFormatter value={row._ctime} />;
+        if (!row._ctime) {
+          cTimeFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          cTimeFormatter = this.renderColumnFormatter(cTimeFormatter);
+        }
+        return cTimeFormatter;
       }
       case CellType.MTIME: {
-        if (!row._mtime) return this.renderEmptyFormatter();
-        return <MTimeFormatter value={row._mtime} />;
+        let mTimeFormatter = <MTimeFormatter value={row._mtime} />;
+        if (!row._mtime) {
+          mTimeFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          mTimeFormatter = this.renderColumnFormatter(mTimeFormatter);
+        }
+        return mTimeFormatter;
       }
       case CellType.CREATOR: {
         if (!row._creator || !collaborator) return this.renderEmptyFormatter();
         if (isDataLoaded) {
-          return <CreatorFormatter collaborators={[collaborator]} value={row._creator} />;
+          let creatorFormatter = <CreatorFormatter collaborators={[collaborator]} value={row._creator} />;
+          if (displayColumnName) {
+            creatorFormatter = this.renderColumnFormatter(creatorFormatter);
+          }
+          return creatorFormatter;
         }
         return null;
       }
       case CellType.LAST_MODIFIER: {
         if (!row._last_modifier || !collaborator) return this.renderEmptyFormatter();
         if (isDataLoaded) {
-          return <LastModifierFormatter collaborators={[collaborator]} value={row._last_modifier} />;
+          let lastModifierFormatter = <LastModifierFormatter collaborators={[collaborator]} value={row._last_modifier} />;
+          if (displayColumnName) {
+            lastModifierFormatter = this.renderColumnFormatter(lastModifierFormatter);
+          }
+          return lastModifierFormatter;
         }
         return null;
       }
@@ -192,8 +288,13 @@ class EditorFormatter extends React.Component {
       case CellType.LINK_FORMULA: {
         let formulaRows = this.props.formulaRows ? {...this.props.formulaRows} : {};
         let formulaValue = formulaRows[row._id] ? formulaRows[row._id][columnKey] : '';
-        if (!formulaValue) return this.renderEmptyFormatter();
-        return <FormulaFormatter value={formulaValue} column={column} collaborators={collaborators} containerClassName="gallery-formula-container" />;
+        let formulaFormatter = <FormulaFormatter value={formulaValue} column={column} collaborators={collaborators} containerClassName="gallery-formula-container" />;
+        if (!formulaValue) {
+          formulaFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          formulaFormatter = this.renderColumnFormatter(formulaFormatter);
+        }
+        return formulaFormatter;
       }
       case CellType.LINK: {
         let linkMetaData = {
@@ -210,33 +311,67 @@ class EditorFormatter extends React.Component {
             return false;
           }
         };
-        return <LinkFormatter column={column} row={row} currentTableId={this.props.table._id} linkMetaData={linkMetaData} containerClassName="gallery-link-container" />;
+        let linkFormatter = <LinkFormatter column={column} row={row} currentTableId={this.props.table._id} linkMetaData={linkMetaData} containerClassName="gallery-link-container" />;
+        if (displayColumnName) {
+          linkFormatter = this.renderColumnFormatter(linkFormatter);
+        }
+        return linkFormatter;
       }
       case CellType.AUTO_NUMBER: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <AutoNumberFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        let autoNumberFormatter = <AutoNumberFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        if (!row[columnKey]) {
+          autoNumberFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          autoNumberFormatter = this.renderColumnFormatter(autoNumberFormatter);
+        }
+        return autoNumberFormatter;
       }
       case CellType.URL: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <UrlFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        let urlFormatter = <UrlFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        if (!row[columnKey]) {
+          urlFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          urlFormatter = this.renderColumnFormatter(urlFormatter);
+        }
+        return urlFormatter;
       }
       case CellType.EMAIL: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <EmailFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        let emailFormatter = <EmailFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
+        if (!row[columnKey]) {
+          emailFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          emailFormatter = this.renderColumnFormatter(emailFormatter);
+        }
+        return emailFormatter;
       }
       case CellType.DURATION: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <DurationFormatter value={row[columnKey]} format={column.data.duration_format} containerClassName="gallery-text-editor" />;
+        let durationFormatter = <DurationFormatter value={row[columnKey]} format={column.data.duration_format} containerClassName="gallery-text-editor" />;
+        if (!row[columnKey]) {
+          durationFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          durationFormatter = this.renderColumnFormatter(durationFormatter);
+        }
+        return durationFormatter;
       }
       case CellType.RATE: {
-        if (!row[columnKey]) return this.renderEmptyFormatter();
-        return <RateFormatter value={row[columnKey]} data={column.data} containerClassName="gallery-text-editor" />;
+        let rateFormatter = <RateFormatter value={row[columnKey]} data={column.data} containerClassName="gallery-text-editor" />;
+        if (!row[columnKey]) {
+          rateFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          rateFormatter = this.renderColumnFormatter(rateFormatter);
+        }
+        return rateFormatter;
       }
       case CellType.BUTTON: {
         const { data = {} } = column;
         const optionColors = this.props.getOptionColors();
-        if (!data.button_name) return this.renderEmptyFormatter();
-        return <ButtonFormatter data={data} optionColors={optionColors} containerClassName="text-center" />;
+        let buttonFormatter = <ButtonFormatter data={data} optionColors={optionColors} containerClassName="text-center" />;
+        if (!data.button_name) {
+          buttonFormatter = this.renderEmptyFormatter();
+        } else if (displayColumnName) {
+          buttonFormatter = this.renderColumnFormatter(buttonFormatter);
+        }
+        return buttonFormatter;
       }
       default:
         return null;

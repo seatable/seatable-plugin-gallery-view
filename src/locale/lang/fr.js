@@ -9,15 +9,16 @@ const fr = {
   "Settings": "Paramètres",
   "Table": "Tableau",
   "View": "Vue",
-  "Name_Column": "Colonne nom",
+  "Name_Column": "Nom",
   "No_options": "Il n'y a pas d'options.",
   "Unnamed_record": "Nouveau enregistrement",
-  "Choose_fields": "Sélectionner les champs",
+  "Choose_fields": "Sélectionner les colonnes",
   "Choose_all": "Afficher toutes",
   "Image_fields": "Image",
   "Title_fields": "Titre",
   "Other_fields": "Autres colonnes",
-  "Hide_all": "Masquer toutes"
+  "Hide_all": "Masquer toutes",
+  "Display_field_name": "Display field name"
 };
 
 export default fr;

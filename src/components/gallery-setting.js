@@ -5,6 +5,7 @@ import PluginSelect from './plugin-select';
 import { SETTING_KEY, zIndexes } from '../constants';
 import GallerySettingItem from './setting/gallery-setting-item';
 import { calculateColumns, calculateColumnsName } from '../utils/utils';
+import Switch from './setting/switch';
 import '../locale';
 
 import '../assets/css/gallery-setting.css';
@@ -27,13 +28,16 @@ class GallerySetting extends React.Component {
   constructor(props) {
     super(props);
     this.columnIconConfig = props.getColumnIconConfig();
-    const CellType = props.CellType;
+    const { CellType, settings } = props;
     this.SHOW_TITLE_COLUMN_TYPE = [
       CellType.TEXT, CellType.SINGLE_SELECT, CellType.MULTIPLE_SELECT, CellType.NUMBER,
       CellType.FORMULA, CellType.LINK_FORMULA, CellType.DATE, CellType.COLLABORATOR,
       CellType.GEOLOCATION, CellType.CTIME, CellType.MTIME, CellType.CREATOR,
       CellType.LAST_MODIFIER, CellType.RATE
     ];
+    this.state = {
+      isShowColumnName: settings.display_field_name || false,
+    };
   }
 
   onModifySettings = (selectedOption) => {
@@ -118,6 +122,14 @@ class GallerySetting extends React.Component {
     this.props.onModifyGallerySettings(updated);
   }
 
+  showColumnNameToggle = () => {
+    let { settings } = this.props;
+    const updateShowColumnName = !this.state.isShowColumnName;
+    let updated = Object.assign({}, settings, {display_field_name: updateShowColumnName});
+    this.props.onModifyGallerySettings(updated);
+    this.setState({isShowColumnName: updateShowColumnName});
+  }
+
   getTitleColumns = () => {
     let { currentColumns } = this.props;
     let titleColumns = currentColumns.filter(column => this.SHOW_TITLE_COLUMN_TYPE.includes(column.type));
@@ -191,9 +203,10 @@ class GallerySetting extends React.Component {
   }
 
   render() {
-    let { tables, views, onHideGallerySetting, settings, imageColumns } = this.props;
-    let filteredColumns = this.getFilteredColumns();
-    let titleColumns = this.getTitleColumns();
+    const { tables, views, onHideGallerySetting, settings, imageColumns } = this.props;
+    const { isShowColumnName } = this.state;
+    const filteredColumns = this.getFilteredColumns();
+    const titleColumns = this.getTitleColumns();
     return (
       <div className="plugin-gallery-setting" style={{zIndex: zIndexes.GALLERY_SETTING}} ref={ref => this.GallerySetting = ref}>
         <div className="setting-container">
@@ -222,6 +235,16 @@ class GallerySetting extends React.Component {
               <div className="setting-item image-setting">
                 <div className="title">{intl.get('Title_fields')}</div>
                 {this.renderFieldsSelector(titleColumns, 'shown_title_name')}
+              </div>
+              <div className="setting-item">
+                <div className="gallery-setting-item">
+                  <Switch
+                    checked={isShowColumnName}
+                    placeholder={intl.get('Display_field_name')}
+                    onChange={this.showColumnNameToggle}
+                    switchClassName='pl-0'
+                  />
+                </div>
               </div>
               <div className="setting-item fields-setting">
                 <div className="fields-setting-header">

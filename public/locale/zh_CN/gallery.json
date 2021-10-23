@@ -10,12 +10,13 @@
   "Table": "表格",
   "View": "视图",
   "Name_Column": "名称字段",
-  "No_options": "没有选择",
-  "Unnamed_record": "未命名行",
+  "No_options": "没有选项",
+  "Unnamed_record": "未命名记录",
   "Choose_fields": "选择字段",
   "Choose_all": "选择全部",
   "Image_fields": "图片字段",
   "Title_fields": "标题字段",
   "Other_fields": "其他字段",
-  "Hide_all": "隐藏全部"
+  "Hide_all": "隐藏全部",
+  "Display_field_name": "显示字段名称"
 }

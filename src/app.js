@@ -470,6 +470,7 @@ class App extends React.Component {
             CellType={CellType}
             formulaRows={formulaRows}
             getTablePermissionType={this.getTablePermissionType}
+            getColumnIconConfig={this.getColumnIconConfig}
           />
           {isShowGallerySetting &&
             <GallerySetting

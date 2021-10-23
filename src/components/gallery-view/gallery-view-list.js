@@ -5,6 +5,7 @@ import GalleryViewItem from './gallery-view-item';
 const propTypes = {
   rows: PropTypes.array.isRequired,
   imageColumn: PropTypes.object,
+  columnIconConfig: PropTypes.object,
   getRow: PropTypes.func,
   table: PropTypes.object,
   selectedGalleryView: PropTypes.object,
@@ -84,6 +85,7 @@ class GalleryViewList extends React.Component {
               CellType={this.props.CellType}
               formulaRows={this.props.formulaRows}
               getOptionColors={this.props.getOptionColors}
+              columnIconConfig={this.props.columnIconConfig}
             />
           );
         })}

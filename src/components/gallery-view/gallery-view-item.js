@@ -12,6 +12,7 @@ const propTypes = {
   getRow: PropTypes.func,
   table: PropTypes.object,
   selectedGalleryView: PropTypes.object,
+  columnIconConfig: PropTypes.object,
   width: PropTypes.number,
   itemMarginRightNone: PropTypes.bool,
   settings: PropTypes.object,
@@ -128,7 +129,7 @@ class GalleryViewItem extends React.Component {
   }
 
   renderEditorFormatter = () => {
-    let { galleryItem, table } = this.props;
+    let { galleryItem, table, settings } = this.props;
     let filteredColumns = this.getFilteredColumns();
     let row = this.props.getRow(table, galleryItem._id);
     return filteredColumns.map((column, index) => {
@@ -148,6 +149,8 @@ class GalleryViewItem extends React.Component {
             CellType={this.props.CellType}
             formulaRows={this.props.formulaRows}
             getOptionColors={this.props.getOptionColors}
+            displayColumnName={settings.display_field_name || false}
+            columnIconConfig={this.props.columnIconConfig}
           /></div>);
     });
   }
