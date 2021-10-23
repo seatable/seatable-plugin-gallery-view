@@ -29,13 +29,15 @@ const propTypes = {
   CellType: PropTypes.object,
   getOptionColors: PropTypes.func,
   getTablePermissionType: PropTypes.func,
+  getColumnIconConfig: PropTypes.func
 };
 
 class Gallery extends React.Component {
 
   constructor(props) {
     super(props);
-    const TABLE_PERMISSION_TYPE = this.props.getTablePermissionType();
+    const TABLE_PERMISSION_TYPE = props.getTablePermissionType();
+    this.columnIconConfig = props.getColumnIconConfig();
     this._canCreateRows = canCreateRows(props.table, TABLE_PERMISSION_TYPE);
   }
 
@@ -71,6 +73,7 @@ class Gallery extends React.Component {
             selectedImageColumn={this.props.selectedImageColumn}
             formulaRows={this.props.formulaRows}
             getOptionColors={this.props.getOptionColors}
+            columnIconConfig={this.columnIconConfig}
           />
           {this._canCreateRows &&
             <AddGalleryItem

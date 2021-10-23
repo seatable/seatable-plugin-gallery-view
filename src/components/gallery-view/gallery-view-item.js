@@ -12,6 +12,7 @@ const propTypes = {
   getRow: PropTypes.func,
   table: PropTypes.object,
   selectedGalleryView: PropTypes.object,
+  columnIconConfig: PropTypes.object,
   width: PropTypes.number,
   itemMarginRightNone: PropTypes.bool,
   settings: PropTypes.object,
@@ -149,13 +150,14 @@ class GalleryViewItem extends React.Component {
             formulaRows={this.props.formulaRows}
             getOptionColors={this.props.getOptionColors}
             displayColumnName={settings.display_field_name || false}
+            columnIconConfig={this.props.columnIconConfig}
           /></div>);
     });
   }
 
   renderRowTitle = () => {
     let titleColumn = this.getGalleryTitleColumn();
-    const { galleryItem, table, settings } = this.props;
+    const { galleryItem, table } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
     return (<div className="row-title" onClick={this.onRowExpand}>
       <EditorFormatter
@@ -173,7 +175,6 @@ class GalleryViewItem extends React.Component {
         formulaRows={this.props.formulaRows}
         type="row_title"
         getOptionColors={this.props.getOptionColors}
-        displayColumnName={settings.display_field_name || false}
       />
     </div>);
   }

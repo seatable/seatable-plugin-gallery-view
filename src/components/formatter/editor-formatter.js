@@ -33,6 +33,7 @@ const propTypes = {
   type: PropTypes.string,
   column: PropTypes.object.isRequired,
   selectedView: PropTypes.object,
+  columnIconConfig: PropTypes.object,
   row: PropTypes.object.isRequired,
   table: PropTypes.object.isRequired,
   CellType: PropTypes.object,
@@ -123,12 +124,17 @@ class EditorFormatter extends React.Component {
   }
 
   renderColumnFormatter = (formatter) => {
-    const { column } = this.props;
-    const { name: columnName } = column;
+    const { column, columnIconConfig } = this.props;
+    const { name: columnName, type: columnType } = column;
     return (
       <>
-        <span className="mr-2">{columnName}: </span>
-        {formatter}
+        <div className="gallery-editor-title">
+          <i className={`dtable-font ${columnIconConfig[columnType]}`}></i>
+          <span className="gallery-editor-title-text">{columnName}</span>
+        </div>
+        <div style={{minHeight: 28}}>
+          {formatter}
+        </div>
       </>
     );
   }
@@ -144,19 +150,17 @@ class EditorFormatter extends React.Component {
         let textFormatter = <TextFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
         if (!row[columnKey]) {
           textFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           textFormatter = this.renderColumnFormatter(textFormatter);
         }
         return textFormatter;
 
       }
       case CellType.COLLABORATOR: {
-        let collaboratorFormatter = <CollaboratorFormatter value={row[columnKey]} collaborators={collaborators} />;
+        let collaboratorFormatter = <CollaboratorFormatter value={row[columnKey]} collaborators={collaborators}  containerClassName="gallery-text-editor"  />;
         if (!row[columnKey] || row[columnKey].length === 0) {
           collaboratorFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           collaboratorFormatter = this.renderColumnFormatter(collaboratorFormatter);
         }
         return collaboratorFormatter;
@@ -165,8 +169,7 @@ class EditorFormatter extends React.Component {
         let longTextFormatter = <LongTextFormatter value={row[columnKey]} />;
         if (!row[columnKey]) {
           longTextFormatter =  this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           longTextFormatter = this.renderColumnFormatter(longTextFormatter);
         }
         return longTextFormatter;
@@ -175,8 +178,7 @@ class EditorFormatter extends React.Component {
         let imageFormatter = <ImageFormatter value={row[columnKey]} isSample />;
         if (!row[columnKey] || row[columnKey].length === 0){
           imageFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           imageFormatter = this.renderColumnFormatter(imageFormatter);
         }
         return imageFormatter;
@@ -185,8 +187,7 @@ class EditorFormatter extends React.Component {
         let geolocationFormatter = <GeolocationFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
         if (!row[columnKey]) {
           geolocationFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           geolocationFormatter = this.renderColumnFormatter(geolocationFormatter);
         }
         return geolocationFormatter;
@@ -195,8 +196,7 @@ class EditorFormatter extends React.Component {
         let numberFormatter = <NumberFormatter value={row[columnKey]} data={column.data} />;
         if (!row[columnKey]) {
           numberFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           numberFormatter = this.renderColumnFormatter(numberFormatter);
         }
         return numberFormatter;
@@ -205,8 +205,7 @@ class EditorFormatter extends React.Component {
         let dateFormatter = <DateFormatter value={row[columnKey]} format={column.data.format} />;
         if (!row[columnKey]) {
           dateFormatter =  this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           dateFormatter = this.renderColumnFormatter(dateFormatter);
         }
         return dateFormatter;
@@ -215,8 +214,7 @@ class EditorFormatter extends React.Component {
         let multipleSelectFormatter = <MultipleSelectFormatter value={row[columnKey]} options={column.data.options} />;
         if (!row[columnKey] || row[columnKey].length === 0) {
           multipleSelectFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           multipleSelectFormatter = this.renderColumnFormatter(multipleSelectFormatter);
         }
         return multipleSelectFormatter;
@@ -225,8 +223,7 @@ class EditorFormatter extends React.Component {
         let singleSelectFormatter = <SingleSelectFormatter value={row[columnKey]} options={column.data.options} />;
         if (!row[columnKey]) {
           singleSelectFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           singleSelectFormatter = this.renderColumnFormatter(singleSelectFormatter);
         }
         return singleSelectFormatter;
@@ -235,8 +232,7 @@ class EditorFormatter extends React.Component {
         let fileFormatter = <FileFormatter value={row[columnKey]} isSample />;
         if (!row[columnKey] || row[columnKey].length === 0) {
           fileFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           fileFormatter = this.renderColumnFormatter(fileFormatter);
         }
         return fileFormatter;
@@ -252,8 +248,7 @@ class EditorFormatter extends React.Component {
         let cTimeFormatter = <CTimeFormatter value={row._ctime} />;
         if (!row._ctime) {
           cTimeFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           cTimeFormatter = this.renderColumnFormatter(cTimeFormatter);
         }
         return cTimeFormatter;
@@ -262,8 +257,7 @@ class EditorFormatter extends React.Component {
         let mTimeFormatter = <MTimeFormatter value={row._mtime} />;
         if (!row._mtime) {
           mTimeFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           mTimeFormatter = this.renderColumnFormatter(mTimeFormatter);
         }
         return mTimeFormatter;
@@ -297,8 +291,7 @@ class EditorFormatter extends React.Component {
         let formulaFormatter = <FormulaFormatter value={formulaValue} column={column} collaborators={collaborators} containerClassName="gallery-formula-container" />;
         if (!formulaValue) {
           formulaFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           formulaFormatter = this.renderColumnFormatter(formulaFormatter);
         }
         return formulaFormatter;
@@ -328,8 +321,7 @@ class EditorFormatter extends React.Component {
         let autoNumberFormatter = <AutoNumberFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
         if (!row[columnKey]) {
           autoNumberFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           autoNumberFormatter = this.renderColumnFormatter(autoNumberFormatter);
         }
         return autoNumberFormatter;
@@ -338,8 +330,7 @@ class EditorFormatter extends React.Component {
         let urlFormatter = <UrlFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
         if (!row[columnKey]) {
           urlFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           urlFormatter = this.renderColumnFormatter(urlFormatter);
         }
         return urlFormatter;
@@ -348,8 +339,7 @@ class EditorFormatter extends React.Component {
         let emailFormatter = <EmailFormatter value={row[columnKey]} containerClassName="gallery-text-editor" />;
         if (!row[columnKey]) {
           emailFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           emailFormatter = this.renderColumnFormatter(emailFormatter);
         }
         return emailFormatter;
@@ -358,8 +348,7 @@ class EditorFormatter extends React.Component {
         let durationFormatter = <DurationFormatter value={row[columnKey]} format={column.data.duration_format} containerClassName="gallery-text-editor" />;
         if (!row[columnKey]) {
           durationFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           durationFormatter = this.renderColumnFormatter(durationFormatter);
         }
         return durationFormatter;
@@ -368,8 +357,7 @@ class EditorFormatter extends React.Component {
         let rateFormatter = <RateFormatter value={row[columnKey]} data={column.data} containerClassName="gallery-text-editor" />;
         if (!row[columnKey]) {
           rateFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           rateFormatter = this.renderColumnFormatter(rateFormatter);
         }
         return rateFormatter;
@@ -380,8 +368,7 @@ class EditorFormatter extends React.Component {
         let buttonFormatter = <ButtonFormatter data={data} optionColors={optionColors} containerClassName="text-center" />;
         if (!data.button_name) {
           buttonFormatter = this.renderEmptyFormatter();
-        }
-        if (displayColumnName) {
+        } else if (displayColumnName) {
           buttonFormatter = this.renderColumnFormatter(buttonFormatter);
         }
         return buttonFormatter;
