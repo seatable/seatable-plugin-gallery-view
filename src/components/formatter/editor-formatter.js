@@ -124,12 +124,11 @@ class EditorFormatter extends React.Component {
   }
 
   renderColumnFormatter = (formatter) => {
-    const { column, columnIconConfig } = this.props;
-    const { name: columnName, type: columnType } = column;
+    const { column } = this.props;
+    const { name: columnName } = column;
     return (
       <>
         <div className="gallery-editor-title">
-          <i className={`dtable-font ${columnIconConfig[columnType]}`}></i>
           <span className="gallery-editor-title-text">{columnName}</span>
         </div>
         <div style={{minHeight: 28}}>
