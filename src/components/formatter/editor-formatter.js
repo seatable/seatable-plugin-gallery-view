@@ -10,7 +10,7 @@ import {
   CollaboratorFormatter,
   ImageFormatter,
   FileFormatter,
-  LongTextFormatter,
+  SimpleLongTextFormatter,
   GeolocationFormatter,
   LinkFormatter,
   FormulaFormatter,
@@ -165,7 +165,7 @@ class EditorFormatter extends React.Component {
         return collaboratorFormatter;
       }
       case CellType.LONG_TEXT: {
-        let longTextFormatter = <LongTextFormatter value={row[columnKey]} />;
+        let longTextFormatter = <SimpleLongTextFormatter value={row[columnKey]} />;
         if (!row[columnKey]) {
           longTextFormatter =  this.renderEmptyFormatter();
         } else if (displayColumnName) {
