@@ -35,14 +35,14 @@
   width: 24px;
   height: 24px;
   text-align: center;
-  color: #000;
-  opacity: .5;
+  color: #333;
+  opacity: 0.5;
   cursor: pointer;
   font-weight: 700;
 }
 
 .gallery-op-icon:hover {
-  opacity: .75;
+  opacity: 0.8;
 }
 
 .gallery-plugin-container .gallery-content {
