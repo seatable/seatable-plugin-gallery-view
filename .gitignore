@@ -25,5 +25,5 @@ yarn-error.log*
 # plugin-zip
 /plugin-zip
 
-#src/setting
-/src/setting.js
+# local development settings
+/src/setting.local.js

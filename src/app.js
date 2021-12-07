@@ -4,7 +4,7 @@ import DTable from 'dtable-sdk';
 import { PLUGIN_NAME, SETTING_KEY } from './constants';
 import pluginContext from './plugin-context';
 import { generatorViewId, checkDesktop } from './utils/utils';
-import GalleryViewsTabs from './components/gallery-views-tabs';
+import ViewsTabs from './components/views-tabs';
 import GallerySetting from './components/gallery-setting';
 import Gallery from './components/gallery';
 import View from './model/view';
@@ -47,6 +47,7 @@ class App extends React.Component {
       isShowGallerySetting: false,
     };
     this.dtable = new DTable();
+    this.isDesktop = checkDesktop();
   }
 
   componentDidMount() {
@@ -179,7 +180,7 @@ class App extends React.Component {
     }, () => {
       this.storeSelectedViewId(updatedViews[selectedViewIdx]._id);
       this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
-      this.viewsTabs && this.viewsTabs.setGalleryViewsTabsScroll();
+      this.viewsTabs && this.viewsTabs.setViewsTabsScroll();
     });
   }
 
@@ -369,7 +370,6 @@ class App extends React.Component {
   }
 
   render() {
-    const isDesktop = checkDesktop();
     let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting, itemShowRowLength } = this.state;
     if (isLoading || !showDialog) {
       return '';
@@ -400,14 +400,15 @@ class App extends React.Component {
     }
     return (
       <div className="dtable-plugin gallery-plugin-container w-100">
-        {isDesktop ? (
+        {this.isDesktop ? (
           <div className="plugin-header">
             <div className="plugin-logo mr-9">
               <img className="mr-2" src={cardLogo} alt="logo" width="24" height="24" />
               <span className="title">{'Gallery'}</span>
             </div>
-            <GalleryViewsTabs
+            <ViewsTabs
               ref={ref => this.viewsTabs = ref}
+              isMobile={false}
               views={galleryViews}
               onSelectView={this.onSelectView}
               selectedViewIdx={selectedViewIdx}
@@ -432,7 +433,8 @@ class App extends React.Component {
               </div>
             </div>
             <div className="plugin-header">
-              <GalleryViewsTabs
+              <ViewsTabs
+                isMobile
                 ref={ref => this.viewsTabs = ref}
                 views={galleryViews}
                 onSelectView={this.onSelectView}
