@@ -14,7 +14,7 @@ const zh_CN = {
   "Unnamed_record": "未命名记录",
   "Choose_fields": "选择字段",
   "Show_all": "显示全部",
-  "Image_fields": "图片字段",
+  "Image_field": "图片字段",
   "Title_field": "标题字段",
   "Other_fields": "其他字段",
   "Hide_all": "隐藏全部",

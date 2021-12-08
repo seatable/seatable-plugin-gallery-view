@@ -14,7 +14,7 @@ const fr = {
   "Unnamed_record": "Nouveau enregistrement",
   "Choose_fields": "Sélectionner les colonnes",
   "Show_all": "Afficher toutes",
-  "Image_fields": "Image",
+  "Image_field": "Image",
   "Title_field": "Titre",
   "Other_fields": "Autres colonnes",
   "Hide_all": "Masquer toutes",

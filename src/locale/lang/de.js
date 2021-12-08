@@ -14,7 +14,7 @@ const de = {
   "Unnamed_record": "Neuer Eintrag",
   "Choose_fields": "Spalten auswählen",
   "Show_all": "Alle anzeigen\n",
-  "Image_fields": "Bild",
+  "Image_field": "Bild",
   "Title_field": "Titel",
   "Other_fields": "Weitere Spalten",
   "Hide_all": "Alle ausblenden",
