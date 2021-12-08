@@ -10,16 +10,22 @@ import '../locale';
 
 import '../assets/css/gallery-tabs.css';
 
+const SCROLL_TYPE = {
+  PREV: 'prev',
+  NEXT: 'next',
+};
+
 const propTypes = {
   views: PropTypes.array,
   selectedViewIdx: PropTypes.number,
+  isMobile: PropTypes.bool,
   onSelectView: PropTypes.func,
   onDeleteView: PropTypes.func,
   onAddView: PropTypes.func,
   onRenameView: PropTypes.func,
 };
 
-class GalleryViewsTabs extends React.Component {
+class ViewsTabs extends React.Component {
 
   constructor(props) {
     super(props);
@@ -31,7 +37,9 @@ class GalleryViewsTabs extends React.Component {
       },
       isShowNewViewDialog: false,
       isShowRenameViewDialog: false,
-      scrollLeft: 0
+      canScrollPrev: false,
+      canScrollNext: false,
+      canViewsScroll: true,
     };
     this.views = [];
   }
@@ -51,17 +59,73 @@ class GalleryViewsTabs extends React.Component {
     let { left } = this.views[selectedViewIdx].getBoundingClientRect();
 
     // get container's view with and total width
-    let { offsetWidth, scrollWidth } = this.viewsTabsScroll;
+    let { offsetWidth } = this.viewsTabsScroll;
     if (left > offsetWidth) {
       this.viewsTabsScroll.scrollLeft = left - offsetWidth;
-      this.setState({tabsScrollLeft: left - offsetWidth});
+    } else {
+      this.checkAvailableScrollType();
     }
-    this.tabsNavWidth = offsetWidth;
-    this.tabsNavTotalWidth = scrollWidth;
   }
 
-  onTabsScroll = (event) => {
-    this.setState({tabsScrollLeft: event.target.scrollLeft});
+  checkAvailableScrollType = () => {
+    if (this.props.isMobile) {
+      return;
+    }
+    const { canScrollPrev, canScrollNext } = this.state;
+    let { offsetWidth, scrollWidth, scrollLeft } = this.viewsTabsScroll;
+    let _canScrollPrev = false;
+    let _canScrollNext = false;
+    if (scrollLeft > 0) {
+      _canScrollPrev = true;
+    }
+    if (scrollLeft + offsetWidth < scrollWidth) {
+      _canScrollNext = true;
+    }
+
+    if (_canScrollPrev !== canScrollPrev || _canScrollNext !== canScrollNext) {
+      this.setState({
+        canScrollPrev: _canScrollPrev,
+        canScrollNext: _canScrollNext,
+      });
+    }
+  }
+
+  onScrollWithControl = (type) => {
+    const { offsetWidth, scrollWidth, scrollLeft } = this.viewsTabsScroll;
+    let targetScrollLeft;
+    if (type === SCROLL_TYPE.PREV) {
+      if (scrollLeft === 0) {
+        return;
+      }
+      targetScrollLeft = scrollLeft - offsetWidth;
+      targetScrollLeft = targetScrollLeft > 0 ? targetScrollLeft : 0;
+    }
+
+    if (type === SCROLL_TYPE.NEXT) {
+      if (scrollLeft + offsetWidth === scrollWidth) {
+        return;
+      }
+      targetScrollLeft = scrollLeft + offsetWidth;
+      targetScrollLeft = targetScrollLeft > scrollWidth - offsetWidth ? scrollWidth - offsetWidth : targetScrollLeft;
+    }
+    if (this.state.canViewsScroll) {
+      this.setState({ canViewsScroll: false });
+      let timer = null;
+      timer = setInterval(() => {
+        let step = (targetScrollLeft - scrollLeft) / 10;
+        step = step > 0 ? Math.ceil(step) : Math.floor(step);
+        this.viewsTabsScroll.scrollLeft = this.viewsTabsScroll.scrollLeft + step;
+        if (Math.abs(targetScrollLeft - this.viewsTabsScroll.scrollLeft) <= Math.abs(step)) {
+          this.viewsTabsScroll.scrollLeft = targetScrollLeft;
+          clearInterval(timer);
+          this.setState({ canViewsScroll: true });
+        }
+      }, 15);
+    }
+  }
+
+  onTabsScroll = () => {
+    this.checkAvailableScrollType();
   }
 
   onDropdownToggle = (evt) => {
@@ -84,7 +148,7 @@ class GalleryViewsTabs extends React.Component {
     this.views[idx] = viewItem;
   }
 
-  setGalleryViewsTabsScroll = () => {
+  setViewsTabsScroll = () => {
     if (!this.viewsTabsScroll) return;
     let { offsetWidth, scrollWidth } = this.viewsTabsScroll;
     if (scrollWidth > offsetWidth) {
@@ -165,18 +229,32 @@ class GalleryViewsTabs extends React.Component {
   }
 
   render() {
-    let { views, selectedViewIdx } = this.props;
-    let { tabsScrollLeft, isShowNewViewDialog, isShowRenameViewDialog } = this.state;
+    let { views, selectedViewIdx, isMobile } = this.props;
+    let { isShowNewViewDialog, isShowRenameViewDialog, canScrollPrev, canScrollNext } = this.state;
     let selectedGridView = views[selectedViewIdx] || {};
     return (
       <div className="gallery-views-tabs">
         <div className="tabs-scroll-container">
-          {tabsScrollLeft > 0 && <div className="tabs-scroll-before"></div>}
           <div className="tabs-scroll" ref={ref => this.viewsTabsScroll = ref} onScroll={this.onTabsScroll}>
             <div className="tabs-content">{this.renderViewsItems()}</div>
           </div>
-          {tabsScrollLeft + this.tabsNavWidth < this.tabsNavTotalWidth && <div className="tabs-scroll-after"></div>}
         </div>
+        {(!isMobile && (canScrollPrev || canScrollNext)) &&
+          <div className="views-scroll-control">
+            <span
+              className={classnames('scroll-control-btn', 'scroll-prev', { 'scroll-active': canScrollPrev })}
+              onClick={this.onScrollWithControl.bind(this, SCROLL_TYPE.PREV)}
+            >
+              <i className="dtable-font dtable-icon-left-slide btn-scroll-icon" />
+            </span>
+            <span
+              className={classnames('scroll-control-btn', 'scroll-next', { 'scroll-active': canScrollNext })}
+              onClick={this.onScrollWithControl.bind(this, SCROLL_TYPE.NEXT)}
+            >
+              <i className="dtable-font dtable-icon-right-slide btn-scroll-icon" />
+            </span>
+          </div>
+        }
         <div className="views-tabs-add-btn flex-shrink-0 align-self-center" onClick={this.onNewViewToggle}>
           <i className="dtable-font dtable-icon-add-table"></i>
         </div>
@@ -198,6 +276,6 @@ class GalleryViewsTabs extends React.Component {
   }
 }
 
-GalleryViewsTabs.propTypes = propTypes;
+ViewsTabs.propTypes = propTypes;
 
-export default GalleryViewsTabs;
+export default ViewsTabs;
