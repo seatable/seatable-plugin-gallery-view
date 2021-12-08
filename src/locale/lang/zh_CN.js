@@ -13,7 +13,7 @@ const zh_CN = {
   "No_options": "没有选项",
   "Unnamed_record": "未命名记录",
   "Choose_fields": "选择字段",
-  "Choose_all": "选择全部",
+  "Show_all": "显示全部",
   "Image_fields": "图片字段",
   "Title_fields": "标题字段",
   "Other_fields": "其他字段",

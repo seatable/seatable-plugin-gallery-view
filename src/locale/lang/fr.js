@@ -13,7 +13,7 @@ const fr = {
   "No_options": "Il n'y a pas d'options.",
   "Unnamed_record": "Nouveau enregistrement",
   "Choose_fields": "Sélectionner les colonnes",
-  "Choose_all": "Afficher toutes",
+  "Show_all": "Afficher toutes",
   "Image_fields": "Image",
   "Title_fields": "Titre",
   "Other_fields": "Autres colonnes",
