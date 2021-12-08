@@ -15,7 +15,7 @@ const de = {
   "Choose_fields": "Spalten auswählen",
   "Show_all": "Alle anzeigen\n",
   "Image_fields": "Bild",
-  "Title_fields": "Titel",
+  "Title_field": "Titel",
   "Other_fields": "Weitere Spalten",
   "Hide_all": "Alle ausblenden",
   "Display_field_name": "Display field name"

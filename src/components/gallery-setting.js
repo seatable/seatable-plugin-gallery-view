@@ -233,7 +233,7 @@ class GallerySetting extends React.Component {
                 </div>
               }
               <div className="setting-item image-setting">
-                <div className="title">{intl.get('Title_fields')}</div>
+                <div className="title">{intl.get('Title_field')}</div>
                 {this.renderFieldsSelector(titleColumns, 'shown_title_name')}
               </div>
               <div className="setting-item">

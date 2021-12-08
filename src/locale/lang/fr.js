@@ -15,7 +15,7 @@ const fr = {
   "Choose_fields": "Sélectionner les colonnes",
   "Show_all": "Afficher toutes",
   "Image_fields": "Image",
-  "Title_fields": "Titre",
+  "Title_field": "Titre",
   "Other_fields": "Autres colonnes",
   "Hide_all": "Masquer toutes",
   "Display_field_name": "Display field name"
