@@ -18,7 +18,7 @@ const zh_CN = {
   "Title_field": "标题字段",
   "Other_fields": "其他字段",
   "Hide_all": "隐藏全部",
-  "Display_field_name": "显示字段名称"
+  "Show_field_names": "显示字段名称"
 };
 
 export default zh_CN;

@@ -18,7 +18,7 @@ const fr = {
   "Title_field": "Titre",
   "Other_fields": "Autres colonnes",
   "Hide_all": "Masquer toutes",
-  "Display_field_name": "Display field name"
+  "Show_field_names": "Display field name"
 };
 
 export default fr;
