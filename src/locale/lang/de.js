@@ -13,12 +13,12 @@ const de = {
   "No_options": "Keine Optionen",
   "Unnamed_record": "Neuer Eintrag",
   "Choose_fields": "Spalten auswählen",
-  "Choose_all": "Alle anzeigen\n",
-  "Image_fields": "Bild",
-  "Title_fields": "Titel",
+  "Show_all": "Alle anzeigen\n",
+  "Image_field": "Bild",
+  "Title_field": "Titel",
   "Other_fields": "Weitere Spalten",
   "Hide_all": "Alle ausblenden",
-  "Display_field_name": "Display field name"
+  "Show_field_names": "Display field name"
 };
 
 export default de;

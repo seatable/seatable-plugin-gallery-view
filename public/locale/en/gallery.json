@@ -13,10 +13,10 @@
   "No_options": "No options",
   "Unnamed_record": "Unnamed record",
   "Choose_fields": "Choose fields",
-  "Choose_all": "Choose all",
-  "Image_fields": "Image fields",
-  "Title_fields": "Title fields",
+  "Show_all": "Show all",
+  "Image_field": "Image field",
+  "Title_field": "Title field",
   "Other_fields": "Other fields",
   "Hide_all": "Hide all",
-  "Display_field_name": "Display field name"
+  "Show_field_names": "Show field names"
 }

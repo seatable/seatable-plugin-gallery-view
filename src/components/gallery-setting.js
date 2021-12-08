@@ -163,7 +163,7 @@ class GallerySetting extends React.Component {
         return <span className="setting-choose-all" onClick={this.onHideAllColumns}>{intl.get('Hide_all')}</span>;
       }
     }
-    return <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Choose_all')}</span>;
+    return <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Show_all')}</span>;
   }
 
   renderFieldsSelector = (source, settingKey) => {
@@ -228,19 +228,19 @@ class GallerySetting extends React.Component {
               </div>
               {imageColumns && imageColumns.length > 0 &&
                 <div className="setting-item image-setting">
-                  <div className="title">{intl.get('Image_fields')}</div>
+                  <div className="title">{intl.get('Image_field')}</div>
                   {this.renderFieldsSelector(imageColumns, 'shown_image_name')}
                 </div>
               }
               <div className="setting-item image-setting">
-                <div className="title">{intl.get('Title_fields')}</div>
+                <div className="title">{intl.get('Title_field')}</div>
                 {this.renderFieldsSelector(titleColumns, 'shown_title_name')}
               </div>
               <div className="setting-item">
                 <div className="gallery-setting-item">
                   <Switch
                     checked={isShowColumnName}
-                    placeholder={intl.get('Display_field_name')}
+                    placeholder={intl.get('Show_field_names')}
                     onChange={this.showColumnNameToggle}
                     switchClassName='pl-0'
                   />
