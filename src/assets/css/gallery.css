@@ -49,7 +49,6 @@
 
 .gallery-item .gallery-image-container img {
   max-height: 100%;
-  max-width: none;
 }
 
 .gallery-item .gallery-image-container .loading-tip {

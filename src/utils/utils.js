@@ -91,3 +91,22 @@ export const canCreateRows = (table, TABLE_PERMISSION_TYPE) => {
   }
   return canCreateRows;
 };
+
+export const needUseThumbnailImage = (url) => {
+  if (!url || url.lastIndexOf('.') == -1) {
+    return false;
+  }
+  const image_suffix = url.substr(url.lastIndexOf('.') + 1).toLowerCase();
+  const suffix = ['bmp', 'tif', 'tiff'];
+  return suffix.includes(image_suffix);
+};
+
+export const isInternalImg = (url) => {
+  if (!url) return;
+  return url.indexOf(window.dtable.server) > -1;
+};
+
+export const checkSVGImage = (url) => {
+  if (!url) return false;
+  return url.substr(-4).toLowerCase() === '.svg';
+};
