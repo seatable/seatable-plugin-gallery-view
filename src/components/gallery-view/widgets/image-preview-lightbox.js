@@ -21,7 +21,7 @@ function ImagePreviewerLightbox(props) {
   } = props;
   const imageItemsLength = imageItems.length;
   const URL = imageItems[imageIndex];
-  
+
   // Handle URL has special symbol %$
   let imageTitle = '';
   try {
@@ -35,7 +35,7 @@ function ImagePreviewerLightbox(props) {
 
   let mainSrc = URL;
   if (needUseThumbnailImage(URL)) {
-    mainSrc = getImageThumbnailUrl(URL, 512)
+    mainSrc = getImageThumbnailUrl(URL, 512);
   }
   const imageTitleEl = (
     <span className="d-flex">
@@ -68,7 +68,7 @@ function ImagePreviewerLightbox(props) {
           <div className="image-footer-choice mobile-image-footer-choice">
             <div className="image-footer-icon">
               <div className="d-flex">
-                {canRotateImage && 
+                {canRotateImage &&
                   <span className="image-footer-choice-item mr-4" onClick={() => {onRotateImage(imageIndex, 90);}}>
                     <i className="dtable-font dtable-icon-rotate"></i>
                   </span>
@@ -106,7 +106,7 @@ function ImagePreviewerLightbox(props) {
     PCtoolbarButtons.push(<button className='dtable-font dtable-icon-delete' onClick={() => {deleteImage(imageIndex, 'previewer');}}></button>);
   }
   if (downloadImage) {
-    PCtoolbarButtons.push(<button className='dtable-font dtable-icon-download' onClick={() => {downloadImage(URL);}}></button>); 
+    PCtoolbarButtons.push(<button className='dtable-font dtable-icon-download' onClick={() => {downloadImage(URL);}}></button>);
   }
   return (
     <Lightbox
