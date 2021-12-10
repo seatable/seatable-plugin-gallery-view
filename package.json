@@ -3,7 +3,7 @@
   "version": "0.1.44",
   "private": true,
   "dependencies": {
-    "@seafile/react-image-lightbox": "0.0.8",
+    "@seafile/react-image-lightbox": "0.0.9",
     "babel-plugin-on-demand-loading": "^0.0.9",
     "classnames": "^2.2.6",
     "dtable-sdk": "0.0.124",
