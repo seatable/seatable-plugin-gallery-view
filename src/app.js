@@ -420,8 +420,8 @@ class App extends React.Component {
               <span className="dtable-font dtable-icon-settings mr-2 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
               <span className="dtable-font dtable-icon-x gallery-op-icon" onClick={this.onPluginToggle}></span>
             </div>
-          </div>) : (
-          <React.Fragment>
+          </div>) :
+          (<React.Fragment>
             <div className="plugin-header justify-content-between">
               <div className="plugin-logo">
                 <img className="mr-2" src={cardLogo} alt="logo" width="24" height="24" />
@@ -444,8 +444,8 @@ class App extends React.Component {
                 onRenameView={this.onRenameView}
               />
             </div>
-          </React.Fragment>
-        )}
+          </React.Fragment>)
+        }
         <div className="gallery-content">
           <Gallery
             rows={rowsList}
