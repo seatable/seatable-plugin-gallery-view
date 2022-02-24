@@ -13,7 +13,7 @@ import '../assets/css/gallery-setting.css';
 const propTypes = {
   tables: PropTypes.array,
   views: PropTypes.array,
-  currentColumns: PropTypes.array,
+  currentFields: PropTypes.array,
   imageColumns: PropTypes.array,
   selectedTable: PropTypes.object,
   settings: PropTypes.object,
@@ -98,9 +98,9 @@ class GallerySetting extends React.Component {
   }
 
   onMoveColumn = (source, target) => {
-    let { settings, currentColumns } = this.props;
+    let { settings, currentFields } = this.props;
 
-    let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
+    let newColumnsName = calculateColumnsName(currentFields, settings.column_name);
     let sourceIndex, targetIndex, movedColumnName, unMovedColumnsName = [];
     newColumnsName.forEach((column_name, index) => {
       if (column_name === source) {
@@ -131,17 +131,17 @@ class GallerySetting extends React.Component {
   }
 
   getTitleColumns = () => {
-    let { currentColumns } = this.props;
-    let titleColumns = currentColumns.filter(column => this.SHOW_TITLE_COLUMN_TYPE.includes(column.type));
+    let { currentFields } = this.props;
+    let titleColumns = currentFields.filter(column => this.SHOW_TITLE_COLUMN_TYPE.includes(column.type));
     return titleColumns;
   }
 
   getFilteredColumns = () => {
-    let { settings, currentColumns } = this.props;
+    let { settings, currentFields } = this.props;
     let filteredColumns = [];
     let { shown_title_name } = settings;
-    let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
-    let newColumns = calculateColumns(newColumnsName, currentColumns);
+    let newColumnsName = calculateColumnsName(currentFields, settings.column_name);
+    let newColumns = calculateColumns(newColumnsName, currentFields);
     if (!shown_title_name) {
       filteredColumns = newColumns.filter(column => column.key !== '0000');
     } else {

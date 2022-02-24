@@ -294,6 +294,10 @@ class App extends React.Component {
     return this.dtable.getTableViews(name);
   }
 
+  getViewFields = (table, view) => {
+    return this.dtable.getViewColumns(table, view);
+  }
+
   getRows = (tableName, viewName, settings = {}) => {
     let rows = [];
     this.dtable.forEachRow(tableName, viewName, (row) => {
@@ -380,10 +384,11 @@ class App extends React.Component {
     let { settings } = selectedGalleryView || {};
     let tables = this.dtable.getTables();
     let selectedTable = this.getSelectedTable(tables, settings);
-    let { name: tableName, columns: currentColumns } = selectedTable || {};
+    let { name: tableName } = selectedTable || {};
     let views = this.dtable.getNonArchiveViews(selectedTable);
     let selectedView = this.getSelectedView(selectedTable, settings) || views[0];
     let { name: viewName } = selectedView;
+    const currentFields = this.getViewFields(selectedTable, selectedView);
     let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
     let rows = this.getRows(tableName, viewName, settings);
     let isShowAllRowList = false;
@@ -461,7 +466,7 @@ class App extends React.Component {
             getRowCommentCount={this.getRowCommentCount}
             onAddGalleryItem={this.onAddGalleryItem}
             settings={settings || {}}
-            currentColumns={currentColumns}
+            currentFields={currentFields}
             getLinkCellValue={this.getLinkCellValue}
             getRowsByID={this.getRowsByID}
             getTableById={this.getTableById}
@@ -482,10 +487,10 @@ class App extends React.Component {
               settings={settings || {}}
               onModifyGallerySettings={this.onModifyGallerySettings}
               onHideGallerySetting={this.onHideGallerySetting}
-              currentColumns={currentColumns}
+              currentFields={currentFields}
               imageColumns={imageColumns}
-              getColumnIconConfig={this.getColumnIconConfig}
               CellType={CellType}
+              getColumnIconConfig={this.getColumnIconConfig}
             />
           }
         </div>
