@@ -294,8 +294,8 @@ class App extends React.Component {
     return this.dtable.getTableViews(name);
   }
 
-  getViewShownFields = (table, view) => {
-    return this.dtable.getViewShownColumns(table, view);
+  getViewShownFields = (view, table) => {
+    return this.dtable.getViewShownColumns(view, table);
   }
 
   getRows = (tableName, viewName, settings = {}) => {
