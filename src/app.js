@@ -388,7 +388,7 @@ class App extends React.Component {
     let views = this.dtable.getNonArchiveViews(selectedTable);
     let selectedView = this.getSelectedView(selectedTable, settings) || views[0];
     let { name: viewName } = selectedView;
-    const currentFields = this.getViewShownFields(selectedTable, selectedView);
+    const currentFields = this.getViewShownFields(selectedView, selectedTable);
     let imageFields = currentFields.filter(field => field.type === CellType.IMAGE);
     let rows = this.getRows(tableName, viewName, settings);
     let isShowAllRowList = false;
