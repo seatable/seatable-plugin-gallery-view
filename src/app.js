@@ -294,8 +294,8 @@ class App extends React.Component {
     return this.dtable.getTableViews(name);
   }
 
-  getViewFields = (table, view) => {
-    return this.dtable.getViewColumns(table, view);
+  getViewShownFields = (table, view) => {
+    return this.dtable.getViewShownColumns(table, view);
   }
 
   getRows = (tableName, viewName, settings = {}) => {
@@ -388,8 +388,8 @@ class App extends React.Component {
     let views = this.dtable.getNonArchiveViews(selectedTable);
     let selectedView = this.getSelectedView(selectedTable, settings) || views[0];
     let { name: viewName } = selectedView;
-    const currentFields = this.getViewFields(selectedTable, selectedView);
-    let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
+    const currentFields = this.getViewShownFields(selectedTable, selectedView);
+    let imageFields = currentFields.filter(field => field.type === CellType.IMAGE);
     let rows = this.getRows(tableName, viewName, settings);
     let isShowAllRowList = false;
     let rowsList = [];
@@ -456,7 +456,7 @@ class App extends React.Component {
             rows={rowsList}
             selectedGalleryView={selectedGalleryView}
             table={selectedTable}
-            imageColumns={imageColumns}
+            imageFields={imageFields}
             getRow={this.getRow}
             selectedView={selectedView}
             getInsertedRowInitData={this.getInsertedRowInitData}
@@ -488,7 +488,7 @@ class App extends React.Component {
               onModifyGallerySettings={this.onModifyGallerySettings}
               onHideGallerySetting={this.onHideGallerySetting}
               currentFields={currentFields}
-              imageColumns={imageColumns}
+              imageFields={imageFields}
               CellType={CellType}
               getColumnIconConfig={this.getColumnIconConfig}
             />

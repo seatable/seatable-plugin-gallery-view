@@ -14,7 +14,7 @@ const propTypes = {
   tables: PropTypes.array,
   views: PropTypes.array,
   currentFields: PropTypes.array,
-  imageColumns: PropTypes.array,
+  imageFields: PropTypes.array,
   selectedTable: PropTypes.object,
   settings: PropTypes.object,
   CellType: PropTypes.object,
@@ -203,7 +203,7 @@ class GallerySetting extends React.Component {
   }
 
   render() {
-    const { tables, views, onHideGallerySetting, settings, imageColumns } = this.props;
+    const { tables, views, onHideGallerySetting, settings, imageFields } = this.props;
     const { isShowColumnName } = this.state;
     const filteredColumns = this.getFilteredColumns();
     const titleColumns = this.getTitleColumns();
@@ -226,10 +226,10 @@ class GallerySetting extends React.Component {
                 <div className="title">{intl.get('View')}</div>
                 {this.renderSelector(views, SETTING_KEY.VIEW_NAME, 'name', 'name')}
               </div>
-              {imageColumns && imageColumns.length > 0 &&
+              {imageFields && imageFields.length > 0 &&
                 <div className="setting-item image-setting">
                   <div className="title">{intl.get('Image_field')}</div>
-                  {this.renderFieldsSelector(imageColumns, 'shown_image_name')}
+                  {this.renderFieldsSelector(imageFields, 'shown_image_name')}
                 </div>
               }
               <div className="setting-item image-setting">

@@ -10,7 +10,6 @@ const propTypes = {
   rows: PropTypes.array.isRequired,
   selectedGalleryView: PropTypes.object,
   table: PropTypes.object,
-  imageColumns: PropTypes.array,
   getRow: PropTypes.func,
   selectedView: PropTypes.object,
   getInsertedRowInitData: PropTypes.func,
