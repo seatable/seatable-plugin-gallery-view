@@ -294,7 +294,7 @@ class App extends React.Component {
     return this.dtable.getTableViews(name);
   }
 
-  getViewShownFields = (view, table) => {
+  getViewShownColumns = (view, table) => {
     return this.dtable.getViewShownColumns(view, table);
   }
 
@@ -388,8 +388,8 @@ class App extends React.Component {
     let views = this.dtable.getNonArchiveViews(selectedTable);
     let selectedView = this.getSelectedView(selectedTable, settings) || views[0];
     let { name: viewName } = selectedView;
-    const currentFields = this.getViewShownFields(selectedView, selectedTable);
-    let imageFields = currentFields.filter(field => field.type === CellType.IMAGE);
+    const currentColumns = this.getViewShownColumns(selectedView, selectedTable);
+    let imageColumns = currentColumns.filter(field => field.type === CellType.IMAGE);
     let rows = this.getRows(tableName, viewName, settings);
     let isShowAllRowList = false;
     let rowsList = [];
@@ -456,7 +456,7 @@ class App extends React.Component {
             rows={rowsList}
             selectedGalleryView={selectedGalleryView}
             table={selectedTable}
-            imageFields={imageFields}
+            imageColumns={imageColumns}
             getRow={this.getRow}
             selectedView={selectedView}
             getInsertedRowInitData={this.getInsertedRowInitData}
@@ -466,7 +466,7 @@ class App extends React.Component {
             getRowCommentCount={this.getRowCommentCount}
             onAddGalleryItem={this.onAddGalleryItem}
             settings={settings || {}}
-            currentFields={currentFields}
+            currentColumns={currentColumns}
             getLinkCellValue={this.getLinkCellValue}
             getRowsByID={this.getRowsByID}
             getTableById={this.getTableById}
@@ -487,8 +487,8 @@ class App extends React.Component {
               settings={settings || {}}
               onModifyGallerySettings={this.onModifyGallerySettings}
               onHideGallerySetting={this.onHideGallerySetting}
-              currentFields={currentFields}
-              imageFields={imageFields}
+              currentColumns={currentColumns}
+              imageColumns={imageColumns}
               CellType={CellType}
               getColumnIconConfig={this.getColumnIconConfig}
             />

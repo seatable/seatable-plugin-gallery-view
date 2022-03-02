@@ -18,7 +18,7 @@ const propTypes = {
   onAddGalleryRowList: PropTypes.func,
   onAddGalleryItem: PropTypes.func,
   settings: PropTypes.object,
-  currentFields: PropTypes.array,
+  currentColumns: PropTypes.array,
   getLinkCellValue: PropTypes.func,
   getRowsByID: PropTypes.func,
   getTableById: PropTypes.func,
@@ -60,7 +60,7 @@ class Gallery extends React.Component {
             table={this.props.table}
             selectedGalleryView={this.props.selectedGalleryView}
             settings={this.props.settings}
-            currentFields={this.props.currentFields}
+            currentColumns={this.props.currentColumns}
             selectedView={this.props.selectedView}
             getLinkCellValue={this.props.getLinkCellValue}
             getRowsByID={this.props.getRowsByID}

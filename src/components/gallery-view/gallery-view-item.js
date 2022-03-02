@@ -16,7 +16,7 @@ const propTypes = {
   width: PropTypes.number,
   itemMarginRightNone: PropTypes.bool,
   settings: PropTypes.object,
-  currentFields: PropTypes.array,
+  currentColumns: PropTypes.array,
   selectedView: PropTypes.object,
   getLinkCellValue: PropTypes.func,
   getRowsByID: PropTypes.func,
@@ -85,38 +85,38 @@ class GalleryViewItem extends React.Component {
   }
 
   getGalleryImageColumn = () => {
-    const { settings, currentFields } = this.props;
+    const { settings, currentColumns } = this.props;
     const { shown_image_name } = settings;
     let imageColumn;
     if (!shown_image_name) {
-      imageColumn = currentFields.find(column => column.type === 'image');
+      imageColumn = currentColumns.find(column => column.type === 'image');
     } else {
-      imageColumn = currentFields.find(column => column.name === shown_image_name);
+      imageColumn = currentColumns.find(column => column.name === shown_image_name);
     }
     return imageColumn;
   }
 
   getGalleryTitleColumn = () => {
-    const { settings, currentFields } = this.props;
+    const { settings, currentColumns } = this.props;
     const { shown_title_name } = settings;
     let titleColumn;
     if (!shown_title_name) {
-      titleColumn = currentFields.find(column => column.key === '0000');
+      titleColumn = currentColumns.find(column => column.key === '0000');
     } else {
-      titleColumn = currentFields.find(column => column.name === shown_title_name);
+      titleColumn = currentColumns.find(column => column.name === shown_title_name);
     }
     if (!titleColumn) {
-      titleColumn = currentFields.find(column => column.key === '0000');
+      titleColumn = currentColumns.find(column => column.key === '0000');
     }
     return titleColumn;
   }
 
   getFilteredColumns = () => {
-    const { settings, currentFields } = this.props;
+    const { settings, currentColumns } = this.props;
     const { shown_column_names, shown_title_name } = settings;
 
-    let newColumnsName = calculateColumnsName(currentFields, settings.column_name);
-    let newColumns = calculateColumns(newColumnsName, currentFields);
+    let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
+    let newColumns = calculateColumns(newColumnsName, currentColumns);
     let filteredColumns = [];
     if (shown_column_names) {
       filteredColumns = newColumns.filter(item => {

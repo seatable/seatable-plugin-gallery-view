@@ -10,7 +10,7 @@ const propTypes = {
   table: PropTypes.object,
   selectedGalleryView: PropTypes.object,
   settings: PropTypes.object,
-  currentFields: PropTypes.array,
+  currentColumns: PropTypes.array,
   selectedView: PropTypes.object,
   getLinkCellValue: PropTypes.func,
   getRowsByID: PropTypes.func,
@@ -73,7 +73,7 @@ class GalleryViewList extends React.Component {
               selectedGalleryView={this.props.selectedGalleryView}
               width={galleryItemWidth}
               itemMarginRightNone={(index + 1) % galleryItemNumber === 0 ? true : false}
-              currentFields={this.props.currentFields}
+              currentColumns={this.props.currentColumns}
               settings={this.props.settings}
               selectedView={this.props.selectedView}
               getLinkCellValue={this.props.getLinkCellValue}
