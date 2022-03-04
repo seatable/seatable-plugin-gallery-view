@@ -294,6 +294,10 @@ class App extends React.Component {
     return this.dtable.getTableViews(name);
   }
 
+  getViewShownColumns = (view, table) => {
+    return this.dtable.getViewShownColumns(view, table);
+  }
+
   getRows = (tableName, viewName, settings = {}) => {
     let rows = [];
     this.dtable.forEachRow(tableName, viewName, (row) => {
@@ -380,11 +384,12 @@ class App extends React.Component {
     let { settings } = selectedGalleryView || {};
     let tables = this.dtable.getTables();
     let selectedTable = this.getSelectedTable(tables, settings);
-    let { name: tableName, columns: currentColumns } = selectedTable || {};
+    let { name: tableName } = selectedTable || {};
     let views = this.dtable.getNonArchiveViews(selectedTable);
     let selectedView = this.getSelectedView(selectedTable, settings) || views[0];
     let { name: viewName } = selectedView;
-    let imageColumns = this.dtable.getColumnsByType(selectedTable, CellType.IMAGE);
+    const currentColumns = this.getViewShownColumns(selectedView, selectedTable);
+    let imageColumns = currentColumns.filter(field => field.type === CellType.IMAGE);
     let rows = this.getRows(tableName, viewName, settings);
     let isShowAllRowList = false;
     let rowsList = [];
@@ -484,8 +489,8 @@ class App extends React.Component {
               onHideGallerySetting={this.onHideGallerySetting}
               currentColumns={currentColumns}
               imageColumns={imageColumns}
-              getColumnIconConfig={this.getColumnIconConfig}
               CellType={CellType}
+              getColumnIconConfig={this.getColumnIconConfig}
             />
           }
         </div>
