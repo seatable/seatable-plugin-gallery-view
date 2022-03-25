@@ -334,7 +334,7 @@ class ViewsTabs extends React.Component {
 
   renderViewsItems = () => {
     let { views, selectedViewIdx } = this.props;
-    const canDelete = views.length > 0;
+    const canDelete = views.length > 1;
     return (
       views.map((view, index) => {
         return (
