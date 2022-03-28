@@ -138,6 +138,48 @@ class App extends React.Component {
     pluginContext.closePlugin();
   }
 
+  // move view, update `selectedViewIdx`
+  onMoveView = (targetViewID, targetIndexViewID, relativePosition) => {
+    let { plugin_settings, selectedViewIdx } = this.state;
+    let { views: updatedViews } = plugin_settings;
+
+    let viewIDMap = {};
+    updatedViews.forEach((view, index) => {
+      viewIDMap[view._id] = view;
+    });
+    const targetView = viewIDMap[targetViewID];
+    const targetIndexView = viewIDMap[targetIndexViewID];
+    const selectedView = updatedViews[selectedViewIdx];
+
+    const originalIndex = updatedViews.indexOf(targetView);
+    let targetIndex = updatedViews.indexOf(targetIndexView);
+    // `relativePosition`: 'before'|'after'
+    targetIndex += relativePosition == 'before' ? 0 : 1;
+
+    if (originalIndex < targetIndex) {
+      if (targetIndex < updatedViews.length) {
+        updatedViews.splice(targetIndex, 0, targetView);
+      } else {
+        // drag it to the end
+        updatedViews.push(targetView);
+      }
+      updatedViews.splice(originalIndex, 1);
+    } else {
+      updatedViews.splice(originalIndex, 1);
+      updatedViews.splice(targetIndex, 0, targetView);
+    }
+
+    const newSelectedViewIndex = updatedViews.indexOf(selectedView);
+
+    plugin_settings.views = updatedViews;
+    this.setState({
+      plugin_settings,
+      selectedViewIdx: newSelectedViewIndex
+    }, () => {
+      this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
+    });
+  }
+
   onSelectView = (viewId) => {
     let { plugin_settings } = this.state;
     let { views: updatedViews } = plugin_settings;
@@ -415,11 +457,12 @@ class App extends React.Component {
               ref={ref => this.viewsTabs = ref}
               isMobile={false}
               views={galleryViews}
-              onSelectView={this.onSelectView}
               selectedViewIdx={selectedViewIdx}
+              onSelectView={this.onSelectView}
               onAddView={this.onAddView}
               onDeleteView={this.onDeleteView}
               onRenameView={this.onRenameView}
+              onMoveView={this.onMoveView}
             />
             <div className="ml-6 align-self-center">
               <span className="dtable-font dtable-icon-settings mr-2 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
@@ -447,6 +490,7 @@ class App extends React.Component {
                 onAddView={this.onAddView}
                 onDeleteView={this.onDeleteView}
                 onRenameView={this.onRenameView}
+                onMoveView={this.onMoveView}
               />
             </div>
           </React.Fragment>)
