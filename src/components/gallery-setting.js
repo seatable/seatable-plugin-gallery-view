@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
-import PluginSelect from './plugin-select';
+import DtableSelect from './dtable-select';
 import { SETTING_KEY, zIndexes } from '../constants';
 import GallerySettingItem from './setting/gallery-setting-item';
 import { calculateColumns, calculateColumnsName } from '../utils/utils';
@@ -177,11 +177,13 @@ class GallerySetting extends React.Component {
     if (!selectedOption) {
       selectedOption = options[0];
     }
-    return <PluginSelect
-      value={selectedOption}
-      options={options}
-      onChange={this.onModifyFieldsSettings}
-    />;
+    return (
+      <DtableSelect
+        value={selectedOption}
+        options={options}
+        onChange={this.onModifyFieldsSettings}
+      />
+    );
   }
 
   renderSelector = (source, settingKey, valueKey, labelKey) => {
@@ -195,11 +197,13 @@ class GallerySetting extends React.Component {
     if (!selectedOption && (settingKey === SETTING_KEY.TABLE_NAME || settingKey === SETTING_KEY.VIEW_NAME)) {
       selectedOption = options[0];
     }
-    return <PluginSelect
-      value={selectedOption}
-      options={options}
-      onChange={this.onModifySettings}
-    />;
+    return (
+      <DtableSelect
+        value={selectedOption}
+        options={options}
+        onChange={this.onModifySettings}
+      />
+    );
   }
 
   render() {
