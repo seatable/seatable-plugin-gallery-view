@@ -58,6 +58,12 @@ class App extends React.Component {
     this.setState({showDialog: nextProps.showDialog});
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.showDialog === true && this.state.showDialog === false) {
+      this.setState({ itemShowRowLength: 50 });
+    }
+  }
+
   async initPluginDTableData() {
     const { isDevelopment } = this.props;
     if (isDevelopment) {

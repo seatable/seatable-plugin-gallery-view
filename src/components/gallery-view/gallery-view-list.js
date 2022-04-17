@@ -34,6 +34,7 @@ class GalleryViewList extends React.Component {
   componentDidMount() {
     window.addEventListener('resize', this.onResize);
     this.onResize();
+    this.props.onRef(this);
   }
 
   componentWillUnmount() {
