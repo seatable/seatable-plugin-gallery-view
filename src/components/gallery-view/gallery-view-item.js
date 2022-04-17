@@ -107,7 +107,7 @@ class GalleryViewItem extends React.Component {
       titleColumn = currentColumns.find(column => column.name === shown_title_name);
     }
     if (!titleColumn) {
-      titleColumn = currentColumns.find(column => column.key === '0000');
+      titleColumn = currentColumns.find(column => column.key === '0000') || {};
     }
     return titleColumn;
   }
