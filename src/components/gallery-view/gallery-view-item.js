@@ -201,7 +201,7 @@ class GalleryViewItem extends React.Component {
         itemImage = (
           <ImageLazyLoad
             ref={ref => this.imageRef = ref}
-            imageUrl={getImageThumbnailUrl(galleryItem[imageColumnName][0])}
+            imageUrl={getImageThumbnailUrl(galleryItem[imageColumnName][0], 512)}
             onImageClick={this.onImageClick}
           />
         );
