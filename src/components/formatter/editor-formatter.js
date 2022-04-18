@@ -44,6 +44,7 @@ const propTypes = {
   getUserCommonInfo: PropTypes.func,
   getMediaUrl: PropTypes.func,
   getOptionColors: PropTypes.func,
+  formulaRows: PropTypes.object,
 };
 
 class EditorFormatter extends React.Component {

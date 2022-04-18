@@ -127,6 +127,7 @@ class ViewTab extends React.Component {
 
     const droppedViewID = event.dataTransfer.getData('text/plain');
     const { _id } = this.props.view;
+    // eslint-disable-next-line
     if (droppedViewID == _id) {
       return;
     }
@@ -154,7 +155,9 @@ class ViewTab extends React.Component {
         className={classnames({
           'view-item': true,
           'active': isActiveView,
+          // eslint-disable-next-line
           'view-item-can-drop-before': dropRelativePosition == 'before',
+          // eslint-disable-next-line
           'view-item-can-drop-after': dropRelativePosition == 'after'
         })}
       >

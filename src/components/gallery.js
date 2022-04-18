@@ -28,6 +28,8 @@ const propTypes = {
   CellType: PropTypes.object,
   getOptionColors: PropTypes.func,
   getTablePermissionType: PropTypes.func,
+  formulaRows: PropTypes.object,
+  selectedImageColumn: PropTypes.func,
   getColumnIconConfig: PropTypes.func
 };
 

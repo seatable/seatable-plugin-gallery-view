@@ -23,11 +23,12 @@ export const generatorViewId = (views) => {
   return view_id;
 };
 
-export const getImageThumbnailUrl = (url) => {
+export const getImageThumbnailUrl = (url, size) => {
   const server = pluginContext.getSetting('server');
   let isInternalLink = url.indexOf(server) > -1;
   if (isInternalLink) {
-    let imageThumbnailUrl = url.replace('/workspace', '/thumbnail/workspace') + '?size=256';
+    size = size || 256;
+    let imageThumbnailUrl = url.replace('/workspace', '/thumbnail/workspace') + '?size=' + size;
     return imageThumbnailUrl;
   }
   return url;
@@ -93,7 +94,7 @@ export const canCreateRows = (table, TABLE_PERMISSION_TYPE) => {
 };
 
 export const needUseThumbnailImage = (url) => {
-  if (!url || url.lastIndexOf('.') == -1) {
+  if (!url || url.lastIndexOf('.') === -1) {
     return false;
   }
   const image_suffix = url.substr(url.lastIndexOf('.') + 1).toLowerCase();
