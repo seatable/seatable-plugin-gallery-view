@@ -58,6 +58,12 @@ class App extends React.Component {
     this.setState({showDialog: nextProps.showDialog});
   }
 
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.showDialog === true && this.state.showDialog === false) {
+      this.setState({ itemShowRowLength: 50 });
+    }
+  }
+
   async initPluginDTableData() {
     const { isDevelopment } = this.props;
     if (isDevelopment) {
@@ -199,7 +205,8 @@ class App extends React.Component {
     let titleColumn = selectedTable.columns.find(column => column.key === '0000');
     let imageColumn = selectedTable.columns.find(column => column.type === 'image');
     let imageName = imageColumn ? imageColumn.name : null;
-    initUpdated = Object.assign({}, {shown_image_name: imageName}, {shown_title_name: titleColumn.name});
+    let titleName = titleColumn ? titleColumn.name : null;
+    initUpdated = Object.assign({}, {shown_image_name: imageName}, {shown_title_name: titleName});
     return initUpdated;
   }
 

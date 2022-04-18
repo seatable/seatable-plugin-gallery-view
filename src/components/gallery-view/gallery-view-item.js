@@ -5,6 +5,7 @@ import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
 import { calculateColumns, calculateColumnsName } from '../../utils/utils';
 import pluginContext from '../../plugin-context';
+import { getImageThumbnailUrl } from '../../utils/utils';
 
 const propTypes = {
   galleryItem: PropTypes.object,
@@ -106,7 +107,7 @@ class GalleryViewItem extends React.Component {
       titleColumn = currentColumns.find(column => column.name === shown_title_name);
     }
     if (!titleColumn) {
-      titleColumn = currentColumns.find(column => column.key === '0000');
+      titleColumn = currentColumns.find(column => column.key === '0000') || {};
     }
     return titleColumn;
   }
@@ -151,7 +152,9 @@ class GalleryViewItem extends React.Component {
             getOptionColors={this.props.getOptionColors}
             displayColumnName={settings.display_field_name || false}
             columnIconConfig={this.props.columnIconConfig}
-          /></div>);
+          />
+        </div>
+      );
     });
   }
 
@@ -195,7 +198,13 @@ class GalleryViewItem extends React.Component {
       let imageColumnName = selectedImageColumn.name;
       if (galleryItem[imageColumnName] && galleryItem[imageColumnName].length > 0) {
         imageNumber = galleryItem[imageColumnName].length;
-        itemImage = <ImageLazyLoad ref={ref => this.imageRef = ref} imageUrl={galleryItem[imageColumnName][0]} onImageClick={this.onImageClick} />;
+        itemImage = (
+          <ImageLazyLoad
+            ref={ref => this.imageRef = ref}
+            imageUrl={getImageThumbnailUrl(galleryItem[imageColumnName][0])}
+            onImageClick={this.onImageClick}
+          />
+        );
       }
     }
 

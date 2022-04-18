@@ -40,20 +40,24 @@ class Gallery extends React.Component {
     this._canCreateRows = canCreateRows(props.table, TABLE_PERMISSION_TYPE);
   }
 
+  setInnerRef = (innerDom) => {
+    this.galleryViewListRef = innerDom.galleryListRef;
+  }
+
   onScroll = () => {
     if (this.props.isShowAllRowList) {
       return;
     }
-    if (this.galleryListRef.offsetHeight + this.galleryListRef.scrollTop + 1 > this.galleryBodyRef.offsetHeight) {
+    const { offsetHeight, scrollTop } = this.galleryListContentRef;
+    if (offsetHeight + scrollTop + 1 > this.galleryViewListRef.offsetHeight) {
       this.props.onAddGalleryRowList();
     }
   }
 
   render() {
-
     return (
-      <div className="gallery-list-content" ref={ref => this.galleryListRef = ref} onScroll={this.onScroll}>
-        <div className="flex-fill" ref={ref => this.galleryBodyRef = ref}>
+      <div className="gallery-list-content" ref={ref => this.galleryListContentRef = ref} onScroll={this.onScroll}>
+        <div className="flex-fill">
           <GalleryViewList
             rows={this.props.rows}
             getRow={this.props.getRow}
@@ -73,6 +77,7 @@ class Gallery extends React.Component {
             formulaRows={this.props.formulaRows}
             getOptionColors={this.props.getOptionColors}
             columnIconConfig={this.columnIconConfig}
+            onRef={this.setInnerRef}
           />
           {this._canCreateRows &&
             <AddGalleryItem
