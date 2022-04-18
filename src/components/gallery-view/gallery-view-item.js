@@ -27,6 +27,7 @@ const propTypes = {
   getMediaUrl: PropTypes.func,
   CellType: PropTypes.object,
   getOptionColors: PropTypes.func,
+  formulaRows: PropTypes.object,
 };
 
 class GalleryViewItem extends React.Component {

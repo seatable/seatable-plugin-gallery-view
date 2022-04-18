@@ -4,6 +4,7 @@ import Loading from '../../loading';
 
 const propTypes = {
   imageUrl: PropTypes.string.isRequired,
+  onImageClick: PropTypes.func,
 };
 
 class ImageLazyLoad extends React.Component {

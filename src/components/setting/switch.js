@@ -5,6 +5,7 @@ const propTypes = {
   checked: PropTypes.bool,
   placeholder: PropTypes.oneOfType([PropTypes.string, PropTypes.node]),
   className: PropTypes.string,
+  switchClassName: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
 };

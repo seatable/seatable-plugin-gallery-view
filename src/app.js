@@ -160,6 +160,7 @@ class App extends React.Component {
     const originalIndex = updatedViews.indexOf(targetView);
     let targetIndex = updatedViews.indexOf(targetIndexView);
     // `relativePosition`: 'before'|'after'
+    // eslint-disable-next-line
     targetIndex += relativePosition == 'before' ? 0 : 1;
 
     if (originalIndex < targetIndex) {
