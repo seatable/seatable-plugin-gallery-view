@@ -16,7 +16,7 @@
 
 .plugin-gallery-setting .setting-header-container {
   width: 100%;
-  padding: 10px 20px 0;
+  padding: 0 20px;
 }
 
 .plugin-gallery-setting .setting-header-container .setting-header-wrapper {
@@ -48,7 +48,7 @@
 }
 
 .plugin-gallery-setting .setting-body {
-  padding: 10px 10px 50px;
+  padding: 14px 10px 50px;
   overflow: auto;
 }
 
