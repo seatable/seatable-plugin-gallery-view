@@ -214,10 +214,10 @@ class GallerySetting extends React.Component {
     return (
       <div className="plugin-gallery-setting" style={{zIndex: zIndexes.GALLERY_SETTING}} ref={ref => this.GallerySetting = ref}>
         <div className="setting-container">
-          <div className="setting-header-container d-flex">
+          <div className="setting-header-container">
             <div className="setting-header-wrapper">
-              <div className="setting-header-title">{intl.get('Settings')}</div>
-              <div className="dtable-font dtable-icon-x btn-close" onClick={onHideGallerySetting}></div>
+              <h3 className="h5 m-0">{intl.get('Settings')}</h3>
+              <i className="dtable-font dtable-icon-x btn-close" onClick={onHideGallerySetting}></i>
             </div>
           </div>
           <div className="setting-body">

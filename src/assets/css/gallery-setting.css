@@ -20,17 +20,11 @@
 }
 
 .plugin-gallery-setting .setting-header-container .setting-header-wrapper {
+  padding: 10px 0;
   border-bottom: 1px solid #e2e2e2;
   display: flex;
-  flex: 1;
+  justify-content: space-between;
   align-items: center;
-}
-
-.plugin-gallery-setting .setting-header-title {
-  flex: 1;
-  padding: 10px 0;
-  font-size: 1rem;
-  font-weight: 700;
 }
 
 .plugin-gallery-setting .btn-close {
