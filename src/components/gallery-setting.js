@@ -214,10 +214,10 @@ class GallerySetting extends React.Component {
     return (
       <div className="plugin-gallery-setting" style={{zIndex: zIndexes.GALLERY_SETTING}} ref={ref => this.GallerySetting = ref}>
         <div className="setting-container">
-          <div className="setting-header-container d-flex">
+          <div className="setting-header-container">
             <div className="setting-header-wrapper">
-              <div className="setting-header-title">{intl.get('Settings')}</div>
-              <div className="dtable-font dtable-icon-x btn-close" onClick={onHideGallerySetting}></div>
+              <h3 className="h5 m-0">{intl.get('Settings')}</h3>
+              <i className="dtable-font dtable-icon-x btn-close" onClick={onHideGallerySetting}></i>
             </div>
           </div>
           <div className="setting-body">
@@ -230,26 +230,20 @@ class GallerySetting extends React.Component {
                 <div className="title">{intl.get('View')}</div>
                 {this.renderSelector(views, SETTING_KEY.VIEW_NAME, 'name', 'name')}
               </div>
+              <div className="split-line"></div>
+
               {imageColumns && imageColumns.length > 0 &&
                 <div className="setting-item image-setting">
                   <div className="title">{intl.get('Image_field')}</div>
                   {this.renderFieldsSelector(imageColumns, 'shown_image_name')}
                 </div>
               }
-              <div className="setting-item image-setting">
+              <div className="setting-item">
                 <div className="title">{intl.get('Title_field')}</div>
                 {this.renderFieldsSelector(titleColumns, 'shown_title_name')}
               </div>
-              <div className="setting-item">
-                <div className="gallery-setting-item">
-                  <Switch
-                    checked={isShowColumnName}
-                    placeholder={intl.get('Show_field_names')}
-                    onChange={this.showColumnNameToggle}
-                    switchClassName='pl-0'
-                  />
-                </div>
-              </div>
+
+
               <div className="setting-item fields-setting">
                 <div className="fields-setting-header">
                   <span>{intl.get('Other_fields')}</span>
@@ -271,6 +265,19 @@ class GallerySetting extends React.Component {
                   })}
                 </div>
               </div>
+
+              <div className="split-line"></div>
+              <div className="setting-item">
+                <div className="gallery-setting-item">
+                  <Switch
+                    checked={isShowColumnName}
+                    placeholder={intl.get('Show_field_names')}
+                    onChange={this.showColumnNameToggle}
+                    switchClassName='pl-0 gallery-switch-setting-item'
+                  />
+                </div>
+              </div>
+
             </div>
           </div>
         </div>

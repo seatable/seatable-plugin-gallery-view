@@ -20,17 +20,11 @@
 }
 
 .plugin-gallery-setting .setting-header-container .setting-header-wrapper {
+  padding: 10px 0;
   border-bottom: 1px solid #e2e2e2;
   display: flex;
-  flex: 1;
+  justify-content: space-between;
   align-items: center;
-}
-
-.plugin-gallery-setting .setting-header-title {
-  flex: 1;
-  padding: 10px 0;
-  font-size: 1rem;
-  font-weight: 700;
 }
 
 .plugin-gallery-setting .btn-close {
@@ -48,13 +42,12 @@
 }
 
 .plugin-gallery-setting .setting-body {
-  padding: 14px 10px 50px;
+  padding: 14px 20px 50px;
   overflow: auto;
 }
 
 .plugin-gallery-setting .setting-item {
   margin-bottom: 14px;
-  padding: 0 10px;
 }
 
 .plugin-gallery-setting .fields-setting {
@@ -77,7 +70,7 @@
   align-items: center;
   justify-content: space-between;
   font-size: 14px;
-  padding: 0 10px;
+  margin-bottom: 10px;
 }
 
 .fields-setting .fields-setting-header .setting-choose-all {
@@ -97,8 +90,8 @@
   height: 30px;
   line-height: 30px;
   display: flex;
-  padding: 0 10px;
   border-radius: 4px;
+  padding: 0 3px 0 2px;
 }
 
 .fields-setting-body .gallery-setting-item:hover { 
@@ -122,7 +115,6 @@
   cursor: pointer;
   border-radius: 2px;
 }
-
 
 .gallery-setting-item .gallery-column-switch .custom-switch {
   width: 100%;
@@ -149,7 +141,6 @@
   width: 22px;
   height: 12px;
   border-radius: 6px;
-  margin-right: 10px;
 }
 
 .gallery-setting-item .custom-switch .custom-switch-input:checked~.custom-switch-indicator:before {
@@ -159,4 +150,8 @@
 .gallery-setting-item .custom-switch .custom-switch-indicator:before {
   height: 8px;
   width: 8px;
+}
+
+.gallery-switch-setting-item {
+  padding: 0 3px 0 0;
 }
