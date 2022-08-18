@@ -199,10 +199,14 @@ class GalleryViewItem extends React.Component {
       let imageColumnName = selectedImageColumn.name;
       if (galleryItem[imageColumnName] && galleryItem[imageColumnName].length > 0) {
         imageNumber = galleryItem[imageColumnName].length;
+        let imageURL = galleryItem[imageColumnName][0];
+        if (imageURL.toLowerCase().indexOf('.svg') == -1) { // not svg
+          imageURL = getImageThumbnailUrl(imageURL, 512);
+        }
         itemImage = (
           <ImageLazyLoad
             ref={ref => this.imageRef = ref}
-            imageUrl={getImageThumbnailUrl(galleryItem[imageColumnName][0], 512)}
+            imageUrl={imageURL}
             onImageClick={this.onImageClick}
           />
         );
