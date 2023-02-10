@@ -109,6 +109,7 @@
 }
 
 .gallery-setting-item .gallery-column-switch {
+  position: relative;
   flex: 1;
   display: flex;
   padding-left: 10px;
