@@ -38,6 +38,9 @@
   color: #000;
   opacity: .5;
   cursor: pointer;
+}
+
+.gallery-op-icon.btn-close {
   font-weight: 700;
 }
 
