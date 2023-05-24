@@ -1,4 +1,6 @@
 const fr = {
+  "Gallery": "Gallery",
+  "Default_View": "Vue standard",
   "Rename_View": "Renommer la vue",
   "Delete_View": "Supprimmer la vue",
   "New_View": "Nouvelle vue",
@@ -13,12 +15,12 @@ const fr = {
   "No_options": "Il n'y a pas d'options.",
   "Unnamed_record": "Nouveau enregistrement",
   "Choose_fields": "Sélectionner les colonnes",
-  "Show_all": "Afficher toutes",
-  "Image_field": "Image",
+  "Show_all": "Afficher tout",
+  "Image_field": "Image field",
   "Title_field": "Titre",
-  "Other_fields": "Autres colonnes",
+  "Other_fields": "Colonnes à afficher",
   "Hide_all": "Masquer toutes",
-  "Show_field_names": "Display field name"
+  "Show_field_names": " Afficher nom de colonne"
 };
 
 export default fr;

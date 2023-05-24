@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import DTable from 'dtable-sdk';
+import intl from 'react-intl-universal';
 import { PLUGIN_NAME, SETTING_KEY } from './constants';
 import pluginContext from './plugin-context';
 import { generatorViewId, checkDesktop } from './utils/utils';
@@ -17,7 +18,7 @@ const DEFAULT_PLUGIN_SETTINGS = {
   views: [
     {
       _id: '0000',
-      name: 'Default View',
+      name: intl.get('Default_View'),
       settings: {}
     }
   ]
@@ -459,7 +460,7 @@ class App extends React.Component {
           <div className="plugin-header">
             <div className="plugin-logo mr-9">
               <img className="mr-2" src={cardLogo} alt="logo" width="24" height="24" />
-              <span className="title">{'Gallery'}</span>
+              <span className="title">{intl.get('Gallery')}</span>
             </div>
             <ViewsTabs
               ref={ref => this.viewsTabs = ref}
