@@ -1,4 +1,4 @@
-const en = {
+const es = {
   "Gallery": "Gallery",
   "Default_View": "Default View",
   "Rename_View": "Rename View",
@@ -23,4 +23,4 @@ const en = {
   "Show_field_names": "Show field names"
 };
 
-export default en;
+export default es;

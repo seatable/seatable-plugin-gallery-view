@@ -1,4 +1,6 @@
 const de = {
+  "Gallery": "Gallery",
+  "Default_View": "Standardansicht",
   "Rename_View": "Ansicht umbenennen",
   "Delete_View": "Ansicht löschen",
   "New_View": "Neue Ansicht",
@@ -13,12 +15,12 @@ const de = {
   "No_options": "Keine Optionen",
   "Unnamed_record": "Neuer Eintrag",
   "Choose_fields": "Spalten auswählen",
-  "Show_all": "Alle anzeigen\n",
-  "Image_field": "Bild",
+  "Show_all": "Alle anzeigen",
+  "Image_field": "Image field",
   "Title_field": "Titel",
-  "Other_fields": "Weitere Spalten",
+  "Other_fields": "Anzuzeigende Spalten",
   "Hide_all": "Alle ausblenden",
-  "Show_field_names": "Display field name"
+  "Show_field_names": "Spaltennamen anzeigen"
 };
 
 export default de;
