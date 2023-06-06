@@ -1,5 +1,5 @@
 {
-  "Gallery": "Gallery",
+  "Gallery": "Galerie",
   "Default_View": "Vue standard",
   "Rename_View": "Renommer la vue",
   "Delete_View": "Supprimmer la vue",
@@ -16,7 +16,7 @@
   "Unnamed_record": "Nouveau enregistrement",
   "Choose_fields": "Sélectionner les colonnes",
   "Show_all": "Afficher tout",
-  "Image_field": "Image field",
+  "Image_field": "Image",
   "Title_field": "Titre",
   "Other_fields": "Colonnes à afficher",
   "Hide_all": "Masquer toutes",
