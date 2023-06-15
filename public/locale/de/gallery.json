@@ -1,5 +1,5 @@
 {
-  "Gallery": "Gallery",
+  "Gallery": "Galerie",
   "Default_View": "Standardansicht",
   "Rename_View": "Ansicht umbenennen",
   "Delete_View": "Ansicht löschen",
@@ -16,7 +16,7 @@
   "Unnamed_record": "Neuer Eintrag",
   "Choose_fields": "Spalten auswählen",
   "Show_all": "Alle anzeigen",
-  "Image_field": "Image field",
+  "Image_field": "Bild",
   "Title_field": "Titel",
   "Other_fields": "Anzuzeigende Spalten",
   "Hide_all": "Alle ausblenden",
