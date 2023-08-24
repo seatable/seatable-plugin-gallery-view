@@ -14,11 +14,12 @@ const en = {
   "Name_Column": "Name Column",
   "No_options": "No options",
   "Unnamed_record": "Unnamed record",
+  "Fields": "Fields",
   "Choose_fields": "Choose fields",
   "Show_all": "Show all",
   "Image_field": "Image field",
   "Title_field": "Title field",
-  "Other_fields": "Other fields",
+  "Other_fields_shown_in_gallery": "Other fields shown in gallery",
   "Hide_all": "Hide all",
   "Show_field_names": "Show field names"
 };
