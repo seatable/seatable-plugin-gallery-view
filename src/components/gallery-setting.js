@@ -242,6 +242,7 @@ class GallerySetting extends React.Component {
                 <div className="title">{intl.get('View')}</div>
                 {this.renderSelector(views, SETTING_KEY.VIEW_NAME, 'name', 'name')}
               </div>
+              <div className="split-line"></div>
 
               {imageColumns && imageColumns.length > 0 &&
                 <div className="setting-item image-setting">
@@ -255,16 +256,6 @@ class GallerySetting extends React.Component {
               </div>
 
               <div className="split-line"></div>
-              <FieldDisplaySetting
-                fields={filteredColumns}
-                textProperties={textProperties}
-                fieldAllShown={fieldAllShown}
-                onClickField={this.onColumnItemClick}
-                onMoveField={this.onMoveColumn}
-                onToggleFieldsVisibility={() => this.onToggleFieldsVisibility(fieldAllShown)}
-              />
-
-              <div className="split-line"></div>
               <div className="setting-item">
                 <div className="gallery-setting-item">
                   <DTableSwitch
@@ -275,6 +266,16 @@ class GallerySetting extends React.Component {
                   />
                 </div>
               </div>
+
+              <div className="split-line"></div>
+              <FieldDisplaySetting
+                fields={filteredColumns}
+                textProperties={textProperties}
+                fieldAllShown={fieldAllShown}
+                onClickField={this.onColumnItemClick}
+                onMoveField={this.onMoveColumn}
+                onToggleFieldsVisibility={() => this.onToggleFieldsVisibility(fieldAllShown)}
+              />
 
             </div>
           </div>
