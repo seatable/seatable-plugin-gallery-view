@@ -1,11 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
+import { DTableSwitch, FieldDisplaySetting } from 'dtable-ui-component';
 import DtableSelect from './dtable-select';
 import { SETTING_KEY, zIndexes } from '../constants';
-import GallerySettingItem from './setting/gallery-setting-item';
 import { calculateColumns, calculateColumnsName } from '../utils/utils';
-import Switch from './setting/switch';
 import '../locale';
 
 import '../assets/css/gallery-setting.css';
@@ -54,7 +53,9 @@ class GallerySetting extends React.Component {
     this.props.onModifyGallerySettings(updated, modifyType);
   };
 
-  onColumnItemClick = (column, value) => {
+  onColumnItemClick = (columnKey, value) => {
+    const filteredColumns = this.getFilteredColumns();
+    const column = filteredColumns.find(column => column.key === columnKey);
     let columnName = column.name;
     let { settings } = this.props;
     let { shown_column_names } = settings;
@@ -90,6 +91,14 @@ class GallerySetting extends React.Component {
     this.props.onModifyGallerySettings(updated);
   }
 
+  onToggleFieldsVisibility = (fieldAllShown) => {
+    if (fieldAllShown) {
+      this.onHideAllColumns();
+    } else {
+      this.onChooseAllColumns();
+    }
+  }
+
   onModifyFieldsSettings = (selectedOption) => {
     let { settings } = this.props;
     let { value, setting_key } = selectedOption;
@@ -97,9 +106,10 @@ class GallerySetting extends React.Component {
     this.props.onModifyGallerySettings(updated);
   }
 
-  onMoveColumn = (source, target) => {
+  onMoveColumn = (sourceColumnKey, targetColumnKey) => {
     let { settings, currentColumns } = this.props;
-
+    const source = currentColumns.find(column => column.key === sourceColumnKey).name;
+    const target = currentColumns.find(column => column.key === targetColumnKey).name;
     let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
     let sourceIndex, targetIndex, movedColumnName, unMovedColumnsName = [];
     newColumnsName.forEach((column_name, index) => {
@@ -139,31 +149,25 @@ class GallerySetting extends React.Component {
   getFilteredColumns = () => {
     let { settings, currentColumns } = this.props;
     let filteredColumns = [];
-    let { shown_title_name } = settings;
+    let { shown_title_name, shown_column_names = [] } = settings;
     let newColumnsName = calculateColumnsName(currentColumns, settings.column_name);
     let newColumns = calculateColumns(newColumnsName, currentColumns);
     if (!shown_title_name) {
-      filteredColumns = newColumns.filter(column => column.key !== '0000');
+      newColumns.forEach(column => {
+        if (column.key !== '0000') {
+          column.shown = shown_column_names.includes(column.name) ? true : false;
+          filteredColumns.push(column);
+        }
+      });
     } else {
-      filteredColumns = newColumns.filter(column => column.name !== shown_title_name);
+      newColumns.forEach(column => {
+        if (column.name !== shown_title_name) {
+          column.shown = shown_column_names.includes(column.name) ? true : false;
+          filteredColumns.push(column);
+        }
+      });
     }
     return filteredColumns;
-  }
-
-  renderChooseFields = () => {
-    let filteredColumns = this.getFilteredColumns();
-    let { settings } = this.props;
-    let { shown_column_names } = settings;
-    let isShowHideChoose = false;
-    if (filteredColumns.length > 0 && shown_column_names && shown_column_names.length > 0) {
-      isShowHideChoose = filteredColumns.every(column => {
-        return shown_column_names.includes(column.name);
-      });
-      if (isShowHideChoose) {
-        return <span className="setting-choose-all" onClick={this.onHideAllColumns}>{intl.get('Hide_all')}</span>;
-      }
-    }
-    return <span className="setting-choose-all" onClick={this.onChooseAllColumns}>{intl.get('Show_all')}</span>;
   }
 
   renderFieldsSelector = (source, settingKey) => {
@@ -207,10 +211,18 @@ class GallerySetting extends React.Component {
   }
 
   render() {
-    const { tables, views, onHideGallerySetting, settings, imageColumns } = this.props;
+    const { tables, views, onHideGallerySetting, imageColumns } = this.props;
     const { isShowColumnName } = this.state;
     const filteredColumns = this.getFilteredColumns();
     const titleColumns = this.getTitleColumns();
+    const textProperties = {
+      titleValue: intl.get('Other_fields_shown_in_gallery'),
+      bannerValue: intl.get('Fields'),
+      hideValue: intl.get('Hide_all'),
+      showValue: intl.get('Show_all'),
+    };
+    const fieldAllShown = filteredColumns.every(column => column.shown);
+
     return (
       <div className="plugin-gallery-setting" style={{zIndex: zIndexes.GALLERY_SETTING}} ref={ref => this.GallerySetting = ref}>
         <div className="setting-container">
@@ -243,40 +255,27 @@ class GallerySetting extends React.Component {
                 {this.renderFieldsSelector(titleColumns, 'shown_title_name')}
               </div>
 
-
-              <div className="setting-item fields-setting">
-                <div className="fields-setting-header">
-                  <span>{intl.get('Other_fields')}</span>
-                  {this.renderChooseFields()}
-                </div>
-                <div className="fields-setting-body">
-                  {filteredColumns.map((column, index) => {
-                    return (
-                      <GallerySettingItem
-                        key={`gallery-setting-item${index}`}
-                        column={column}
-                        onColumnItemClick={this.onColumnItemClick}
-                        settings={settings.shown_column_names || []}
-                        onMoveColumn={this.onMoveColumn}
-                        selectedTable={this.props.selectedTable}
-                        columnIconConfig={this.columnIconConfig}
-                      />
-                    );
-                  })}
+              <div className="split-line"></div>
+              <div className="setting-item">
+                <div className="gallery-setting-item">
+                  <DTableSwitch
+                    checked={isShowColumnName}
+                    placeholder={intl.get('Show_field_names')}
+                    onChange={this.showColumnNameToggle}
+                    switchClassName='gallery-column-switch pl-0 gallery-switch-setting-item'
+                  />
                 </div>
               </div>
 
               <div className="split-line"></div>
-              <div className="setting-item">
-                <div className="gallery-setting-item">
-                  <Switch
-                    checked={isShowColumnName}
-                    placeholder={intl.get('Show_field_names')}
-                    onChange={this.showColumnNameToggle}
-                    switchClassName='pl-0 gallery-switch-setting-item'
-                  />
-                </div>
-              </div>
+              <FieldDisplaySetting
+                fields={filteredColumns}
+                textProperties={textProperties}
+                fieldAllShown={fieldAllShown}
+                onClickField={this.onColumnItemClick}
+                onMoveField={this.onMoveColumn}
+                onToggleFieldsVisibility={() => this.onToggleFieldsVisibility(fieldAllShown)}
+              />
 
             </div>
           </div>
