@@ -30,7 +30,8 @@ const propTypes = {
   getTablePermissionType: PropTypes.func,
   formulaRows: PropTypes.object,
   selectedImageColumn: PropTypes.func,
-  getColumnIconConfig: PropTypes.func
+  getColumnIconConfig: PropTypes.func,
+  isFitMode: PropTypes.bool,
 };
 
 class Gallery extends React.Component {
@@ -80,6 +81,7 @@ class Gallery extends React.Component {
             getOptionColors={this.props.getOptionColors}
             columnIconConfig={this.columnIconConfig}
             onRef={this.setInnerRef}
+            isFitMode={this.props.isFitMode}
           />
           {this._canCreateRows &&
             <AddGalleryItem

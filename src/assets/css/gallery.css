@@ -12,12 +12,12 @@
   margin-left: 8px;
   margin-top: 16px;
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
-  max-height: 350px;
+  max-height: max-content;
   background: #fff;
 }
 
 .gallery-list .gallery-item:hover {
-  box-shadow: 0 1px 10px 2px rgba(0, 0, 0, 0.1)
+  box-shadow: 0 1px 10px 2px rgba(0, 0, 0, 0.1);
 }
 
 .gallery-image-number {
@@ -25,7 +25,7 @@
   right: 10px;
   bottom: 10px;
   padding: 0 8px;
-  font-size: .8125rem;
+  font-size: 0.8125rem;
   background: rgba(0, 0, 0, 0.3);
   color: #fff;
   border-radius: 45%;
@@ -33,7 +33,6 @@
 
 .gallery-item .gallery-image-container {
   position: relative;
-  height: 162px;
   text-align: center;
   border-bottom: 1px solid #e2e2e2;
   background: #efefef;
@@ -55,24 +54,15 @@
 
 .gallery-item .gallery-row-content {
   padding: 8px 5px;
+  cursor: pointer;
+}
+
+.gallery-item .gallery-row-content-has-images {
   height: calc(100% - 162px);
 }
 
-.gallery-item .gallery-row-content:hover {
-  overflow-y: auto;
-}
-
-.gallery-item .gallery-row-content:hover::-webkit-scrollbar {
-  width: 8px;
-}
- 
-.gallery-item .gallery-row-content:hover::-webkit-scrollbar-button {
-  display: none;
-}
-
-.gallery-item .gallery-row-content:hover::-webkit-scrollbar-thumb {
-  background-color: rgb(206, 206, 212);
-  border-radius: 10px;
+.gallery-item .gallery-row-content-no-images {
+  height: 100%;
 }
 
 .gallery-item .gallery-row-content .gallery-title-container {
@@ -145,6 +135,21 @@
   line-height: 28px;
 }
 
+.gallery-editor-container .multiple-select-formatter {
+  overflow-x: scroll;
+}
+
+.gallery-editor-container .multiple-select-formatter::-webkit-scrollbar {
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+}
+
+.gallery-editor-container .multiple-select-formatter::-webkit-scrollbar-thumb {
+  background-color: rgb(78, 204, 203);
+  border-radius: 10px;
+}
+
 .gallery-row-content .gallery-text-editor {
   font-size: 14px;
   line-height: 28px;
@@ -154,7 +159,7 @@
 }
 
 .gallery-row-content .gallery-formula-container {
-  text-align: left!important;
+  text-align: left !important;
 }
 
 .gallery-row-content .gallery-link-container {
@@ -178,4 +183,24 @@
   text-overflow: ellipsis;
   line-height: 20px;
   width: fit-content;
+}
+
+.gallery-row-content .long-text-content {
+  font-size: 13px;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+}
+
+.image-gallery {
+  height: 100%;
+  width: 100%;
+}
+
+.image-gallery-thumbnail .image-gallery-thumbnail-image {
+  height: 32px;
+  object-fit: cover;
 }

@@ -175,7 +175,7 @@ class EditorFormatter extends React.Component {
         return longTextFormatter;
       }
       case CellType.IMAGE: {
-        let imageFormatter = <ImageFormatter value={row[columnKey]} isSample />;
+        let imageFormatter = <ImageFormatter value={row[columnKey]} isSample={false} />;
         if (!row[columnKey] || row[columnKey].length === 0){
           imageFormatter = this.renderEmptyFormatter();
         } else if (displayColumnName) {
@@ -231,7 +231,7 @@ class EditorFormatter extends React.Component {
         return singleSelectFormatter;
       }
       case CellType.FILE: {
-        let fileFormatter = <FileFormatter value={row[columnKey]} isSample />;
+        let fileFormatter = <FileFormatter value={row[columnKey]} isSample={false} />;
         if (!row[columnKey] || row[columnKey].length === 0) {
           fileFormatter = this.renderEmptyFormatter();
         } else if (displayColumnName) {
