@@ -21,6 +21,15 @@ const propTypes = {
   onModifyGallerySettings: PropTypes.func,
   onHideGallerySetting: PropTypes.func,
   getColumnIconConfig: PropTypes.func,
+  isFitMode: PropTypes.bool,
+  onChangeFitMode: PropTypes.func,
+};
+
+const optionNoImage = {
+  key: '',
+  type: 'image',
+  name: 'No image field',
+  value: ''
 };
 
 class GallerySetting extends React.Component {
@@ -206,11 +215,24 @@ class GallerySetting extends React.Component {
     );
   }
 
+  getGalleryImageColumn = () => {
+    const { settings, currentColumns } = this.props;
+    const { shown_image_name } = settings;
+    let imageColumn;
+    if (shown_image_name) {
+      imageColumn = currentColumns.find(
+        (column) => column.name === shown_image_name
+      );
+    }
+    return imageColumn;
+  }
+
   render() {
-    const { tables, views, onHideGallerySetting, settings, imageColumns } = this.props;
+    const { tables, views, onHideGallerySetting, settings, imageColumns, onChangeFitMode, isFitMode } = this.props;
     const { isShowColumnName } = this.state;
     const filteredColumns = this.getFilteredColumns();
     const titleColumns = this.getTitleColumns();
+    const selectedImageColumn = this.getGalleryImageColumn();
     return (
       <div className="plugin-gallery-setting" style={{zIndex: zIndexes.GALLERY_SETTING}} ref={ref => this.GallerySetting = ref}>
         <div className="setting-container">
@@ -234,8 +256,20 @@ class GallerySetting extends React.Component {
 
               {imageColumns && imageColumns.length > 0 &&
                 <div className="setting-item image-setting">
-                  <div className="title">{intl.get('Image_field')}</div>
-                  {this.renderFieldsSelector(imageColumns, 'shown_image_name')}
+                  <div className="title">
+                    {intl.get('Image_field')}
+                    {selectedImageColumn && (
+                      <Switch
+                        checked={isFitMode}
+                        placeholder={<span className="mr-2">Crop</span>}
+                        placeholder2="Fit"
+                        onChange={onChangeFitMode}
+                        showTwoLabel
+                        switchClassName="gallery-setting-crop-fit-mode"
+                      />
+                    )}
+                  </div>
+                  {this.renderFieldsSelector([optionNoImage, ...imageColumns], 'shown_image_name')}
                 </div>
               }
               <div className="setting-item">

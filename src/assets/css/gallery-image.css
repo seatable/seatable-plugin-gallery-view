@@ -1,0 +1,15 @@
+.image-gallery-slide.image-gallery-center {
+  height: 164px;
+}
+
+.image-gallery-slide .image-gallery-image {
+  max-height: 100% !important;
+}
+
+.image-gallery-crop-mode .image-gallery-image {
+  object-fit: contain !important;
+}
+
+.image-gallery-fit-mode .image-gallery-image {
+  object-fit: cover !important;
+}

@@ -56,6 +56,8 @@
 
 .plugin-gallery-setting .setting-item .title {
   margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .plugin-gallery-setting .split-line {
@@ -117,7 +119,12 @@
   border-radius: 2px;
 }
 
-.gallery-setting-item .gallery-column-switch .custom-switch {
+.gallery-setting-crop-fit-mode {
+  font-size: 11px;
+}
+
+.gallery-setting-item .gallery-column-switch .custom-switch,
+.gallery-setting-crop-fit-mode .gallery-column-switch .custom-switch {
   width: 100%;
   justify-content: space-between;
   cursor: pointer;
@@ -138,17 +145,20 @@
   color: #666;
 }
 
-.gallery-setting-item .custom-switch .custom-switch-indicator {
+.gallery-setting-item .custom-switch .custom-switch-indicator,
+.gallery-setting-crop-fit-mode .custom-switch .custom-switch-indicator {
   width: 22px;
   height: 12px;
   border-radius: 6px;
 }
 
-.gallery-setting-item .custom-switch .custom-switch-input:checked~.custom-switch-indicator:before {
+.gallery-setting-item .custom-switch .custom-switch-input:checked~.custom-switch-indicator:before,
+.gallery-setting-crop-fit-mode .custom-switch .custom-switch-input:checked~.custom-switch-indicator:before {
   left: 12px;
 }
 
-.gallery-setting-item .custom-switch .custom-switch-indicator:before {
+.gallery-setting-item .custom-switch .custom-switch-indicator:before,
+.gallery-setting-crop-fit-mode .custom-switch .custom-switch-indicator:before {
   height: 8px;
   width: 8px;
 }

@@ -46,6 +46,7 @@ class App extends React.Component {
       selectedViewIdx: 0,
       plugin_settings: {},
       isShowGallerySetting: false,
+      isFitMode: false,
     };
     this.dtable = new DTable();
     this.isDesktop = checkDesktop();
@@ -424,6 +425,11 @@ class App extends React.Component {
     return this.dtable.getTableFormulaResults(table, rows);
   }
 
+  showImageModeToggle = () => {
+    const updateFitMode = !this.state.isFitMode;
+    this.setState({ isFitMode: updateFitMode });
+  }
+
   render() {
     let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting, itemShowRowLength } = this.state;
     if (isLoading || !showDialog) {
@@ -531,6 +537,7 @@ class App extends React.Component {
             formulaRows={formulaRows}
             getTablePermissionType={this.getTablePermissionType}
             getColumnIconConfig={this.getColumnIconConfig}
+            isFitMode={this.state.isFitMode}
           />
           {isShowGallerySetting &&
             <GallerySetting
@@ -544,6 +551,8 @@ class App extends React.Component {
               imageColumns={imageColumns}
               CellType={CellType}
               getColumnIconConfig={this.getColumnIconConfig}
+              isFitMode={this.state.isFitMode}
+              onChangeFitMode={this.showImageModeToggle}
             />
           }
         </div>

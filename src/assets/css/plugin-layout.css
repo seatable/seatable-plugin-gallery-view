@@ -1,3 +1,5 @@
+@import "~react-image-gallery/styles/css/image-gallery.css";
+
 .dtable-plugin.gallery-plugin-container {
   flex: 1;
   display: flex;

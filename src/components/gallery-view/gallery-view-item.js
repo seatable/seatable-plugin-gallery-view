@@ -1,11 +1,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import ImageLazyLoad from './widgets/ImageLazyLoad';
 import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
 import { calculateColumns, calculateColumnsName } from '../../utils/utils';
 import pluginContext from '../../plugin-context';
 import { getImageThumbnailUrl } from '../../utils/utils';
+import { CellType } from 'dtable-ui-component/lib/constants';
+import ImageGallery from 'react-image-gallery';
+import '../../assets/css/gallery-image.css';
 
 const propTypes = {
   galleryItem: PropTypes.object,
@@ -28,10 +30,10 @@ const propTypes = {
   CellType: PropTypes.object,
   getOptionColors: PropTypes.func,
   formulaRows: PropTypes.object,
+  isFitMode: PropTypes.bool,
 };
 
 class GalleryViewItem extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
@@ -49,7 +51,7 @@ class GalleryViewItem extends React.Component {
     this.setState({
       isShowLargeImage: true,
       images: galleryItem[imageColumnName],
-      largeImageIndex: index
+      largeImageIndex: index || 0,
     });
   }
 
@@ -81,7 +83,7 @@ class GalleryViewItem extends React.Component {
   }
 
   onRowExpand = () => {
-    let { table,  galleryItem } = this.props;
+    let { table, galleryItem } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
     pluginContext.expandRow(row, table);
   }
@@ -90,10 +92,10 @@ class GalleryViewItem extends React.Component {
     const { settings, currentColumns } = this.props;
     const { shown_image_name } = settings;
     let imageColumn;
-    if (!shown_image_name) {
-      imageColumn = currentColumns.find(column => column.type === 'image');
-    } else {
-      imageColumn = currentColumns.find(column => column.name === shown_image_name);
+    if (shown_image_name) {
+      imageColumn = currentColumns.find(
+        (column) => column.name === shown_image_name
+      );
     }
     return imageColumn;
   }
@@ -136,7 +138,13 @@ class GalleryViewItem extends React.Component {
     let row = this.props.getRow(table, galleryItem._id);
     return filteredColumns.map((column, index) => {
       return (
-        <div className="gallery-editor-container" key={`editor-formatter-${index}`}>
+        <div
+          className={`gallery-editor-container ${
+            column.type === CellType.LONG_TEXT ? '' : 'text-truncate'
+          }`}
+          key={`editor-formatter-${index}`}
+          onClick={column.type === CellType.IMAGE ? null : this.onRowExpand}
+        >
           <EditorFormatter
             column={column}
             selectedView={this.props.selectedView}
@@ -163,57 +171,58 @@ class GalleryViewItem extends React.Component {
     let titleColumn = this.getGalleryTitleColumn();
     const { galleryItem, table } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
-    return (<div className="row-title" onClick={this.onRowExpand}>
-      <EditorFormatter
-        column={titleColumn}
-        selectedView={this.props.selectedView}
-        row={row}
-        table={table}
-        getLinkCellValue={this.props.getLinkCellValue}
-        getRowsByID={this.props.getRowsByID}
-        getTableById={this.props.getTableById}
-        collaborators={this.props.collaborators}
-        getUserCommonInfo={this.props.getUserCommonInfo}
-        getMediaUrl={this.props.getMediaUrl}
-        CellType={this.props.CellType}
-        formulaRows={this.props.formulaRows}
-        type="row_title"
-        getOptionColors={this.props.getOptionColors}
-      />
-    </div>);
-  }
-
-  clickImage = (e) => {
-    if (this.imageRef) {
-      this.imageRef.onImageClick(e);
-    }
+    return (
+      <div className="row-title" onClick={this.onRowExpand}>
+        <EditorFormatter
+          column={titleColumn}
+          selectedView={this.props.selectedView}
+          row={row}
+          table={table}
+          getLinkCellValue={this.props.getLinkCellValue}
+          getRowsByID={this.props.getRowsByID}
+          getTableById={this.props.getTableById}
+          collaborators={this.props.collaborators}
+          getUserCommonInfo={this.props.getUserCommonInfo}
+          getMediaUrl={this.props.getMediaUrl}
+          CellType={this.props.CellType}
+          formulaRows={this.props.formulaRows}
+          type="row_title"
+          getOptionColors={this.props.getOptionColors}
+        />
+      </div>
+    );
   }
 
   render() {
     let { images, largeImageIndex } = this.state;
-    let { galleryItem, itemMarginRightNone } = this.props;
+    let { galleryItem, itemMarginRightNone, isFitMode } = this.props;
     let selectedImageColumn = this.getGalleryImageColumn();
     let itemImage;
-    let imageNumber = 0;
     if (selectedImageColumn) {
       let imageColumnName = selectedImageColumn.name;
-      if (galleryItem[imageColumnName] && galleryItem[imageColumnName].length > 0) {
-        imageNumber = galleryItem[imageColumnName].length;
-        let imageURL = galleryItem[imageColumnName][0];
-        if (imageURL.toLowerCase().indexOf('.svg') === -1) { // not svg
-          imageURL = getImageThumbnailUrl(imageURL, 512);
-        }
+      if (
+        galleryItem[imageColumnName] &&
+        galleryItem[imageColumnName].length > 0
+      ) {
+        let imageValues = galleryItem[imageColumnName];
+        const imageURLs = imageValues.map((imageURL) => ({
+          original: imageURL,
+          thumbnail: getImageThumbnailUrl(imageURL, 64),
+        }));
         itemImage = (
-          <ImageLazyLoad
-            ref={ref => this.imageRef = ref}
-            imageUrl={imageURL}
-            onImageClick={this.onImageClick}
+          <ImageGallery
+            items={imageURLs}
+            showNav={false}
+            showPlayButton={false}
+            onClick={(e) => this.onImageClick(e, imageValues.indexOf(e.target.valueOf().src))}
+            showFullscreenButton={false}
+            additionalClass={isFitMode ? 'image-gallery-fit-mode' : 'image-gallery-crop-mode'}
           />
         );
       }
     }
 
-    let style = { width: `${this.props.width}px`};
+    let style = { width: `${this.props.width}px` };
     if (itemMarginRightNone) {
       style = {
         width: `${this.props.width}px`,
@@ -222,23 +231,26 @@ class GalleryViewItem extends React.Component {
     }
     return (
       <div className="gallery-item" style={style}>
-        <div className="gallery-image-container" onClick={this.clickImage}>
-          {itemImage}
-          {imageNumber > 1 &&
-            <div className="gallery-image-number">
-              {imageNumber}
-            </div>
-          }
-        </div>
-        <div className="text-truncate gallery-row-content">
-          <div className="gallery-title-container">
+        {itemImage && (
+          <div className="gallery-image-container">
+            {itemImage}
+          </div>
+        )}
+        <div
+          className={`gallery-row-content ${
+            itemImage
+              ? 'gallery-row-content-has-images'
+              : 'gallery-row-content-no-images'
+          }`}
+        >
+          <div className="gallery-title-container text-truncate">
             {this.renderRowTitle()}
           </div>
           <div className="gallery-formatter-list">
             {this.renderEditorFormatter()}
           </div>
         </div>
-        {this.state.isShowLargeImage &&
+        {this.state.isShowLargeImage && 
           <ImagePreviewerLightbox
             imageItems={images}
             imageIndex={largeImageIndex}

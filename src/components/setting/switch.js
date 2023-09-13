@@ -8,10 +8,12 @@ const propTypes = {
   switchClassName: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  showTwoLabel: PropTypes.bool,
+  placeholder2: PropTypes.string
 };
 
 function Switch(props) {
-  const { onChange, checked, placeholder, disabled, switchClassName } = props;
+  const { onChange, checked, placeholder, disabled, switchClassName, showTwoLabel, placeholder2 } = props;
   return(
     <div className={`gallery-column-switch ${switchClassName || ''}`}>
       <label className="custom-switch">
@@ -25,6 +27,7 @@ function Switch(props) {
         />
         <span className="custom-switch-description text-truncate">{placeholder}</span>
         <span className="custom-switch-indicator"></span>
+        {showTwoLabel && <span className="custom-switch-description text-truncate">{placeholder2}</span>}
       </label>
     </div>
   );

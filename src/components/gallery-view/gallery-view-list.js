@@ -22,6 +22,7 @@ const propTypes = {
   getOptionColors: PropTypes.func,
   onRef: PropTypes.func.isRequired,
   formulaRows: PropTypes.object,
+  isFitMode: PropTypes.bool,
 };
 
 class GalleryViewList extends React.Component {
@@ -89,6 +90,7 @@ class GalleryViewList extends React.Component {
               formulaRows={this.props.formulaRows}
               getOptionColors={this.props.getOptionColors}
               columnIconConfig={this.props.columnIconConfig}
+              isFitMode={this.props.isFitMode}
             />
           );
         })}
