@@ -12,7 +12,9 @@
     "react-dom": "16.14.0",
     "react-intl-universal": "^2.2.2",
     "react-select": "^2.4.3",
-    "reactstrap": "^8.4.1"
+    "react-slick": "^0.29.0",
+    "reactstrap": "^8.4.1",
+    "slick-carousel": "^1.8.1"
   },
   "scripts": {
     "clean": "rm -rf plugin-zip && mkdir plugin-zip",
