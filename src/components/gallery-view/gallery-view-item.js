@@ -147,28 +147,24 @@ class GalleryViewItem extends React.Component {
     let row = this.props.getRow(table, galleryItem._id);
     return filteredColumns.map((column, index) => {
       return (
-        <div
-          className='gallery-editor-container'
-          key={`editor-formatter-${index}`}
-        >
-          <EditorFormatter
-            column={column}
-            selectedView={this.props.selectedView}
-            row={row}
-            table={table}
-            getLinkCellValue={this.props.getLinkCellValue}
-            getRowsByID={this.props.getRowsByID}
-            getTableById={this.props.getTableById}
-            collaborators={this.props.collaborators}
-            getUserCommonInfo={this.props.getUserCommonInfo}
-            getMediaUrl={this.props.getMediaUrl}
-            CellType={this.props.CellType}
-            formulaRows={this.props.formulaRows}
-            getOptionColors={this.props.getOptionColors}
-            displayColumnName={settings.display_field_name || false}
-            columnIconConfig={this.props.columnIconConfig}
-          />
-        </div>
+        <EditorFormatter
+          index={index}
+          column={column}
+          selectedView={this.props.selectedView}
+          row={row}
+          table={table}
+          getLinkCellValue={this.props.getLinkCellValue}
+          getRowsByID={this.props.getRowsByID}
+          getTableById={this.props.getTableById}
+          collaborators={this.props.collaborators}
+          getUserCommonInfo={this.props.getUserCommonInfo}
+          getMediaUrl={this.props.getMediaUrl}
+          CellType={this.props.CellType}
+          formulaRows={this.props.formulaRows}
+          getOptionColors={this.props.getOptionColors}
+          displayColumnName={settings.display_field_name || false}
+          columnIconConfig={this.props.columnIconConfig}
+        />
       );
     });
   };
@@ -200,7 +196,6 @@ class GalleryViewItem extends React.Component {
   };
 
   clickImage = (e) => {
-    console.log('e :>> ', e);
     if (this.imageRef) {
       this.imageRef.onImageClick(e);
     }
