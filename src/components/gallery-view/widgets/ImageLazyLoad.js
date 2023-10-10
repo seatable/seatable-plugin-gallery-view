@@ -16,7 +16,6 @@ class ImageLazyLoad extends React.Component {
       loadedCount: 0,
       isShowLoading: false,
     };
-    window.console.log('props in image lazy', this.imageList);
   }
 
   componentDidMount() {

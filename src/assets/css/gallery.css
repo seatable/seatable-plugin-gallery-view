@@ -159,10 +159,12 @@
   display: flex;
   font-size: 14px;
   flex-direction: column;
+  max-height: 100px;
 }
 
 .gallery-editor-container .gallery-editor-title {
   font-size: 12px;
+  height: fit-content;
 }
 
 .gallery-editor-container .gallery-editor-title .gallery-editor-title-text {
@@ -170,7 +172,14 @@
 }
 
 .gallery-editor-container .cell-formatter-container {
-  line-height: 28px;
+  height: auto;
+}
+
+.long-text-content {
+  width: 210px;
+  white-space: normal;
+  overflow: hidden;
+  display: block;
 }
 
 .gallery-row-content .gallery-text-editor {

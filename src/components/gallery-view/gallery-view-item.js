@@ -228,7 +228,6 @@ class GalleryViewItem extends React.Component {
             onImageClick={this.onImageClick}
           />
         );
-        console.log(this.props.galleryItem.Image);
       }
     }
 
