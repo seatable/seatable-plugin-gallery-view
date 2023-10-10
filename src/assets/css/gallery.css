@@ -159,6 +159,15 @@
   height: auto;
 }
 
+ .cell-formatter-container {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+ .cell-formatter-container div{
+ margin-top: 5px;
+}
+
 .long-text-content {
   width: 210px;
   white-space: normal;
