@@ -47,6 +47,12 @@
   scroll-snap-align: inherit;
 }
 
+.gallery-item {
+  display: flex;
+  flex-direction: column;
+  height: fit-content;
+}
+
 .gallery-item .gallery-image-container {
   position: relative;
   height: 162px;
@@ -75,7 +81,9 @@
 
 .gallery-item .gallery-row-content {
   padding: 8px 5px;
-  height: calc(100% - 162px);
+  /* height: calc(100% - 162px); */
+  flex: 0 1 auto;
+
 }
 
 .gallery-item .gallery-row-content:hover {
