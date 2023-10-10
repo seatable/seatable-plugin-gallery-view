@@ -84,6 +84,7 @@
   flex: 1;
   min-height: 0;
   height: auto;
+  cursor: pointer;
 }
 
 
@@ -98,7 +99,6 @@
 
 .gallery-item .gallery-row-content .row-title {
   font-size: 15px;
-  cursor: pointer;
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;

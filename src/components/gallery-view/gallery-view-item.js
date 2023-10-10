@@ -174,7 +174,7 @@ class GalleryViewItem extends React.Component {
     const { galleryItem, table } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
     return (
-      <div className='row-title' onClick={this.onRowExpand}>
+      <div className='row-title'>
         <EditorFormatter
           column={titleColumn}
           selectedView={this.props.selectedView}
@@ -245,7 +245,10 @@ class GalleryViewItem extends React.Component {
             {itemImage}
           </div>
         )}
-        <div className='text-truncate gallery-row-content'>
+        <div
+          className='text-truncate gallery-row-content'
+          onClick={this.onRowExpand}
+        >
           <div className='gallery-title-container'>{this.renderRowTitle()}</div>
           <div className='gallery-formatter-list'>
             {this.renderEditorFormatter()}
