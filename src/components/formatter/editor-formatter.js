@@ -183,10 +183,6 @@ class EditorFormatter extends React.Component {
         return collaboratorFormatter;
       }
       case CellType.LONG_TEXT: {
-        window.console.log('row[columnKey] :>> ', row[columnKey]?.preview);
-        window.console.log('columnKey :>> ', columnKey);
-        window.console.log('row :>> ', row);
-
         const outputValue = {
           ...row[columnKey],
           preview: row[columnKey]?.preview.substring(0, 200).trim() + '...',
