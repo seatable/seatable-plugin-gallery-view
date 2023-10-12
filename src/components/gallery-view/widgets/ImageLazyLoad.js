@@ -8,21 +8,20 @@ const propTypes = {
 };
 
 class ImageLazyLoad extends React.Component {
-
   constructor(props) {
     super(props);
     this.state = {
       imageUrl: props.imageUrl,
-      imageList: [],
+      imageList: props.imageUrlsArr,
       loadedCount: 0,
-      isShowLoading: false
+      isShowLoading: false,
     };
   }
 
   componentDidMount() {
     let { imageUrl } = this.state;
     this.loadImageAsync(imageUrl, (image) => {
-      this.setState({imageUrl: image.src});
+      this.setState({ imageUrl: image.src });
     });
   }
 
@@ -30,7 +29,7 @@ class ImageLazyLoad extends React.Component {
     let newImageUrl = nextProps.imageUrl;
     if (this.isArrayEqual(newImageUrl, this.props.imageUrl)) return;
     this.loadImageAsync(newImageUrl, (image) => {
-      this.setState({imageUrl: image.src});
+      this.setState({ imageUrl: image.src });
     });
   }
 
@@ -43,35 +42,35 @@ class ImageLazyLoad extends React.Component {
 
   isArrayEqual = (array1, array2) => {
     return array1.toString() === array2.toString();
-  }
+  };
 
   loadImageAsync = (url, resolve, reject) => {
     if (!url) {
       reject('img path is require');
       return;
     }
-    this.setState({isShowLoading: true});
+    this.setState({ isShowLoading: true });
     const image = new Image();
     image.src = url;
     image.onload = () => {
       resolve(image);
-      this.setState({isShowLoading: false});
+      this.setState({ isShowLoading: false });
     };
     image.onerror = () => {
-      this.setState({isShowLoading: false});
+      this.setState({ isShowLoading: false });
     };
-  }
+  };
 
   onMouseDown = (event) => {
     event.stopPropagation();
-  }
+  };
 
   onImageClick = (event) => {
     this.props.onImageClick(event, 0);
-  }
+  };
 
   render() {
-    let { imageUrl, isShowLoading } = this.state;
+    let { imageList, imageUrl, isShowLoading } = this.state;
 
     if (!imageUrl) {
       return '';
@@ -80,13 +79,19 @@ class ImageLazyLoad extends React.Component {
     if (isShowLoading) {
       return <Loading />;
     }
+
     return (
-      <img
-        alt=''
-        src={imageUrl}
-        onMouseDown={this.onMouseDown}
-        onClick={this.onImageClick}
-      />
+      <div className='horizontal-scroll-preview'>
+        {imageList.map((imageUrl, index) => (
+          <img
+            alt=''
+            key={index}
+            src={imageUrl}
+            onMouseDown={this.onMouseDown}
+            onClick={() => this.onImageClick(imageUrl)}
+          />
+        ))}
+      </div>
     );
   }
 }

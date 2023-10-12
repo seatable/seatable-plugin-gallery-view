@@ -1,5 +1,4 @@
 class PluginContext {
-
   constructor() {
     this.settings = window.dtable ? window.dtable : window.dtablePluginConfig;
     this.api = window.dtableWebAPI ? window.dtableWebAPI : null;
@@ -29,9 +28,8 @@ class PluginContext {
     if (!this.api) return Promise.reject();
     return this.api.getUserCommonInfo(email, avatar_size);
   }
-
 }
 
-const pluginContext =  new PluginContext();
+const pluginContext = new PluginContext();
 
 export default pluginContext;
