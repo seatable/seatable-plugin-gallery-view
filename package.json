@@ -1,6 +1,6 @@
 {
   "name": "seatable-plugin-gallery-view",
-  "version": "0.1.70",
+  "version": "0.1.71",
   "private": true,
   "dependencies": {
     "@seafile/react-image-lightbox": "2.0.4",
