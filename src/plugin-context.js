@@ -1,16 +1,11 @@
 class PluginContext {
 
-  constructor() {
-    this.settings = window.dtable ? window.dtable : window.dtablePluginConfig;
-    this.api = window.dtableWebAPI ? window.dtableWebAPI : null;
-  }
-
   getConfig() {
-    return this.settings;
+    return window.dtable;
   }
 
   getSetting(key) {
-    return this.settings[key] || '';
+    return window.dtable[key] || '';
   }
 
   getInitData() {
@@ -26,8 +21,7 @@ class PluginContext {
   }
 
   getUserCommonInfo(email, avatar_size) {
-    if (!this.api) return Promise.reject();
-    return this.api.getUserCommonInfo(email, avatar_size);
+    return window.dtableWebAPI.getUserCommonInfo(email, avatar_size);
   }
 
 }

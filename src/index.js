@@ -1,12 +1,32 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './setting'; // should init before app component
+import DTable from 'dtable-sdk';
 import App from './app';
+import './setting';
 
 class TaskList {
 
-  static execute() {
-    ReactDOM.render(<App isDevelopment={true} showDialog={true} />, document.getElementById('root'));
+  static async init() {
+    const dtableSDK = new DTable();
+
+    // local develop
+    await dtableSDK.init(window.dtablePluginConfig);
+    await dtableSDK.syncWithServer();
+
+    window.app = {};
+    window.app.state = {};
+    window.dtable = {
+      ...window.dtablePluginConfig,
+    };
+    window.app.collaborators = dtableSDK.dtableStore.collaborators;
+    window.app.state.collaborators = dtableSDK.dtableStore.collaborators;
+    window.dtableSDK = dtableSDK;
+  }
+
+
+  static async execute() {
+    await this.init();
+    ReactDOM.render(<App isDevelopment showDialog />, document.getElementById('root'));
   }
 
 }

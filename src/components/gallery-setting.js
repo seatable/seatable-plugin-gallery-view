@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
+import { CellType } from 'dtable-utils';
 import { DTableSwitch, FieldDisplaySetting } from 'dtable-ui-component';
 import DtableSelect from './dtable-select';
 import { SETTING_KEY, zIndexes } from '../constants';
@@ -16,24 +17,22 @@ const propTypes = {
   imageColumns: PropTypes.array,
   selectedTable: PropTypes.object,
   settings: PropTypes.object,
-  CellType: PropTypes.object,
   onModifyGallerySettings: PropTypes.func,
   onHideGallerySetting: PropTypes.func,
-  getColumnIconConfig: PropTypes.func,
 };
+
+const SHOW_TITLE_COLUMN_TYPE = [
+  CellType.TEXT, CellType.SINGLE_SELECT, CellType.MULTIPLE_SELECT, CellType.NUMBER,
+  CellType.FORMULA, CellType.LINK_FORMULA, CellType.DATE, CellType.COLLABORATOR,
+  CellType.GEOLOCATION, CellType.CTIME, CellType.MTIME, CellType.CREATOR,
+  CellType.LAST_MODIFIER, CellType.RATE,
+];
 
 class GallerySetting extends React.Component {
 
   constructor(props) {
     super(props);
-    this.columnIconConfig = props.getColumnIconConfig();
-    const { CellType, settings } = props;
-    this.SHOW_TITLE_COLUMN_TYPE = [
-      CellType.TEXT, CellType.SINGLE_SELECT, CellType.MULTIPLE_SELECT, CellType.NUMBER,
-      CellType.FORMULA, CellType.LINK_FORMULA, CellType.DATE, CellType.COLLABORATOR,
-      CellType.GEOLOCATION, CellType.CTIME, CellType.MTIME, CellType.CREATOR,
-      CellType.LAST_MODIFIER, CellType.RATE
-    ];
+    const { settings } = props;
     this.state = {
       isShowColumnName: settings.display_field_name || false,
     };
@@ -141,9 +140,8 @@ class GallerySetting extends React.Component {
   }
 
   getTitleColumns = () => {
-    let { currentColumns } = this.props;
-    let titleColumns = currentColumns.filter(column => this.SHOW_TITLE_COLUMN_TYPE.includes(column.type));
-    return titleColumns;
+    const { currentColumns } = this.props;
+    return currentColumns.filter(column => SHOW_TITLE_COLUMN_TYPE.includes(column.type));
   }
 
   getFilteredColumns = () => {

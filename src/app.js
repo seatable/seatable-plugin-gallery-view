@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import DTable from 'dtable-sdk';
 import intl from 'react-intl-universal';
+import {
+  CellType, getTableById, getTableByName, getViewByName, getViewShownColumns, getRowById,
+  getRowsByIds, getLinkCellValue, getNonArchiveViews,
+} from 'dtable-utils';
 import { PLUGIN_NAME, SETTING_KEY } from './constants';
 import pluginContext from './plugin-context';
 import { generatorViewId, checkDesktop } from './utils/utils';
@@ -47,7 +50,6 @@ class App extends React.Component {
       plugin_settings: {},
       isShowGallerySetting: false,
     };
-    this.dtable = new DTable();
     this.isDesktop = checkDesktop();
   }
 
@@ -66,27 +68,15 @@ class App extends React.Component {
   }
 
   async initPluginDTableData() {
-    const { isDevelopment } = this.props;
-    if (isDevelopment) {
+    if (this.props.isDevelopment) {
       // local develop
-      // todo
-      await this.dtable.init(pluginContext.getConfig());
-      await this.dtable.syncWithServer();
-      this.dtable.subscribe('dtable-connect', () => { this.onDTableConnect(); });
-    } else {
-      // integrated to dtable app
-      const initData = pluginContext.getInitData();
-      this.dtable.initInBrowser(initData);
+      window.dtableSDK.subscribe('dtable-connect', () => { this.onDTableConnect(); });
     }
-    let table = this.dtable.getActiveTable();
-    this.setState({table});
-    this.dtable.subscribe('local-dtable-changed', () => { this.onDTableChanged(); });
-    this.dtable.subscribe('remote-dtable-changed', () => { this.onDTableChanged(); });
+    const table = window.dtableSDK.getActiveTable();
+    this.setState({ table });
+    window.dtableSDK.subscribe('local-dtable-changed', () => { this.onDTableChanged(); });
+    window.dtableSDK.subscribe('remote-dtable-changed', () => { this.onDTableChanged(); });
     this.resetData(true);
-  }
-
-  getTableRelatedUsers = () => {
-    return this.dtable.getRelatedUsers();
   }
 
   onDTableConnect = () => {
@@ -99,7 +89,7 @@ class App extends React.Component {
 
   resetData = (init = false) => {
     let { showDialog, isShowGallerySetting } = this.state;
-    let plugin_settings = this.dtable.getPluginSettings(PLUGIN_NAME) || {};
+    let plugin_settings = window.dtableSDK.getPluginSettings(PLUGIN_NAME) || {};
     if (!plugin_settings || Object.keys(plugin_settings).length === 0) {
       plugin_settings = DEFAULT_PLUGIN_SETTINGS;
     }
@@ -184,7 +174,7 @@ class App extends React.Component {
       plugin_settings,
       selectedViewIdx: newSelectedViewIndex
     }, () => {
-      this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
+      window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
     });
   }
 
@@ -202,8 +192,7 @@ class App extends React.Component {
 
   initGallerySetting = (settings = {}) => {
     let initUpdated = {};
-    let tables = this.dtable.getTables();
-    let selectedTable = this.getSelectedTable(tables, settings);
+    let selectedTable = this.getSelectedTable(settings);
     let titleColumn = selectedTable.columns.find(column => column.key === '0000');
     let imageColumn = selectedTable.columns.find(column => column.type === 'image');
     let imageName = imageColumn ? imageColumn.name : null;
@@ -230,7 +219,7 @@ class App extends React.Component {
       isShowGallerySetting
     }, () => {
       this.storeSelectedViewId(updatedViews[selectedViewIdx]._id);
-      this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
+      window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
       this.viewsTabs && this.viewsTabs.setViewsTabsScroll();
     });
   }
@@ -243,7 +232,7 @@ class App extends React.Component {
     this.setState({
       plugin_settings
     }, () => {
-      this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
+      window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
     });
   }
 
@@ -263,7 +252,7 @@ class App extends React.Component {
         isShowGallerySetting
       }, () => {
         this.storeSelectedViewId(updatedViews[selectedViewIdx]._id);
-        this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
+        window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
       });
     }
   }
@@ -283,12 +272,12 @@ class App extends React.Component {
     updatedViews[selectedViewIdx] = updatedView;
     plugin_settings.views = updatedViews;
     this.setState({plugin_settings}, () => {
-      this.dtable.updatePluginSettings(PLUGIN_NAME, plugin_settings);
+      window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
     });
   }
 
   onInsertRow = (table, view, rowData) => {
-    let columns = this.dtable.getColumns(table);
+    const { columns } = table;
     let newRowData = {};
     for (let key in rowData) {
       let column = columns.find(column => column.key === key);
@@ -320,73 +309,52 @@ class App extends React.Component {
     }
     let row_data = Object.assign({}, newRowData);
 
-    this.dtable.appendRow(table, row_data, view);
-    let viewRows = this.dtable.getViewRows(view, table);
-    let insertedRow = viewRows[viewRows.length - 1];
+    window.dtableSDK.appendRow(table, row_data, view);
+    const viewRows = window.dtableSDK.getViewRows(view, table);
+    const insertedRow = viewRows[viewRows.length - 1];
     if (insertedRow) {
       pluginContext.expandRow(insertedRow, table);
     }
   }
 
-  getSelectedTable = (tables, settings = {}) => {
-    let selectedTable = this.dtable.getTableByName(settings[SETTING_KEY.TABLE_NAME]);
-    if (!selectedTable) {
-      return tables[0];
-    }
-    return selectedTable;
+  getSelectedTable = (settings = {}) => {
+    const tables = window.dtableSDK.getTables();
+    return getTableByName(tables, settings[SETTING_KEY.TABLE_NAME]) || tables[0];
   }
 
   getSelectedView = (table, settings = {}) => {
-    return this.dtable.getViewByName(table, settings[SETTING_KEY.VIEW_NAME]);
-  }
-
-  getViews = (table) => {
-    let { name } = table || {};
-    return this.dtable.getTableViews(name);
-  }
-
-  getViewShownColumns = (view, table) => {
-    return this.dtable.getViewShownColumns(view, table);
+    return getViewByName(table.views, settings[SETTING_KEY.VIEW_NAME]);
   }
 
   getRows = (tableName, viewName, settings = {}) => {
     let rows = [];
-    this.dtable.forEachRow(tableName, viewName, (row) => {
+    window.dtableSDK.forEachRow(tableName, viewName, (row) => {
       rows.push(row);
     });
     return rows;
   }
 
   getRow = (table, rowID) => {
-    return this.dtable.getRowById(table, rowID);
-  }
-
-  getColumnIconConfig = () => {
-    return this.dtable.getColumnIconConfig();
+    return getRowById(table, rowID);
   }
 
   getInsertedRowInitData = (view, table, rowID) => {
-    return this.dtable.getInsertedRowInitData(view, table, rowID);
+    return window.dtableSDK.getInsertedRowInitData(view, table, rowID);
   }
 
   getLinkCellValue = (linkId, table1Id, table2Id, rowId) => {
-    return this.dtable.getLinkCellValue(linkId, table1Id, table2Id, rowId);
+    const links = window.dtableSDK.getLinks();
+    return getLinkCellValue(links, linkId, table1Id, table2Id, rowId);
   }
 
   getRowsByID = (tableId, rowIds) => {
-    return this.dtable.getRowsByID(tableId, rowIds);
+    const table = this.getTableById(tableId);
+    return getRowsByIds(table, rowIds);
   }
 
   getTableById = (table_id) => {
-    return this.dtable.getTableById(table_id);
-  }
-
-  getOptionColors = () => {
-    return this.dtable.getOptionColors();
-  }
-
-  getTablePermissionType = () => {
-    return  this.dtable.getTablePermissionType();
+    const tables = window.dtableSDK.getTables();
+    return getTableById(tables, table_id);
   }
 
   getUserCommonInfo = (email, avatar_size) => {
@@ -394,14 +362,14 @@ class App extends React.Component {
   }
 
   storeSelectedViewId = (viewId) => {
-    let dtableUuid = this.getDtableUuid();
-    let selectedViewIds = this.getSelectedViewIds(KEY_SELECTED_VIEW_IDS);
+    const dtableUuid = this.getDtableUuid();
+    const selectedViewIds = this.getSelectedViewIds(KEY_SELECTED_VIEW_IDS);
     selectedViewIds[dtableUuid] = viewId;
     window.localStorage.setItem(KEY_SELECTED_VIEW_IDS, JSON.stringify(selectedViewIds));
   }
 
   getSelectedViewIds = (key) => {
-    let selectedViewIds = window.localStorage.getItem(key);
+    const selectedViewIds = window.localStorage.getItem(key);
     return selectedViewIds ? JSON.parse(selectedViewIds) : {};
   }
 
@@ -410,42 +378,44 @@ class App extends React.Component {
   }
 
   onAddGalleryRowList = () => {
-    let newGalleryRowList = this.state.itemShowRowLength + 50;
-    this.setState({itemShowRowLength: newGalleryRowList});
+    const newGalleryRowList = this.state.itemShowRowLength + 50;
+    this.setState({ itemShowRowLength: newGalleryRowList });
   }
 
   onAddGalleryItem = (view, table, rowID) => {
-    let rowData = this.getInsertedRowInitData(view, table, rowID);
+    const rowData = this.getInsertedRowInitData(view, table, rowID);
     this.onInsertRow(table, view, rowData);
   }
 
   getTableFormulaRows = (table, view) => {
-    let rows = this.dtable.getViewRows(view, table);
-    return this.dtable.getTableFormulaResults(table, rows);
+    const rows = window.dtableSDK.getViewRows(view, table);
+    return window.dtableSDK.getTableFormulaResults(table, rows);
   }
 
   render() {
-    let { isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting, itemShowRowLength } = this.state;
+    const {
+      isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting,
+      itemShowRowLength,
+    } = this.state;
     if (isLoading || !showDialog) {
       return '';
     }
-    let CellType = this.dtable.getCellType();
-    let { views: galleryViews } = plugin_settings;
-    let selectedGalleryView = galleryViews[selectedViewIdx];
-    let { settings } = selectedGalleryView || {};
-    let tables = this.dtable.getTables();
-    let selectedTable = this.getSelectedTable(tables, settings);
-    let { name: tableName } = selectedTable || {};
-    let views = this.dtable.getNonArchiveViews(selectedTable);
-    let selectedView = this.getSelectedView(selectedTable, settings) || views[0];
-    let { name: viewName } = selectedView;
-    const currentColumns = this.getViewShownColumns(selectedView, selectedTable);
-    let imageColumns = currentColumns.filter(field => field.type === CellType.IMAGE);
-    let rows = this.getRows(tableName, viewName, settings);
+    const { views: galleryViews } = plugin_settings;
+    const selectedGalleryView = galleryViews[selectedViewIdx];
+    const { settings } = selectedGalleryView || {};
+    const tables = window.dtableSDK.getTables();
+    const selectedTable = this.getSelectedTable(settings);
+    const { name: tableName } = selectedTable || {};
+    const views = getNonArchiveViews(selectedTable.views);
+    const selectedView = this.getSelectedView(selectedTable, settings) || views[0];
+    const { name: viewName } = selectedView;
+    const currentColumns = getViewShownColumns(selectedView, selectedTable.columns);
+    const imageColumns = currentColumns.filter(field => field.type === CellType.IMAGE);
+    const rows = this.getRows(tableName, viewName, settings);
     let isShowAllRowList = false;
     let rowsList = [];
-    let collaborators = this.getTableRelatedUsers();
-    let formulaRows = this.getTableFormulaRows(selectedTable, selectedView);
+    const collaborators = window.app.state.collaborators;
+    const formulaRows = this.getTableFormulaRows(selectedTable, selectedView);
     if (rows.length < itemShowRowLength) {
       rowsList = rows;
       isShowAllRowList = true;
@@ -523,14 +493,10 @@ class App extends React.Component {
             getLinkCellValue={this.getLinkCellValue}
             getRowsByID={this.getRowsByID}
             getTableById={this.getTableById}
-            getOptionColors={this.getOptionColors}
             collaborators={collaborators}
             getUserCommonInfo={this.getUserCommonInfo}
             getMediaUrl={this.getMediaUrl}
-            CellType={CellType}
             formulaRows={formulaRows}
-            getTablePermissionType={this.getTablePermissionType}
-            getColumnIconConfig={this.getColumnIconConfig}
           />
           {isShowGallerySetting &&
             <GallerySetting
@@ -542,8 +508,6 @@ class App extends React.Component {
               onHideGallerySetting={this.onHideGallerySetting}
               currentColumns={currentColumns}
               imageColumns={imageColumns}
-              CellType={CellType}
-              getColumnIconConfig={this.getColumnIconConfig}
             />
           }
         </div>

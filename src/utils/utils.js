@@ -1,3 +1,4 @@
+import { TABLE_PERMISSION_TYPE } from 'dtable-utils';
 import pluginContext from '../plugin-context';
 
 export const generatorBase64Code = (keyLength = 4) => {
@@ -67,9 +68,8 @@ export const checkDesktop = () => {
   return window.innerWidth >= 768;
 };
 
-export const isTableEditable = ({permission_type = 'default', permitted_users = []}, TABLE_PERMISSION_TYPE) => {
-  const { isAdmin, username } = window.dtable ? window.dtable :  window.dtablePluginConfig;
-
+export const isTableEditable = ({ permission_type = 'default', permitted_users = [] }) => {
+  const { isAdmin, username } = window.dtable;
   if (!permission_type) {
     return true;
   }
@@ -85,10 +85,10 @@ export const isTableEditable = ({permission_type = 'default', permitted_users = 
   return false;
 };
 
-export const canCreateRows = (table, TABLE_PERMISSION_TYPE) => {
+export const canCreateRows = (table) => {
   let canCreateRows = true;
   if (table && table.table_permissions && table.table_permissions.add_rows_permission) {
-    canCreateRows = isTableEditable(table.table_permissions.add_rows_permission, TABLE_PERMISSION_TYPE);
+    canCreateRows = isTableEditable(table.table_permissions.add_rows_permission);
   }
   return canCreateRows;
 };

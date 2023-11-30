@@ -1,12 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './app'
+import App from './app';
 
 class TaskList {
 
   static execute() {
-    let wrapper = document.querySelector('#plugin-wrapper');
-    ReactDOM.render(<App showDialog={true} />, wrapper);
+    ReactDOM.render(<App showDialog={true} />, document.querySelector('#plugin-wrapper'));
   }
 
 }
