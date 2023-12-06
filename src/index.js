@@ -1,8 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import DTable from 'dtable-sdk';
-import App from './app';
 import './setting';
+import App from './app';
 
 class TaskList {
 

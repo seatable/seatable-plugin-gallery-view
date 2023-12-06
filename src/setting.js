@@ -39,3 +39,4 @@ if (intl.options && intl.options.locales && intl.options.locales[config.lang]) {
 
 /* (5/5) init window.dtablePluginConfig  */
 window.dtablePluginConfig = config;
+window.dtable = window.dtablePluginConfig;
