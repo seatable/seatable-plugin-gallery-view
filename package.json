@@ -1,12 +1,12 @@
 {
   "name": "seatable-plugin-gallery-view",
-  "version": "0.1.71",
+  "version": "0.1.72",
   "private": true,
   "dependencies": {
     "@seafile/react-image-lightbox": "2.0.4",
     "classnames": "^2.2.6",
-    "dtable-ui-component": "0.3.26",
-    "dtable-utils": "4.3.2-beta.1",
+    "dtable-ui-component": "0.3.29",
+    "dtable-utils": "4.3.3",
     "react": "17.0.2",
     "react-dom": "17.0.2",
     "react-intl-universal": "^2.2.2",
