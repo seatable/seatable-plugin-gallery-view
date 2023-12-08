@@ -13,7 +13,6 @@ const propTypes = {
   getRow: PropTypes.func,
   table: PropTypes.object,
   selectedGalleryView: PropTypes.object,
-  columnIconConfig: PropTypes.object,
   width: PropTypes.number,
   itemMarginRightNone: PropTypes.bool,
   settings: PropTypes.object,
@@ -25,8 +24,6 @@ const propTypes = {
   collaborators: PropTypes.array,
   getUserCommonInfo: PropTypes.func,
   getMediaUrl: PropTypes.func,
-  CellType: PropTypes.object,
-  getOptionColors: PropTypes.func,
   formulaRows: PropTypes.object,
 };
 
@@ -148,11 +145,8 @@ class GalleryViewItem extends React.Component {
             collaborators={this.props.collaborators}
             getUserCommonInfo={this.props.getUserCommonInfo}
             getMediaUrl={this.props.getMediaUrl}
-            CellType={this.props.CellType}
             formulaRows={this.props.formulaRows}
-            getOptionColors={this.props.getOptionColors}
             displayColumnName={settings.display_field_name || false}
-            columnIconConfig={this.props.columnIconConfig}
           />
         </div>
       );
@@ -175,10 +169,8 @@ class GalleryViewItem extends React.Component {
         collaborators={this.props.collaborators}
         getUserCommonInfo={this.props.getUserCommonInfo}
         getMediaUrl={this.props.getMediaUrl}
-        CellType={this.props.CellType}
         formulaRows={this.props.formulaRows}
         type="row_title"
-        getOptionColors={this.props.getOptionColors}
       />
     </div>);
   }

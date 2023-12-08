@@ -25,21 +25,15 @@ const propTypes = {
   collaborators: PropTypes.array,
   getUserCommonInfo: PropTypes.func,
   getMediaUrl: PropTypes.func,
-  CellType: PropTypes.object,
-  getOptionColors: PropTypes.func,
-  getTablePermissionType: PropTypes.func,
   formulaRows: PropTypes.object,
   selectedImageColumn: PropTypes.func,
-  getColumnIconConfig: PropTypes.func
 };
 
 class Gallery extends React.Component {
 
   constructor(props) {
     super(props);
-    const TABLE_PERMISSION_TYPE = props.getTablePermissionType();
-    this.columnIconConfig = props.getColumnIconConfig();
-    this._canCreateRows = canCreateRows(props.table, TABLE_PERMISSION_TYPE);
+    this.canCreateRows = canCreateRows(props.table);
   }
 
   setInnerRef = (innerDom) => {
@@ -74,14 +68,11 @@ class Gallery extends React.Component {
             collaborators={this.props.collaborators}
             getUserCommonInfo={this.props.getUserCommonInfo}
             getMediaUrl={this.props.getMediaUrl}
-            CellType={this.props.CellType}
             selectedImageColumn={this.props.selectedImageColumn}
             formulaRows={this.props.formulaRows}
-            getOptionColors={this.props.getOptionColors}
-            columnIconConfig={this.columnIconConfig}
             onRef={this.setInnerRef}
           />
-          {this._canCreateRows &&
+          {this.canCreateRows &&
             <AddGalleryItem
               table={this.props.table}
               selectedView={this.props.selectedView}

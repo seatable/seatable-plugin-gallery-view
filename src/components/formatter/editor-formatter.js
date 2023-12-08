@@ -1,5 +1,6 @@
 import React, { Fragment } from 'react';
 import PropTypes from 'prop-types';
+import { CellType, SELECT_OPTION_COLORS } from 'dtable-utils';
 import {
   TextFormatter,
   NumberFormatter,
@@ -33,17 +34,14 @@ const propTypes = {
   type: PropTypes.string,
   column: PropTypes.object.isRequired,
   selectedView: PropTypes.object,
-  columnIconConfig: PropTypes.object,
   row: PropTypes.object.isRequired,
   table: PropTypes.object.isRequired,
-  CellType: PropTypes.object,
   collaborators: PropTypes.array,
   getLinkCellValue: PropTypes.func,
   getRowsByID: PropTypes.func,
   getTableById: PropTypes.func,
   getUserCommonInfo: PropTypes.func,
   getMediaUrl: PropTypes.func,
-  getOptionColors: PropTypes.func,
   formulaRows: PropTypes.object,
 };
 
@@ -66,7 +64,7 @@ class EditorFormatter extends React.Component {
   }
 
   calculateCollaboratorData = (props) => {
-    const { row, column, CellType } = props;
+    const { row, column } = props;
     if (column.type === CellType.LAST_MODIFIER) {
       this.getCollaborator(row._last_modifier);
     } else if (column.type === CellType.CREATOR) {
@@ -140,7 +138,7 @@ class EditorFormatter extends React.Component {
   }
 
   renderFormatter = () => {
-    const { column, row, collaborators, CellType, displayColumnName } = this.props;
+    const { column, row, collaborators, displayColumnName } = this.props;
     const { type: columnType, key: columnKey } = column;
     const { isDataLoaded, collaborator } = this.state;
     const _this = this;
@@ -366,8 +364,7 @@ class EditorFormatter extends React.Component {
       }
       case CellType.BUTTON: {
         const { data = {} } = column;
-        const optionColors = this.props.getOptionColors();
-        let buttonFormatter = <ButtonFormatter data={data} optionColors={optionColors} containerClassName="text-center" />;
+        let buttonFormatter = <ButtonFormatter data={data} optionColors={SELECT_OPTION_COLORS} containerClassName="text-center" />;
         if (!data.button_name) {
           buttonFormatter = this.renderEmptyFormatter();
         } else if (displayColumnName) {
