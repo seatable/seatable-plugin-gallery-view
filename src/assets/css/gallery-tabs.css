@@ -64,13 +64,13 @@
 
 .gallery-views-tabs .view-item .view-item-content:hover {
   border-color: #ff8000;
-  color: #444;
+  color: #212529;
   cursor: pointer;
 }
 
 .gallery-views-tabs .view-item.active .view-item-content {
   border-color: #ff8000;
-  color: #444;
+  color: #212529;
   cursor: default;
 }
 

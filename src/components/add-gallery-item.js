@@ -16,7 +16,7 @@ class AddGalleryItem extends React.Component{
     let { rows, selectedView, table } = this.props;
     let row_id = rows.length > 0 ? rows[rows.length - 1]._id : '';
     this.props.onAddGalleryItem(selectedView, table, row_id);
-  }
+  };
 
   render() {
     return(

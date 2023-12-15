@@ -43,7 +43,7 @@ class ImageLazyLoad extends React.Component {
 
   isArrayEqual = (array1, array2) => {
     return array1.toString() === array2.toString();
-  }
+  };
 
   loadImageAsync = (url, resolve, reject) => {
     if (!url) {
@@ -60,15 +60,15 @@ class ImageLazyLoad extends React.Component {
     image.onerror = () => {
       this.setState({isShowLoading: false});
     };
-  }
+  };
 
   onMouseDown = (event) => {
     event.stopPropagation();
-  }
+  };
 
   onImageClick = (event) => {
     this.props.onImageClick(event, 0);
-  }
+  };
 
   render() {
     let { imageUrl, isShowLoading } = this.state;
