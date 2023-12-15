@@ -48,14 +48,14 @@ class GalleryViewItem extends React.Component {
       images: galleryItem[imageColumnName],
       largeImageIndex: index
     });
-  }
+  };
 
   hideLargeImage = () => {
     this.setState({
       isShowLargeImage: false,
       largeImageIndex: ''
     });
-  }
+  };
 
   moveNext = () => {
     let { galleryItem } = this.props;
@@ -65,7 +65,7 @@ class GalleryViewItem extends React.Component {
     this.setState(prevState => ({
       largeImageIndex: (prevState.largeImageIndex + 1) % images.length,
     }));
-  }
+  };
 
   movePrev = () => {
     let { galleryItem } = this.props;
@@ -75,13 +75,13 @@ class GalleryViewItem extends React.Component {
     this.setState(prevState => ({
       largeImageIndex: (prevState.largeImageIndex + images.length - 1) % images.length,
     }));
-  }
+  };
 
   onRowExpand = () => {
     let { table,  galleryItem } = this.props;
     let row = this.props.getRow(table, galleryItem._id);
     pluginContext.expandRow(row, table);
-  }
+  };
 
   getGalleryImageColumn = () => {
     const { settings, currentColumns } = this.props;
@@ -93,7 +93,7 @@ class GalleryViewItem extends React.Component {
       imageColumn = currentColumns.find(column => column.name === shown_image_name);
     }
     return imageColumn;
-  }
+  };
 
   getGalleryTitleColumn = () => {
     const { settings, currentColumns } = this.props;
@@ -108,7 +108,7 @@ class GalleryViewItem extends React.Component {
       titleColumn = currentColumns.find(column => column.key === '0000') || {};
     }
     return titleColumn;
-  }
+  };
 
   getFilteredColumns = () => {
     const { settings, currentColumns } = this.props;
@@ -125,7 +125,7 @@ class GalleryViewItem extends React.Component {
       });
     }
     return filteredColumns;
-  }
+  };
 
   renderEditorFormatter = () => {
     let { galleryItem, table, settings } = this.props;
@@ -151,7 +151,7 @@ class GalleryViewItem extends React.Component {
         </div>
       );
     });
-  }
+  };
 
   renderRowTitle = () => {
     let titleColumn = this.getGalleryTitleColumn();
@@ -173,13 +173,13 @@ class GalleryViewItem extends React.Component {
         type="row_title"
       />
     </div>);
-  }
+  };
 
   clickImage = (e) => {
     if (this.imageRef) {
       this.imageRef.onImageClick(e);
     }
-  }
+  };
 
   render() {
     let { images, largeImageIndex } = this.state;

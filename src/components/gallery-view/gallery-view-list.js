@@ -54,7 +54,7 @@ class GalleryViewList extends React.Component {
       galleryItemWidth: galleryItemWidth,
       galleryItemNumber: galleryItemNumber
     });
-  }
+  };
 
   render() {
     const { rows, imageColumn } = this.props;

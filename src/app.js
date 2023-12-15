@@ -81,11 +81,11 @@ class App extends React.Component {
 
   onDTableConnect = () => {
     this.resetData();
-  }
+  };
 
   onDTableChanged = () => {
     this.resetData();
-  }
+  };
 
   resetData = (init = false) => {
     let { showDialog, isShowGallerySetting } = this.state;
@@ -110,30 +110,30 @@ class App extends React.Component {
       selectedViewIdx,
       isShowGallerySetting
     });
-  }
+  };
 
   onGallerySettingToggle = () => {
     this.setState({isShowGallerySetting: !this.state.isShowGallerySetting});
-  }
+  };
 
   onHideGallerySetting = () => {
     this.setState({isShowGallerySetting: false});
-  }
+  };
 
   getDtableUuid = () => {
     return pluginContext.getSetting('dtableUuid');
-  }
+  };
 
   getMediaUrl = () => {
     return pluginContext.getSetting('mediaUrl');
-  }
+  };
 
   onPluginToggle = () => {
     setTimeout(() => {
       this.setState({showDialog: false});
     }, 500);
     pluginContext.closePlugin();
-  }
+  };
 
   // move view, update `selectedViewIdx`
   onMoveView = (targetViewID, targetIndexViewID, relativePosition) => {
@@ -176,7 +176,7 @@ class App extends React.Component {
     }, () => {
       window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
     });
-  }
+  };
 
   onSelectView = (viewId) => {
     let { plugin_settings } = this.state;
@@ -188,7 +188,7 @@ class App extends React.Component {
       this.setState({selectedViewIdx: viewIdx, isShowGallerySetting, itemShowRowLength: 50});
       this.storeSelectedViewId(viewId);
     }
-  }
+  };
 
   initGallerySetting = (settings = {}) => {
     let initUpdated = {};
@@ -199,7 +199,7 @@ class App extends React.Component {
     let titleName = titleColumn ? titleColumn.name : null;
     initUpdated = Object.assign({}, {shown_image_name: imageName}, {shown_title_name: titleName});
     return initUpdated;
-  }
+  };
 
   onAddView = (viewName) => {
     let { plugin_settings } = this.state;
@@ -222,7 +222,7 @@ class App extends React.Component {
       window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
       this.viewsTabs && this.viewsTabs.setViewsTabsScroll();
     });
-  }
+  };
 
   onRenameView = (viewName) => {
     let { plugin_settings, selectedViewIdx } = this.state;
@@ -234,7 +234,7 @@ class App extends React.Component {
     }, () => {
       window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
     });
-  }
+  };
 
   onDeleteView = (viewId) => {
     let { plugin_settings, selectedViewIdx } = this.state;
@@ -255,7 +255,7 @@ class App extends React.Component {
         window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
       });
     }
-  }
+  };
 
   onModifyGallerySettings = (updated, type) => {
     let { plugin_settings, selectedViewIdx } = this.state;
@@ -274,7 +274,7 @@ class App extends React.Component {
     this.setState({plugin_settings}, () => {
       window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
     });
-  }
+  };
 
   onInsertRow = (table, view, rowData) => {
     const { columns } = table;
@@ -315,16 +315,16 @@ class App extends React.Component {
     if (insertedRow) {
       pluginContext.expandRow(insertedRow, table);
     }
-  }
+  };
 
   getSelectedTable = (settings = {}) => {
     const tables = window.dtableSDK.getTables();
     return getTableByName(tables, settings[SETTING_KEY.TABLE_NAME]) || tables[0];
-  }
+  };
 
   getSelectedView = (table, settings = {}) => {
     return getViewByName(table.views, settings[SETTING_KEY.VIEW_NAME]);
-  }
+  };
 
   getRows = (tableName, viewName, settings = {}) => {
     let rows = [];
@@ -332,65 +332,65 @@ class App extends React.Component {
       rows.push(row);
     });
     return rows;
-  }
+  };
 
   getRow = (table, rowID) => {
     return getRowById(table, rowID);
-  }
+  };
 
   getInsertedRowInitData = (view, table, rowID) => {
     return window.dtableSDK.getInsertedRowInitData(view, table, rowID);
-  }
+  };
 
   getLinkCellValue = (linkId, table1Id, table2Id, rowId) => {
     const links = window.dtableSDK.getLinks();
     return getLinkCellValue(links, linkId, table1Id, table2Id, rowId);
-  }
+  };
 
   getRowsByID = (tableId, rowIds) => {
     const table = this.getTableById(tableId);
     return getRowsByIds(table, rowIds);
-  }
+  };
 
   getTableById = (table_id) => {
     const tables = window.dtableSDK.getTables();
     return getTableById(tables, table_id);
-  }
+  };
 
   getUserCommonInfo = (email, avatar_size) => {
     pluginContext.getUserCommonInfo(email, avatar_size);
-  }
+  };
 
   storeSelectedViewId = (viewId) => {
     const dtableUuid = this.getDtableUuid();
     const selectedViewIds = this.getSelectedViewIds(KEY_SELECTED_VIEW_IDS);
     selectedViewIds[dtableUuid] = viewId;
     window.localStorage.setItem(KEY_SELECTED_VIEW_IDS, JSON.stringify(selectedViewIds));
-  }
+  };
 
   getSelectedViewIds = (key) => {
     const selectedViewIds = window.localStorage.getItem(key);
     return selectedViewIds ? JSON.parse(selectedViewIds) : {};
-  }
+  };
 
   isValidViewSettings = (settings) => {
     return settings && Object.keys(settings).length > 0;
-  }
+  };
 
   onAddGalleryRowList = () => {
     const newGalleryRowList = this.state.itemShowRowLength + 50;
     this.setState({ itemShowRowLength: newGalleryRowList });
-  }
+  };
 
   onAddGalleryItem = (view, table, rowID) => {
     const rowData = this.getInsertedRowInitData(view, table, rowID);
     this.onInsertRow(table, view, rowData);
-  }
+  };
 
   getTableFormulaRows = (table, view) => {
     const rows = window.dtableSDK.getViewRows(view, table);
     return window.dtableSDK.getTableFormulaResults(table, rows);
-  }
+  };
 
   render() {
     const {

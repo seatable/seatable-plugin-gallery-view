@@ -38,7 +38,7 @@ class Gallery extends React.Component {
 
   setInnerRef = (innerDom) => {
     this.galleryViewListRef = innerDom.galleryListRef;
-  }
+  };
 
   onScroll = () => {
     if (this.props.isShowAllRowList) {
@@ -48,7 +48,7 @@ class Gallery extends React.Component {
     if (offsetHeight + scrollTop + 1 > this.galleryViewListRef.offsetHeight) {
       this.props.onAddGalleryRowList();
     }
-  }
+  };
 
   render() {
     return (

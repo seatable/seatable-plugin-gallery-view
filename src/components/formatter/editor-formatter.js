@@ -70,7 +70,7 @@ class EditorFormatter extends React.Component {
     } else if (column.type === CellType.CREATOR) {
       this.getCollaborator(row._creator);
     }
-  }
+  };
 
   getCollaborator = (value) => {
     if (!value) {
@@ -108,7 +108,7 @@ class EditorFormatter extends React.Component {
       };
       this.setState({isDataLoaded: true, collaborator: collaborator});
     });
-  }
+  };
 
   renderEmptyFormatter = () => {
     const { displayColumnName } = this.props;
@@ -120,7 +120,7 @@ class EditorFormatter extends React.Component {
       emptyFormatter = this.renderColumnFormatter(emptyFormatter);
     }
     return emptyFormatter;
-  }
+  };
 
   renderColumnFormatter = (formatter) => {
     const { column } = this.props;
@@ -135,7 +135,7 @@ class EditorFormatter extends React.Component {
         </div>
       </>
     );
-  }
+  };
 
   renderFormatter = () => {
     const { column, row, collaborators, displayColumnName } = this.props;
@@ -375,7 +375,7 @@ class EditorFormatter extends React.Component {
       default:
         return null;
     }
-  }
+  };
 
   render() {
     return(

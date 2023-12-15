@@ -71,7 +71,7 @@ class GallerySetting extends React.Component {
     }
     let updated = Object.assign({}, settings, {shown_column_names: shownColumnNames});
     this.props.onModifyGallerySettings(updated);
-  }
+  };
 
   onChooseAllColumns = () => {
     const { settings } = this.props;
@@ -82,13 +82,13 @@ class GallerySetting extends React.Component {
     });
     let updated = Object.assign({}, settings, {shown_column_names: shownColumnNames});
     this.props.onModifyGallerySettings(updated);
-  }
+  };
 
   onHideAllColumns = () => {
     const { settings } = this.props;
     let updated = Object.assign({}, settings, {shown_column_names: []});
     this.props.onModifyGallerySettings(updated);
-  }
+  };
 
   onToggleFieldsVisibility = (fieldAllShown) => {
     if (fieldAllShown) {
@@ -96,14 +96,14 @@ class GallerySetting extends React.Component {
     } else {
       this.onChooseAllColumns();
     }
-  }
+  };
 
   onModifyFieldsSettings = (selectedOption) => {
     let { settings } = this.props;
     let { value, setting_key } = selectedOption;
     let updated = Object.assign({}, settings, {[setting_key]: value});
     this.props.onModifyGallerySettings(updated);
-  }
+  };
 
   onMoveColumn = (sourceColumnKey, targetColumnKey) => {
     let { settings, currentColumns } = this.props;
@@ -129,7 +129,7 @@ class GallerySetting extends React.Component {
     unMovedColumnsName.splice(target_index, 0, movedColumnName);
     let updated = Object.assign({}, settings, {column_name: unMovedColumnsName});
     this.props.onModifyGallerySettings(updated);
-  }
+  };
 
   showColumnNameToggle = () => {
     let { settings } = this.props;
@@ -137,12 +137,12 @@ class GallerySetting extends React.Component {
     let updated = Object.assign({}, settings, {display_field_name: updateShowColumnName});
     this.props.onModifyGallerySettings(updated);
     this.setState({isShowColumnName: updateShowColumnName});
-  }
+  };
 
   getTitleColumns = () => {
     const { currentColumns } = this.props;
     return currentColumns.filter(column => SHOW_TITLE_COLUMN_TYPE.includes(column.type));
-  }
+  };
 
   getFilteredColumns = () => {
     let { settings, currentColumns } = this.props;
@@ -166,7 +166,7 @@ class GallerySetting extends React.Component {
       });
     }
     return filteredColumns;
-  }
+  };
 
   renderFieldsSelector = (source, settingKey) => {
     let { settings } = this.props;
@@ -186,7 +186,7 @@ class GallerySetting extends React.Component {
         onChange={this.onModifyFieldsSettings}
       />
     );
-  }
+  };
 
   renderSelector = (source, settingKey, valueKey, labelKey) => {
     let { settings } = this.props;
@@ -206,7 +206,7 @@ class GallerySetting extends React.Component {
         onChange={this.onModifySettings}
       />
     );
-  }
+  };
 
   render() {
     const { tables, views, onHideGallerySetting, imageColumns } = this.props;
