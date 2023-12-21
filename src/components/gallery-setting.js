@@ -2,8 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import { CellType } from 'dtable-utils';
-import { DTableSwitch, FieldDisplaySetting } from 'dtable-ui-component';
-import DtableSelect from './dtable-select';
+import { DTableSwitch, FieldDisplaySetting, DTableSelect } from 'dtable-ui-component';
 import { SETTING_KEY, zIndexes } from '../constants';
 import { calculateColumns, calculateColumnsName } from '../utils/utils';
 import '../locale';
@@ -180,7 +179,7 @@ class GallerySetting extends React.Component {
       selectedOption = options[0];
     }
     return (
-      <DtableSelect
+      <DTableSelect
         value={selectedOption}
         options={options}
         onChange={this.onModifyFieldsSettings}
@@ -200,7 +199,7 @@ class GallerySetting extends React.Component {
       selectedOption = options[0];
     }
     return (
-      <DtableSelect
+      <DTableSelect
         value={selectedOption}
         options={options}
         onChange={this.onModifySettings}
