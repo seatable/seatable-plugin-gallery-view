@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import intl from 'react-intl-universal';
 import {
   CellType, getTableById, getTableByName, getViewByName, getViewShownColumns, getRowById,
-  getRowsByIds, getLinkCellValue, getNonArchiveViews,
+  getRowsByIds, getLinkCellValue, getNonArchiveViews, getNonPrivateViews
 } from 'dtable-utils';
 import { PLUGIN_NAME, SETTING_KEY } from './constants';
 import pluginContext from './plugin-context';
@@ -406,7 +406,7 @@ class App extends React.Component {
     const tables = window.dtableSDK.getTables();
     const selectedTable = this.getSelectedTable(settings);
     const { name: tableName } = selectedTable || {};
-    const views = getNonArchiveViews(selectedTable.views);
+    const views = getNonPrivateViews(getNonArchiveViews(selectedTable.views));
     const selectedView = this.getSelectedView(selectedTable, settings) || views[0];
     const { name: viewName } = selectedView;
     const currentColumns = getViewShownColumns(selectedView, selectedTable.columns);
