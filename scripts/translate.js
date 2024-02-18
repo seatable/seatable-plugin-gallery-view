@@ -14,7 +14,7 @@ const generatorLanguage = (lang, content) => {
 
 export default ${lang};`
   );
-}
+};
 
 SUPPORT_LANGUAGES.forEach(lang => {
   const contentPath = path.join(sourcePath, lang, pluginName);
