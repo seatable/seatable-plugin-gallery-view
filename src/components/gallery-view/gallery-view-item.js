@@ -192,7 +192,7 @@ class GalleryViewItem extends React.Component {
       if (galleryItem[imageColumnName] && galleryItem[imageColumnName].length > 0) {
         imageNumber = galleryItem[imageColumnName].length;
         let imageURL = galleryItem[imageColumnName][0];
-        if (imageURL.toLowerCase().indexOf('.svg') === -1) { // not svg
+        if (typeof imageURL === 'string' && imageURL.toLowerCase().indexOf('.svg') === -1) { // not svg
           imageURL = getImageThumbnailUrl(imageURL, 512);
         }
         itemImage = (

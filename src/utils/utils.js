@@ -94,7 +94,7 @@ export const canCreateRows = (table) => {
 };
 
 export const needUseThumbnailImage = (url) => {
-  if (!url || url.lastIndexOf('.') === -1) {
+  if (!url || typeof url !== 'string' || url.lastIndexOf('.') === -1) {
     return false;
   }
   const image_suffix = url.substr(url.lastIndexOf('.') + 1).toLowerCase();
