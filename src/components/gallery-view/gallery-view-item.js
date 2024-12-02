@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { ImagePreviewerLightbox } from 'dtable-ui-component';
 import ImageLazyLoad from './widgets/ImageLazyLoad';
-import ImagePreviewerLightbox from './widgets/image-preview-lightbox';
 import EditorFormatter from '../formatter/editor-formatter';
 import { calculateColumns, calculateColumnsName } from '../../utils/utils';
 import pluginContext from '../../plugin-context';
@@ -184,6 +184,7 @@ class GalleryViewItem extends React.Component {
   render() {
     let { images, largeImageIndex } = this.state;
     let { galleryItem, itemMarginRightNone } = this.props;
+    const { server, workspaceID, dtableUuid } = window.dtable;
     let selectedImageColumn = this.getGalleryImageColumn();
     let itemImage;
     let imageNumber = 0;
@@ -234,6 +235,9 @@ class GalleryViewItem extends React.Component {
           <ImagePreviewerLightbox
             imageItems={images}
             imageIndex={largeImageIndex}
+            server={server}
+            workspaceID={workspaceID}
+            dtableUuid={dtableUuid}
             closeImagePopup={this.hideLargeImage}
             moveToPrevImage={this.movePrev}
             moveToNextImage={this.moveNext}
