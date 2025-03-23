@@ -27,7 +27,7 @@
   align-items: center;
 }
 
-.plugin-gallery-setting .btn-close {
+.plugin-gallery-setting .dtable-icon-x {
   margin-right: -4px;
   height: 24px;
   width: 24px;
@@ -37,7 +37,7 @@
   font-weight: 700;
 }
 
-.plugin-gallery-setting .btn-close:hover {
+.plugin-gallery-setting .dtable-icon-x:hover {
   opacity: 0.8;
 }
 

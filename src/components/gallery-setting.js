@@ -226,7 +226,7 @@ class GallerySetting extends React.Component {
           <div className="setting-header-container">
             <div className="setting-header-wrapper">
               <h3 className="h5 m-0">{intl.get('Settings')}</h3>
-              <i className="dtable-font dtable-icon-x btn-close" onClick={onHideGallerySetting}></i>
+              <i className="dtable-font dtable-icon-x" onClick={onHideGallerySetting}></i>
             </div>
           </div>
           <div className="setting-body">

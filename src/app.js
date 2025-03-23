@@ -445,7 +445,7 @@ class App extends React.Component {
             />
             <div className="ml-6 align-self-center">
               <span className="dtable-font dtable-icon-set-up mr-1 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
-              <span className="dtable-font dtable-icon-x gallery-op-icon btn-close" onClick={this.onPluginToggle}></span>
+              <span className="dtable-font dtable-icon-x gallery-op-icon" onClick={this.onPluginToggle}></span>
             </div>
           </div>) :
           (<React.Fragment>
@@ -456,7 +456,7 @@ class App extends React.Component {
               </div>
               <div className="ml-2 align-self-center">
                 <span className="dtable-font dtable-icon-set-up mr-1 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
-                <span className="dtable-font dtable-icon-x gallery-op-icon btn-close" onClick={this.onPluginToggle}></span>
+                <span className="dtable-font dtable-icon-x gallery-op-icon" onClick={this.onPluginToggle}></span>
               </div>
             </div>
             <div className="plugin-header">
