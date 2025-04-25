@@ -20,6 +20,7 @@ const en = {
   "Image_field": "Image field",
   "Title_field": "Title field",
   "Other_fields_shown_in_gallery": "Other fields shown in gallery",
+  "Other_fields_shown_in_gallery": "Other fields shown in gallery",
   "Hide_all": "Hide all",
   "Show_field_names": "Show field names"
 };
