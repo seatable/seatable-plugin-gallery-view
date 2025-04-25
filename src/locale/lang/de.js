@@ -18,6 +18,7 @@ const de = {
   "Show_all": "Alle anzeigen",
   "Image_field": "Bild",
   "Title_field": "Titel",
+  "Other_fields_shown_in_gallery": "Other fields shown in gallery",
   "Other_fields": "Anzuzeigende Spalten",
   "Hide_all": "Alle ausblenden",
   "Show_field_names": "Spaltennamen anzeigen"

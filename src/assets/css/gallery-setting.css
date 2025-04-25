@@ -73,6 +73,10 @@
   margin-bottom: 10px;
 }
 
+.plugin-gallery-setting .form-label {
+  font-weight: unset !important;
+}
+
 .fields-setting .fields-setting-header .setting-choose-all {
   color: #ff8000;
   font-size: 12px;

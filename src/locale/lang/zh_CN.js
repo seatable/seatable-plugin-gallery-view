@@ -18,6 +18,7 @@ const zh_CN = {
   "Show_all": "显示全部",
   "Image_field": "图片字段",
   "Title_field": "标题字段",
+  "Other_fields_shown_in_gallery": "图库中显示的其他字段",
   "Other_fields": "其他字段",
   "Hide_all": "隐藏全部",
   "Show_field_names": "显示字段名称"

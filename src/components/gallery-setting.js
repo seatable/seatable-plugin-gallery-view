@@ -240,7 +240,6 @@ class GallerySetting extends React.Component {
                 {this.renderSelector(views, SETTING_KEY.VIEW_NAME, 'name', 'name')}
               </div>
               <div className="split-line"></div>
-
               {imageColumns && imageColumns.length > 0 &&
                 <div className="setting-item image-setting">
                   <div className="title">{intl.get('Image_field')}</div>
@@ -251,7 +250,6 @@ class GallerySetting extends React.Component {
                 <div className="title">{intl.get('Title_field')}</div>
                 {this.renderFieldsSelector(titleColumns, 'shown_title_name')}
               </div>
-
               <div className="split-line"></div>
               <div className="setting-item">
                 <div className="gallery-setting-item">
@@ -263,7 +261,6 @@ class GallerySetting extends React.Component {
                   />
                 </div>
               </div>
-
               <div className="split-line"></div>
               <FieldDisplaySetting
                 fields={filteredColumns}
@@ -273,7 +270,6 @@ class GallerySetting extends React.Component {
                 onMoveField={this.onMoveColumn}
                 onToggleFieldsVisibility={() => this.onToggleFieldsVisibility(fieldAllShown)}
               />
-
             </div>
           </div>
         </div>
