@@ -5,6 +5,8 @@ import {
   CellType, getTableById, getTableByName, getViewByName, getViewShownColumns, getRowById,
   getRowsByIds, getLinkCellValue, getNonArchiveViews, getNonPrivateViews
 } from 'dtable-utils';
+import { toaster } from 'dtable-ui-component';
+import { Button } from 'reactstrap';
 import { PLUGIN_NAME, SETTING_KEY } from './constants';
 import pluginContext from './plugin-context';
 import { generatorViewId, checkDesktop } from './utils/utils';
@@ -12,6 +14,7 @@ import ViewsTabs from './components/views-tabs';
 import GallerySetting from './components/gallery-setting';
 import Gallery from './components/gallery';
 import View from './model/view';
+import Icon from './components/icon';
 import './locale/index.js';
 
 import cardLogo from './assets/image/card-view.png';
@@ -58,7 +61,7 @@ class App extends React.Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({showDialog: nextProps.showDialog});
+    this.setState({ showDialog: nextProps.showDialog });
   }
 
   componentDidUpdate(prevProps, prevState) {
@@ -113,11 +116,11 @@ class App extends React.Component {
   };
 
   onGallerySettingToggle = () => {
-    this.setState({isShowGallerySetting: !this.state.isShowGallerySetting});
+    this.setState({ isShowGallerySetting: !this.state.isShowGallerySetting });
   };
 
   onHideGallerySetting = () => {
-    this.setState({isShowGallerySetting: false});
+    this.setState({ isShowGallerySetting: false });
   };
 
   getDtableUuid = () => {
@@ -130,7 +133,7 @@ class App extends React.Component {
 
   onPluginToggle = () => {
     setTimeout(() => {
-      this.setState({showDialog: false});
+      this.setState({ showDialog: false });
     }, 500);
     pluginContext.closePlugin();
   };
@@ -185,7 +188,7 @@ class App extends React.Component {
     if (viewIdx > -1) {
       let { settings } = updatedViews[viewIdx];
       let isShowGallerySetting = !this.isValidViewSettings(settings);
-      this.setState({selectedViewIdx: viewIdx, isShowGallerySetting, itemShowRowLength: 50});
+      this.setState({ selectedViewIdx: viewIdx, isShowGallerySetting, itemShowRowLength: 50 });
       this.storeSelectedViewId(viewId);
     }
   };
@@ -197,7 +200,7 @@ class App extends React.Component {
     let imageColumn = selectedTable.columns.find(column => column.type === 'image');
     let imageName = imageColumn ? imageColumn.name : null;
     let titleName = titleColumn ? titleColumn.name : null;
-    initUpdated = Object.assign({}, {shown_image_name: imageName}, {shown_title_name: titleName});
+    initUpdated = Object.assign({}, { shown_image_name: imageName }, { shown_title_name: titleName });
     return initUpdated;
   };
 
@@ -206,12 +209,12 @@ class App extends React.Component {
     let { views: updatedViews } = plugin_settings;
     let selectedViewIdx = updatedViews.length;
     let _id = generatorViewId(updatedViews);
-    let newView = new View({_id, name: viewName});
+    let newView = new View({ _id, name: viewName });
     updatedViews.push(newView);
     let { settings } = updatedViews[selectedViewIdx];
     let isShowGallerySetting = !this.isValidViewSettings(settings);
     let initUpdated = this.initGallerySetting();
-    updatedViews[selectedViewIdx].settings  = Object.assign({}, initUpdated);
+    updatedViews[selectedViewIdx].settings = Object.assign({}, initUpdated);
     plugin_settings.views = updatedViews;
     this.setState({
       plugin_settings,
@@ -227,7 +230,7 @@ class App extends React.Component {
   onRenameView = (viewName) => {
     let { plugin_settings, selectedViewIdx } = this.state;
     let updatedView = plugin_settings.views[selectedViewIdx];
-    updatedView = Object.assign({}, updatedView, {name: viewName});
+    updatedView = Object.assign({}, updatedView, { name: viewName });
     plugin_settings.views[selectedViewIdx] = updatedView;
     this.setState({
       plugin_settings
@@ -261,7 +264,7 @@ class App extends React.Component {
     let { plugin_settings, selectedViewIdx } = this.state;
     let { views: updatedViews } = plugin_settings;
     let updatedView = plugin_settings.views[selectedViewIdx];
-    let { settings: updatedSettings} = updatedView || {};
+    let { settings: updatedSettings } = updatedView || {};
     if (!type) {
       updatedSettings = Object.assign({}, updatedSettings, updated);
     } else {
@@ -271,7 +274,7 @@ class App extends React.Component {
     updatedView.settings = updatedSettings;
     updatedViews[selectedViewIdx] = updatedView;
     plugin_settings.views = updatedViews;
-    this.setState({plugin_settings}, () => {
+    this.setState({ plugin_settings }, () => {
       window.dtableSDK.updatePluginSettings(PLUGIN_NAME, plugin_settings);
     });
   };
@@ -284,7 +287,7 @@ class App extends React.Component {
       if (!column) {
         continue;
       }
-      switch(column.type) {
+      switch (column.type) {
         case 'single-select': {
           let singleSelectName = '';
           singleSelectName = column.data.options.find(item => item.id === rowData[key]);
@@ -392,6 +395,101 @@ class App extends React.Component {
     return window.dtableSDK.getTableFormulaResults(table, rows);
   };
 
+  // Create a unique view name by appending an incremental suffix if needed
+  getSuffixedViewName = (viewName, views) => {
+    if (!Array.isArray(views) || views.length === 0) return viewName || '';
+    const existedViewNames = views.map(v => v.name);
+    if (!viewName) viewName = intl.get('Gallery');
+    if (existedViewNames.indexOf(viewName) === -1) return viewName;
+    const reg = new RegExp(`^${viewName} (\\d+)$`);
+    let maxNum = 0;
+    existedViewNames.forEach(name => {
+      const match = name.match(reg);
+      if (match && match[1]) {
+        const num = Number(match[1]);
+        if (!isNaN(num)) maxNum = Math.max(maxNum, num);
+      }
+    });
+    return `${viewName} ${maxNum + 1}`;
+  };
+
+  // Migrate plugin views to gallery views
+  migratePluginToView = async () => {
+    try {
+      const plugin_settings = window.dtableSDK.getPluginSettings(PLUGIN_NAME) || {};
+      const { views = [] } = plugin_settings;
+      if (!Array.isArray(views) || views.length === 0) return;
+
+      toaster.notify(intl.get('Starting_migration'));
+      const tables = window.dtableSDK.getTables();
+      for (let i = 0; i < views.length; i++) {
+        const view = views[i] || {};
+        const {
+          name = intl.get('Gallery'),
+          settings = {}
+        } = view;
+
+        const {
+          table_name,
+          shown_image_name = '',
+          shown_title_name = '',
+          shown_column_names = [],
+          display_field_name = false,
+        } = settings;
+
+        const selectedTable = (table_name && getTableByName(tables, table_name)) || tables[0];
+        if (!selectedTable) continue;
+
+        const columns = selectedTable.columns;
+        const titleColumn = shown_title_name && columns.find(col => col.name === shown_title_name);
+        const imageColumn = shown_image_name && columns.find(col => col.name === shown_image_name);
+        const title_column_key = titleColumn ? titleColumn.key : '';
+        const image_column_key = imageColumn ? imageColumn.key : '';
+        const shownNamesSet = new Set(shown_column_names);
+        const card_columns = [];
+
+        shown_column_names.forEach(columnName => {
+          const column = columns.find(col => col.name === columnName);
+          if (column) {
+            card_columns.push({ key: column.key, shown: true });
+          }
+        });
+
+        columns.forEach(column => {
+          if (!shownNamesSet.has(column.name)) {
+            card_columns.push({ key: column.key, shown: false });
+          }
+        });
+
+        const selectTableViews = window.dtableSDK.getViews(selectedTable) || [];
+        const viewName = this.getSuffixedViewName(name, selectTableViews);
+
+        const view_Data = {
+          type: 'gallery',
+          name: viewName,
+          custom_settings: {
+            image_column_key,
+            title_column_key,
+            card_columns,
+            show_fields_name: !!display_field_name,
+          },
+        };
+
+        await new Promise((resolve, reject) => {
+          try {
+            window.dtableSDK.migratePluginView(selectedTable.name, view_Data);
+            setTimeout(resolve, 500);
+          } catch (error) {
+            reject(error);
+          }
+        });
+      }
+      toaster.success(intl.get('Migrate_to_views_successfully'));
+    } catch (error) {
+      toaster.danger(intl.get('Migration_failed'));
+    }
+  };
+
   render() {
     const {
       isLoading, showDialog, plugin_settings, selectedViewIdx, isShowGallerySetting,
@@ -443,7 +541,13 @@ class App extends React.Component {
               onRenameView={this.onRenameView}
               onMoveView={this.onMoveView}
             />
-            <div className="ml-6 align-self-center">
+            <div className="ml-6 align-self-center d-flex align-items-center">
+              {selectedViewIdx > -1 &&
+                <Button className="mr-4 migrate-to-view-button" onClick={this.migratePluginToView} color="secondary">
+                  <Icon symbol='move-to' className='mr-2' />
+                  <span>{intl.get('Migrate_to_view')}</span>
+                </Button>
+              }
               <span className="dtable-font dtable-icon-set-up mr-1 gallery-op-icon" onClick={this.onGallerySettingToggle}></span>
               <span className="dtable-font dtable-icon-x gallery-op-icon" onClick={this.onPluginToggle}></span>
             </div>

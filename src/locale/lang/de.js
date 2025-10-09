@@ -18,10 +18,13 @@ const de = {
   "Show_all": "Alle anzeigen",
   "Image_field": "Bild",
   "Title_field": "Titel",
-  "Other_fields_shown_in_gallery": "Other fields shown in gallery",
-  "Other_fields": "Anzuzeigende Spalten",
+  "Other_fields_shown_in_gallery": "Weitere in der Galerie angezeigte Felder",
   "Hide_all": "Alle ausblenden",
-  "Show_field_names": "Spaltennamen anzeigen"
+  "Show_field_names": "Spaltennamen anzeigen",
+  "Migrate_to_view": "Zur Ansicht migrieren",
+  "Starting_migration": "Migration wird gestartet...",
+  "Migrate_to_views_successfully": "Erfolgreich zu Ansichten migriert",
+  "Migration_failed": "Migration fehlgeschlagen, bitte erneut versuchen"
 };
 
 export default de;

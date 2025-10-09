@@ -1,5 +1,5 @@
 const ru = {
-  "Gallery": "Gallery",
+  "Gallery": "Галерея",
   "Default_View": "Вид по умолчанию",
   "Rename_View": "Переименовать Вид",
   "Delete_View": "Удалить Вид",
@@ -15,13 +15,16 @@ const ru = {
   "No_options": "Нет вариантов",
   "Unnamed_record": "Нет имени",
   "Choose_fields": "Выберите поле",
-  "Show_all": "Show all",
-  "Image_field": "Image field",
+  "Show_all": "Показать все",
+  "Image_field": "Поле изображения",
   "Title_field": "Поле заголовка",
-  "Other_fields_shown_in_gallery": "Other fields shown in gallery",
-  "Other_fields": "Другие поля",
+  "Other_fields_shown_in_gallery": "Другие поля, отображаемые в галерее",
   "Hide_all": "Скрыть все",
-  "Show_field_names": "Show field names"
+  "Show_field_names": "Показывать названия полей",
+  "Migrate_to_view": "Мигрировать в вид",
+  "Starting_migration": "Запуск миграции...",
+  "Migrate_to_views_successfully": "Миграция в виды завершена",
+  "Migration_failed": "Миграция не удалась, попробуйте снова"
 };
 
 export default ru;

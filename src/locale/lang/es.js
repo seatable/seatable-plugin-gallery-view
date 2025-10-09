@@ -18,10 +18,13 @@ const es = {
   "Show_all": "Mostrar todo",
   "Image_field": "Campo de imagen",
   "Title_field": "Campo de título",
-  "Other_fields_shown_in_gallery": "Other fields shown in gallery",
-  "Other_fields": "Otros campos",
+  "Other_fields_shown_in_gallery": "Otros campos mostrados en la galería",
   "Hide_all": "Ocultar todo",
-  "Show_field_names": "Mostrar nombres de campos"
+  "Show_field_names": "Mostrar nombres de campos",
+  "Migrate_to_view": "Migrar a vista",
+  "Starting_migration": "Iniciando migración...",
+  "Migrate_to_views_successfully": "Migración a vistas completada",
+  "Migration_failed": "La migración falló, inténtalo de nuevo"
 };
 
 export default es;
