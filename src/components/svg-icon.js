@@ -10,19 +10,14 @@ requireContext.keys().forEach(path => {
   components[iconName] = requireContext(path).default;
 });
 
-const needScaleIcons = ['check', 'dot', 'cross'];
-
 const SvgIcon = ({ className, symbol, color }) => {
   let iconClass = `multicolor-icon multicolor-icon-${symbol} ${className || ''}`;
-  if (needScaleIcons.includes(symbol) && window.isMobile) {
-    iconClass += ' scale-icon';
-  }
   let containerStyle = {
     color: color || '',
   };
   const IconComponent = components[symbol];
   if (!IconComponent) return null;
-  return (<IconComponent className={iconClass} style={containerStyle} aria-hidden="true"/>);
+  return (<IconComponent className={iconClass} style={containerStyle} aria-hidden="true" />);
 };
 
 SvgIcon.propTypes = {
