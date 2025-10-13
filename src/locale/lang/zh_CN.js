@@ -21,7 +21,11 @@ const zh_CN = {
   "Other_fields_shown_in_gallery": "图库中显示的其他字段",
   "Other_fields": "其他字段",
   "Hide_all": "隐藏全部",
-  "Show_field_names": "显示字段名称"
+  "Show_field_names": "显示字段名称",
+  "Migrate_to_view": "迁移为视图",
+  "Starting_migration": "正在迁移...",
+  "Migrate_to_views_successfully": "迁移为视图成功",
+  "Migration_failed": "迁移失败，请重试"
 };
 
 export default zh_CN;

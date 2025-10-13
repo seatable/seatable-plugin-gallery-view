@@ -1,13 +1,13 @@
 const pt = {
-  "Gallery": "Gallery",
+  "Gallery": "Galeria",
   "Default_View": "Modo de Exibição Padrão",
   "Rename_View": "Renomear Modo de Exibição",
   "Delete_View": "Excluir modo de exibição",
   "New_View": "Nova Vista",
   "Name": "Nome",
-  "Name_is_required": "O nome é obrigatório<br><br>",
+  "Name_is_required": "O nome é obrigatório",
   "Cancel": "Cancelar",
-  "Submit": "Envi",
+  "Submit": "Enviar",
   "Settings": "Configurações",
   "Table": "Tabela",
   "View": "Vista",
@@ -16,12 +16,15 @@ const pt = {
   "Unnamed_record": "Registro sem nome",
   "Choose_fields": "Escolher campos",
   "Show_all": "Mostrar tudo",
-  "Image_field": "Image field",
+  "Image_field": "Campo de imagem",
   "Title_field": "Campo Título",
-  "Other_fields_shown_in_gallery": "Other fields shown in gallery",
-  "Other_fields": "Outros campos",
+  "Other_fields_shown_in_gallery": "Outros campos exibidos na galeria",
   "Hide_all": "Ocultar tudo",
-  "Show_field_names": "Mostrar nomes de campos"
+  "Show_field_names": "Mostrar nomes de campos",
+  "Migrate_to_view": "Migrar para vista",
+  "Starting_migration": "Iniciando migração...",
+  "Migrate_to_views_successfully": "Migração para vistas concluída",
+  "Migration_failed": "A migração falhou, tente novamente"
 };
 
 export default pt;

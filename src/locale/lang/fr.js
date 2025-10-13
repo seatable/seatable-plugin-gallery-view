@@ -18,10 +18,13 @@ const fr = {
   "Show_all": "Afficher tout",
   "Image_field": "Image",
   "Title_field": "Titre",
-  "Other_fields_shown_in_gallery": "Other fields shown in gallery",
-  "Other_fields": "Colonnes à afficher",
-  "Hide_all": "Masquer toutes",
-  "Show_field_names": " Afficher nom de colonne"
+  "Other_fields_shown_in_gallery": "Autres champs affichés dans la galerie",
+  "Hide_all": "Tout masquer",
+  "Show_field_names": "Afficher les noms des colonnes",
+  "Migrate_to_view": "Migrer vers une vue",
+  "Starting_migration": "Démarrage de la migration...",
+  "Migrate_to_views_successfully": "Migration vers les vues réussie",
+  "Migration_failed": "Échec de la migration, veuillez réessayer"
 };
 
 export default fr;
